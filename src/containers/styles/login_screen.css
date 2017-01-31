@@ -14,8 +14,11 @@
     font-size: 3em;
 }
 
-.login-screen__form {
+.login-screen__form__wrapper {
     max-width: 250px;
+}
+
+.login-screen__form {
     width: 100%;
 }
 
