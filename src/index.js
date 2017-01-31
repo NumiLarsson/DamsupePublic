@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-/*REDUX  */
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import reducers from './reducers/reducers';
-import { reducer as formReducer } from 'redux-form'
+/*REDUX AND ROUTING */
+import { createStore, applyMiddleware } from 'redux'
+import rootReducer from './reducers/root';
 import promise from 'redux-promise';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { Provider } from 'react-redux'
-import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
+import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 /*APP SPECIFIC IMPORTS */
@@ -34,7 +33,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 /*Initialize the redux store */
 const store = createStore(
-    combineReducers({...reducers, routing: routerReducer, form: formReducer}), 
+    rootReducer, 
     applyMiddleware(...middleware)
 );
 

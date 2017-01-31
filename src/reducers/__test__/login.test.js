@@ -1,6 +1,6 @@
-import login from '../auth';
+import login from '../login';
 import { initialState } from '../login';
 
 it('should return the initial state', () => {
-    expect(initialState).toEqual(auth(initialState, {type: 'DEFAULT'}));
+    expect(initialState).toEqual(login(initialState, {type: 'DEFAULT'}));
 })
