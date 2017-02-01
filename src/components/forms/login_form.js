@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import InputField from './input_field';
-import { connect } from 'react-redux';
 
 
 class LoginForm extends Component {
@@ -16,8 +15,8 @@ class LoginForm extends Component {
                 <button type="submit" 
                     id="loginBtn" 
                     disabled={pristine || submitting}
-                    className="flat-button  spaced-item flat-button--primary">
-                    {submitting ? 'Loading' : 'Sign In'}
+                    className="flat-button spaced-item flat-button--primary">
+                    {submitting ? 'Loading' : (submitFailed ?  error : 'Sign In')}
                 </button>
             </form>
         )

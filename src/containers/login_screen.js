@@ -20,12 +20,28 @@ class LoginScreen extends Component {
     signInEmail (values) {
         const { email, password } = values;
         return api.signInWithEmail(email, password)
-        .catch((e) => { throw new SubmissionError({ _error: e.message }); });
+        .catch((e) => { throw new SubmissionError({ _error: 'Some error' }); });
     }
 
     handleError(error, dispatch, submitError, props) {
-        TweenMax.to("#loginBtn", 2, {
+        
+        TweenMax.to("#loginBtn", 1, {
             backgroundColor: "#e74c3c"
+        });
+        TweenMax.to("#loginBtn", .1, {
+            x: -7,
+            ease: TweenMax.Quad.easeInOut
+        });
+        TweenMax.to("#loginBtn", .1, {
+            repeat: 4,
+            x: 7,
+            yoyo: true,
+            delay: .1,
+            ease: TweenMax.Quad.easeInOut
+        });
+        TweenMax.to("#loginBtn", .1, {
+            x: 0,
+            delay: .1 * 4
         });
     }
     
