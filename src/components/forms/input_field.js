@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/input_field.css';
+import './input_field.css';
 
 
 export default (props) => {
@@ -11,8 +11,8 @@ export default (props) => {
                 autoComplete={props.name} 
                 type={props.type} 
                 name={props.name}
-                value={props.value}
-                onInput={props.onInput} 
+                value={props.input.value}
+                onChange={props.input.onChange} 
                 placeholder={props.placeholder}
                 />
         </div>

@@ -457,7 +457,7 @@ template {
   display: none;
 }
 
-html, body, #app {
+html, body, #root {
   height: 100%;
   width: 100%;
 }
