@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import InputField from '../components/input_field';
-import { signInWithEmail, updateEmail, updatePassword } from '../actions/login';
+import { SubmissionError } from 'redux-form';
+import LoginForm from '../components/forms/login_form';
+import api from '../libs/api';
+import { signInWithEmail } from '../actions/login';
 import './styles/login_screen.css';
 import '../components/styles/flat_button.css';
 import TweenMax from 'gsap';
@@ -9,39 +11,24 @@ import TweenMax from 'gsap';
 class LoginScreen extends Component {
 
     constructor() {
-        super();
-        this.updateEmailValue = this.updateEmailValue.bind(this);
-        this.updatePasswordValue = this.updatePasswordValue.bind(this);
+        super()
         this.signInEmail = this.signInEmail.bind(this);
+        this.handleError = this.handleError.bind(this);
     }
 
-    updateEmailValue(e) {
-        this.props.updateEmail(e.target.value);
+ 
+    signInEmail (values) {
+        const { email, password } = values;
+        return api.signInWithEmail(email, password)
+        .catch((e) => { throw new SubmissionError({ _error: e.message }); });
     }
 
-    updatePasswordValue(e) {
-        this.props.updatePassword(e.target.value);
+    handleError(error, dispatch, submitError, props) {
+        TweenMax.to("#loginBtn", 2, {
+            backgroundColor: "#e74c3c"
+        });
     }
-
-    signInEmail(e) {
-        e.preventDefault();
-        this.props.signInWithEmail(this.props.email, this.props.password);
-    }
-
-    /* Animate error stuff */
-    /*
-    componentWillReceiveProps(newProps) {
-        if (newProps.loginError) {
-            this.handleLoginError();
-        }
-    }
-
-    handleLoginError() {
-        TweenMax.to(this.loginB, 0.05, {x:"+=5", yoyo:true, repeat:3});
-        TweenMax.to(this.loginB, 0.05, {x:"-=5", yoyo:true, repeat:3});
-        this.props.resetError();
-    }
-    */ 
+    
 
     render() {
         return (
@@ -50,15 +37,10 @@ class LoginScreen extends Component {
                 <div className="login-screen__header">
                     <h1 className="login-screen__header__title">Welcome!</h1>
                 </div>
-                <form className="login-screen__form">
-                    <InputField type="email" name="email" label="Email" value={this.props.email} onInput={this.updateEmailValue}  />
-                    <InputField type="password" name="password" label="Password" value={this.props.password} onInput={this.updatePasswordValue}   />
-                    <button 
-                        ref={(loginB) => {this.loginB = loginB}}
-                        onClick={this.signInEmail} 
-                        className="flat-button flat-button--primary spaced-item">Sign In</button>
+                <div className="login-screen__form__wrapper">
+                    <LoginForm onSubmit={this.signInEmail} onSubmitFail={this.handleError} />
                     <button className="flat-button flat-button--facebook spaced-item">Use Facebook</button>
-                </form>
+                </div> 
             </div>
         )
     }
@@ -67,17 +49,13 @@ class LoginScreen extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        email: state.login.email,
-        password: state.login.password,
         loginError: state.login.error,
         loginErrorMessage: state.login.errorMessage
     }
 }
 
 const mapDispatchToProps = {
-    signInWithEmail,
-    updateEmail,
-    updatePassword
+    signInWithEmail
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
