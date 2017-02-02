@@ -75,4 +75,4 @@ class LoginScreen extends Component {
 
 }
 
-export default connect(null, null)(LoginScreen);
+module.exports = connect(null, null)(LoginScreen);

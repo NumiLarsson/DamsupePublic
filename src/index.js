@@ -11,7 +11,7 @@ import { listenForAuthChanges } from './actions/auth';
 import api from './libs/api';
 import './index.css';
 import App from './components/App';
-import Splash from './routes/Splash/components/Splash';
+//import Splash from './routes/Splash/components/Splash';
 
 /* Initialize api and start listening for auth changes*/
 api.initialize();
@@ -25,7 +25,7 @@ const routes = {
         getIndexRoute(partialNextState, callback) {
             require.ensure([], function (require) {
             callback(null, {
-                component: Splash,
+                component: require('./routes/Splash/components/Splash'),
             })
             })
         },

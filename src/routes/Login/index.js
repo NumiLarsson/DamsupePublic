@@ -1,11 +1,11 @@
-import Login from './components/Login'
+//import Login from './components/Login'
 
 module.exports = {
     path: 'login',
 
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
-            cb(null, Login);
+            cb(null, require('./components/Login'));
         });
     }
 }

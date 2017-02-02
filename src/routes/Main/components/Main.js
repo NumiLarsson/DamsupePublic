@@ -11,4 +11,4 @@ class MainScreen extends Component {
 }
 
 
-export default connect(null, null)(MainScreen);
+module.exports = connect(null, null)(MainScreen);
