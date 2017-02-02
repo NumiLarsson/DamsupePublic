@@ -1,6 +1,6 @@
 import React from 'react';
-import HourGlass from './hourglass';
-import './styles/splash.css';
+import HourGlass from './Hourglass';
+import './styles/Splash.css';
 
 export default function SplashScreen(props) {
     return (

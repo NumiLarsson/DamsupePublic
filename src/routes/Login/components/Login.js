@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
-import LoginForm from '../components/forms/login_form';
-import api from '../libs/api';
-import { signInWithEmail } from '../actions/login';
-import './styles/login_screen.css';
-import '../components/styles/flat_button.css';
+import LoginForm from './LoginForm';
+import api from '../../../libs/api';
+import './styles/Login.css';
+import './styles/FlatButton.css';
 import TweenMax from 'gsap';
 
 class LoginScreen extends Component {
@@ -16,18 +15,31 @@ class LoginScreen extends Component {
         this.handleError = this.handleError.bind(this);
     }
 
+    componentWillMount() {
+        api.getRedirectResult()
+        .then(res => {
+            if (res) {
+                console.log('User is signed in');
+            } else {
+                console.log('User canceled or something');
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        }) 
+    }
  
     signInEmail (values) {
         const { email, password } = values;
         return api.signInWithEmail(email, password)
-        .catch((e) => { throw new SubmissionError({ _error: 'Some error' }); });
+        .catch((e) => { throw new SubmissionError({ _error: e }); });
     }
 
     handleError(error, dispatch, submitError, props) {
         
         TweenMax.to("#loginBtn", 1, {
             backgroundColor: "#e74c3c"
-        });
+        }); 
         TweenMax.to("#loginBtn", .1, {
             x: -7,
             ease: TweenMax.Quad.easeInOut
@@ -55,7 +67,7 @@ class LoginScreen extends Component {
                 </div>
                 <div className="login-screen__form__wrapper">
                     <LoginForm onSubmit={this.signInEmail} onSubmitFail={this.handleError} />
-                    <button className="flat-button flat-button--facebook spaced-item">Use Facebook</button>
+                    <button onClick={api.signInWithFacebook} className="flat-button flat-button--facebook spaced-item">Use Facebook</button>
                 </div> 
             </div>
         )
@@ -63,15 +75,4 @@ class LoginScreen extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-    return {
-        loginError: state.login.error,
-        loginErrorMessage: state.login.errorMessage
-    }
-}
-
-const mapDispatchToProps = {
-    signInWithEmail
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default connect(null, null)(LoginScreen);

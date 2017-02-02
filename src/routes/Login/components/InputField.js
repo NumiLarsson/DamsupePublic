@@ -1,6 +1,5 @@
 import React from 'react';
-import './input_field.css';
-
+import './styles/InputField.css';
 
 export default (props) => {
     return (
@@ -18,8 +17,3 @@ export default (props) => {
         </div>
     );
 }
-
-
-/*
-
-*/

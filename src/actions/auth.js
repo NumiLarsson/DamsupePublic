@@ -13,7 +13,7 @@ export function listenForAuthChanges() {
     return (dispatch) => {
         api.listenForAuthChanges(
             (user) => dispatch(push('main')), //Success
-            () => dispatch(push('login'))//Failure
+            () => dispatch(push('/login'))//Failure
         );
     };
 }
