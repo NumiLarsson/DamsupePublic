@@ -1,5 +1,5 @@
 import React from 'react';
-import HourGlass from './Hourglass';
+import HourGlass from '../../../components/HourGlass';
 import { Link } from 'react-router'
 import './styles/Splash.css';
 

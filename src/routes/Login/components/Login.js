@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
 import LoginForm from './LoginForm';
+import RedirectLoader from './RedirectLoader';
+import HourGlass from '../../../components/HourGlass';
 import api from '../../../libs/api';
 import './styles/Login.css';
 import './styles/FlatButton.css';
@@ -18,14 +20,14 @@ class LoginScreen extends Component {
     componentWillMount() {
         api.getRedirectResult()
         .then(res => {
-            if (res) {
-                console.log('User is signed in');
+            if (res.user) {
+                this.props.setRedirectLoading();
             } else {
-                console.log('User canceled or something');
+                this.props.setNoRedirect();
             }
         })
         .catch(err => {
-            console.log(err);
+            this.props.setRedirectError();
         }) 
     }
  
@@ -61,6 +63,7 @@ class LoginScreen extends Component {
     render() {
         return (
             <div className="login-screen">
+                {this.props.redirectLoading ? <RedirectLoader><HourGlass width="80" height="80" /></RedirectLoader> : null}
                 <a className="register-link" href="/register">Register</a>
                 <div className="login-screen__header">
                     <h1 className="login-screen__header__title">Welcome!</h1>
@@ -75,4 +78,20 @@ class LoginScreen extends Component {
 
 }
 
-module.exports = connect(null, null)(LoginScreen);
+const mapStateToProps = state => {
+    return {
+        redirectError: state.login.redirectError,
+        redirectLoading: state.login.redirectLoading
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setRedirectError: () => dispatch({type: 'REDIRECT_ERROR'}),
+        setRedirectLoading: () => dispatch({type: 'REDIRECT_LOADING'}),
+        setNoRedirect: () => dispatch({type: 'NO_REDIRECT'})
+    }
+}
+
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

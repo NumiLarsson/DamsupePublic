@@ -15,7 +15,7 @@ import App from './components/App';
 
 /* Initialize api and start listening for auth changes*/
 api.initialize();
-//store.dispatch(listenForAuthChanges());
+store.dispatch(listenForAuthChanges());
 
 const routes = {
     childRoutes: [{
