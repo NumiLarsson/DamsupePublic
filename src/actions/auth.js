@@ -12,8 +12,13 @@ import { push } from 'react-router-redux';
 export function listenForAuthChanges() {
     return (dispatch) => {
         api.listenForAuthChanges(
-            (user) => dispatch(push('main')), //Success
-            () => dispatch(push('login'))//Failure
+            (user) => {
+                dispatch({type: 'USER_SIGNED_IN'});
+                dispatch(push('main'));
+            }, //Success
+            () => {
+                dispatch(push('/login'));
+            }
         );
     };
 }

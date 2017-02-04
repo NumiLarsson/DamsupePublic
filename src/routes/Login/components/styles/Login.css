@@ -26,6 +26,10 @@
     margin-top: 5px;
 }
 
+.spaced-item-x2 {
+    margin-top: 10px;
+}
+
 .register-link {
     position: absolute;
     top: 10px;
