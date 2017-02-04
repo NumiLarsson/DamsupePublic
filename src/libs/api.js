@@ -73,6 +73,7 @@ class Api {
         })
     }
 
+    //Todo: Add error handling
     signInWithFacebook() {
         const provider = new fb.auth.FacebookAuthProvider();
         fb.auth().signInWithRedirect(provider)

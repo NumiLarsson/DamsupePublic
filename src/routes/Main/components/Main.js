@@ -5,10 +5,19 @@ import api from '../../../libs/api';
 class MainScreen extends Component {
     render() {
         return (
-            <button onClick={api.signOut}>Logout</button>
+            <button onClick={this.props.signOut}>Logout</button>
         )
     }
 }
 
+//TODO: Fix this hack
 
-module.exports = connect(null, null)(MainScreen);
+const mapDispatchToProps = dispatch => {
+    return {
+        signOut: () => api.signOut().then(()=> {
+            dispatch({type: 'USER_SIGNED_OUT'});
+        })
+    }
+}
+
+module.exports = connect(null, mapDispatchToProps)(MainScreen);

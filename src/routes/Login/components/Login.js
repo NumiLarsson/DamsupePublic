@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
 import LoginForm from './LoginForm';
 import RedirectLoader from './RedirectLoader';
+import RedirectError from './RedirectError';
 import HourGlass from '../../../components/HourGlass';
 import api from '../../../libs/api';
 import './styles/Login.css';
@@ -20,14 +21,16 @@ class LoginScreen extends Component {
     componentWillMount() {
         api.getRedirectResult()
         .then(res => {
-            if (res.user) {
+            if (res.user && !this.props.userSignedOut) {
                 this.props.setRedirectLoading();
             } else {
                 this.props.setNoRedirect();
             }
         })
         .catch(err => {
-            this.props.setRedirectError();
+            if (!this.props.userSignedOut) {
+                this.props.setRedirectError(err);
+            } 
         }) 
     }
  
@@ -71,6 +74,7 @@ class LoginScreen extends Component {
                 <div className="login-screen__form__wrapper">
                     <LoginForm onSubmit={this.signInEmail} onSubmitFail={this.handleError} />
                     <button onClick={api.signInWithFacebook} className="flat-button flat-button--facebook spaced-item">Use Facebook</button>
+                    {this.props.redirectError ? <RedirectError error={this.props.redirectErrorMsg}/> : null}
                 </div> 
             </div>
         )
@@ -81,13 +85,15 @@ class LoginScreen extends Component {
 const mapStateToProps = state => {
     return {
         redirectError: state.login.redirectError,
-        redirectLoading: state.login.redirectLoading
+        redirectErrorMsg: state.login.redirectErrorMsg,
+        redirectLoading: state.login.redirectLoading,
+        userSignedOut: state.login.userSignedOut
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        setRedirectError: () => dispatch({type: 'REDIRECT_ERROR'}),
+        setRedirectError: (msg) => dispatch({type: 'REDIRECT_ERROR', payload: msg}),
         setRedirectLoading: () => dispatch({type: 'REDIRECT_LOADING'}),
         setNoRedirect: () => dispatch({type: 'NO_REDIRECT'})
     }

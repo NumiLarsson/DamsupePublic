@@ -1,7 +1,9 @@
 
 export const initialState = {
     redirectError : false,
-    redirectLoading: true
+    redirectErrorMsg: '',
+    redirectLoading: true,
+    userSignedOut: false
 }
 
 export default (state = initialState, action) => {
@@ -13,6 +15,18 @@ export default (state = initialState, action) => {
                 redirectLoading: false
             });
 
+        case 'USER_SIGNED_OUT':
+            return Object.assign({}, state, {
+                userSignedOut: true,
+                redirectError: false,
+                redirectLoading: false
+            })
+        
+        case 'USER_SIGNED_IN':
+            return Object.assign({}, state, {
+                userSignedOut: false
+            })
+
         case 'REDIRECT_LOADING':
             return Object.assign({}, state, {
                     redirectLoading: true
@@ -20,7 +34,9 @@ export default (state = initialState, action) => {
 
         case 'REDIRECT_ERROR':
             return Object.assign({}, state, {
-                    redirectError: true
+                    redirectLoading: false,
+                    redirectError: true,
+                    redirectErrorMsg: action.payload
                 });
 
         default:
