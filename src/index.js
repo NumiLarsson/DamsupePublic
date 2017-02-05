@@ -32,6 +32,7 @@ const routes = {
 
         childRoutes: [
             require('./routes/Login'),
+            require('./routes/Register'),
             require('./routes/Main')
         ]
     }]

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
+import { Link } from 'react-router';
 import LoginForm from './LoginForm';
 import RedirectLoader from './RedirectLoader';
 import RedirectError from './RedirectError';
@@ -67,7 +68,7 @@ class LoginScreen extends Component {
         return (
             <div className="login-screen">
                 {this.props.redirectLoading ? <RedirectLoader><HourGlass width="80" height="80" /></RedirectLoader> : null}
-                <a className="register-link" href="/register">Register</a>
+                <Link className="register-link" to="/register">Register</Link>
                 <div className="login-screen__header">
                     <h1 className="login-screen__header__title">Welcome!</h1>
                 </div>

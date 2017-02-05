@@ -1,9 +1,9 @@
 module.exports = {
-    path: 'login',
+    path: 'register',
 
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
-            cb(null, require('./components/Login'));
+            cb(null, require('./components/Register'));
         });
     }
 }
