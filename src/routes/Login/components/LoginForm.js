@@ -9,8 +9,8 @@ class LoginForm extends Component {
         const { handleSubmit, submitFailed, error, pristine, submitting } = this.props;
         return (
             <form onSubmit={handleSubmit} className="login-screen__form">
-                <Field type="email" name="email" component={InputField} label="Email"/>
-                <Field type="password" name="password" component={InputField} label="Password" />
+                <Field fieldId="logName" type="email" name="email" component={InputField} label="Email"/>
+                <Field fieldId="logPwd" type="password" name="password" component={InputField} label="Password" />
                 <button type="submit" 
                     id="loginBtn" 
                     disabled={pristine || submitting}

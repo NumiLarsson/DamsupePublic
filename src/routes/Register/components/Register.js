@@ -9,6 +9,12 @@ import { Link } from 'react-router';
 
 class RegisterScreen extends Component {
 
+
+    createUser(values) {
+        const { email, password, password2 } = values;
+        
+    }
+
     render() {
         return (
              <div className="register-screen">
@@ -17,7 +23,7 @@ class RegisterScreen extends Component {
                     <h1 className="register-screen__header__title">Register!</h1>
                 </div>
                 <div className="register-screen__form__wrapper">
-                    <RegisterForm  />
+                    <RegisterForm onSubmit={this.createUser} />
                 </div> 
             </div>
 

@@ -27,3 +27,7 @@
 .input-field.error {
     border-color: #e74c3c;
 }
+
+.input-field__error {
+    color: #e74c3c;
+}

@@ -19,6 +19,13 @@ const EMAIL_LOGIN_ERRORS = {
     'auth/wrong-password': 'Wrong password'
 }
 
+const ACCOUNT_CREATION_ERRORS = {
+    'auth/email-already-in-use': 'The email address is already in use',
+    'auth/invalid-email': 'Invalid email address',
+    'auth/operation-not-allowed': 'Unknown error',
+    'auth/weak-password': 'The password is not strong enough'
+}
+
 const FACEBOOK_LOGIN_ERRORS = {
     'auth/account-exists-with-different-credential' : 'A regular account with the same email already exists',
     'auth/credential-already-in-use' : 'Account already exist',
@@ -72,6 +79,19 @@ class Api {
             })
         })
     }
+
+    createUser(email, password) {
+        return new Promise((resolve, reject) => {
+            fb.auth().createUserWithEmailAndPassword(email, password)
+            .then(() => {
+                resolve(RESULT.SUCCESS);
+            })
+            .catch(error => {
+                let err = ACCOUNT_CREATION_ERRORS[error.code] || 'Network error';
+                reject(err);
+            })
+        })
+    }    
 
     //Todo: Add error handling
     signInWithFacebook() {
