@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import api from '../../../api/Api';
-import MdAccountCircle from 'react-icons/lib/md/account-circle';
 
 class MainScreen extends Component {
     render() {
         return (
-            <header className="app-header">
-                <MdAccountCircle size="24" />
-                <button onClick={this.props.signOut}>Logout</button>
-            </header>
+            <button onClick={this.props.signOut}>Logout</button>
         )
     }
 }
