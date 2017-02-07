@@ -8,13 +8,12 @@ import store, { history } from './store';
 import { listenForAuthChanges } from './actions/auth';
 
 /*APP SPECIFIC IMPORTS */
-import api from './libs/api';
 import './index.css';
 import App from './components/App';
+import TweenMax from 'gsap';
 //import Splash from './routes/Splash/components/Splash';
 
 /* Initialize api and start listening for auth changes*/
-api.initialize();
 store.dispatch(listenForAuthChanges());
 
 const routes = {
@@ -38,9 +37,13 @@ const routes = {
     }]
 };
 
+let root = document.getElementById("root");
+let preloader = document.getElementById("preloader");
+root.removeChild(preloader);
+
 ReactDOM.render(
  <Provider store={store}>
     <Router history={history} routes={routes} />
   </Provider>,
-  document.getElementById('root')
+  root
 );

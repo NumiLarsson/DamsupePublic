@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import api from '../../../libs/api';
+import api from '../../../api/Api';
 
 class MainScreen extends Component {
     render() {
@@ -14,7 +14,7 @@ class MainScreen extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        signOut: () => api.signOut().then(()=> {
+        signOut: () => api.auth.signOut().then(()=> {
             dispatch({type: 'USER_SIGNED_OUT'});
         })
     }

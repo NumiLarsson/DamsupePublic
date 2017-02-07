@@ -1,12 +1,4 @@
-import fb from 'firebase';
 
-const config = {
-    apiKey: "AIzaSyCn_Liz4rzXjUlxEHwOB5SCZeErJrYjkxM",
-    authDomain: "smalands-events.firebaseapp.com",
-    databaseURL: "https://smalands-events.firebaseio.com",
-    storageBucket: "smalands-events.appspot.com",
-    messagingSenderId: "18567849572"
-  };
 
 const RESULT = {
     SUCCESS: 'success'
@@ -20,10 +12,10 @@ const EMAIL_LOGIN_ERRORS = {
 }
 
 const ACCOUNT_CREATION_ERRORS = {
-    'auth/email-already-in-use': 'The email address is already in use',
+    'auth/email-already-in-use': 'Email already in use',
     'auth/invalid-email': 'Invalid email address',
     'auth/operation-not-allowed': 'Unknown error',
-    'auth/weak-password': 'The password is not strong enough'
+    'auth/weak-password': 'Need a stronger password'
 }
 
 const FACEBOOK_LOGIN_ERRORS = {
@@ -33,32 +25,18 @@ const FACEBOOK_LOGIN_ERRORS = {
     'auth/timeout' : 'Request timed out'
 }
 
+export default class AuthApi {
 
-class Api {
-
-    constructor() {
-
-        if (! Api.instance) {
-            Api.instance = this;
-        }
-
-        return Api.instance;
+    constructor(auth) {
+        this.auth = auth;
     }
-
-    initialize() {
-        fb.initializeApp(config);
-    }
-
-    /** 
-     * AUTHENTICATION
-    */
 
     getCurrentUser() {
-        return fb.auth().currentUser;
+        return this.auth().currentUser;
     }
 
     listenForAuthChanges(signedIn, signedOut) {
-        fb.auth().onAuthStateChanged((user) => {
+        this.auth().onAuthStateChanged((user) => {
             if (user) {
                 signedIn(user);
             } else {
@@ -67,9 +45,10 @@ class Api {
         });
     }
 
-    signInWithEmail(email, password) {
+    signInWithEmail(email="", password="") {
+        let self = this;
         return new Promise((resolve, reject) => {
-            fb.auth().signInWithEmailAndPassword(email, password)
+            self.auth().signInWithEmailAndPassword(email, password)
             .then(() => {
                 resolve(RESULT.SUCCESS);
             })
@@ -80,9 +59,10 @@ class Api {
         })
     }
 
-    createUser(email, password) {
+    createUser(email="", password="") {
+        let self = this;
         return new Promise((resolve, reject) => {
-            fb.auth().createUserWithEmailAndPassword(email, password)
+            self.auth().createUserWithEmailAndPassword(email, password)
             .then(() => {
                 resolve(RESULT.SUCCESS);
             })
@@ -94,14 +74,15 @@ class Api {
     }    
 
     //Todo: Add error handling
-    signInWithFacebook() {
-        const provider = new fb.auth.FacebookAuthProvider();
-        fb.auth().signInWithRedirect(provider)
+    signInWithFacebookRedirect() {
+        const provider = new this.auth.FacebookAuthProvider();
+        this.auth().signInWithRedirect(provider)
     }
 
     getRedirectResult() {
+        let self = this;
         return new Promise((resolve, reject) => {
-            fb.auth().getRedirectResult().then((result) => {
+            self.auth().getRedirectResult().then((result) => {
                 resolve(result);
             })
             .catch((error) => {
@@ -113,8 +94,9 @@ class Api {
     
 
     signOut() {
+        let self = this;
         return new Promise((resolve, reject) => {
-            fb.auth().signOut()
+            self.auth().signOut()
             .then(() => {
                 resolve(RESULT.SUCCESS);
             }).catch((error) => {
@@ -122,10 +104,4 @@ class Api {
             })
         })
     }
-
 }
-
-const api = new Api();
-Object.freeze(api);
-
-export default api;

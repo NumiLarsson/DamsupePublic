@@ -31,7 +31,6 @@ const validate = values => {
     else if (values.password2 !== values.password) {
         errors.password2 = 'The passwords does not match';
     }
-    errors._error = "Form is invalid";
     return errors;
 }
 
@@ -47,7 +46,7 @@ const RegisterForm = (props) => {
                 id="registerBtn" 
                 disabled={pristine || submitting}
                 className="flat-button spaced-item flat-button--primary">
-                {submitting ? 'Loading' : (submitFailed ?  error : 'Register')}
+                {submitting ? 'Loading' : (submitFailed && error ?  error : 'Register')}
             </button>
          </form>
     );

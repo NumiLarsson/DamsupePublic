@@ -5,22 +5,22 @@ import { Link } from 'react-router';
 import LoginForm from './LoginForm';
 import RedirectLoader from './RedirectLoader';
 import RedirectError from './RedirectError';
-import HourGlass from '../../../components/HourGlass';
-import api from '../../../libs/api';
+import api from '../../../api/Api';
 import './styles/Login.css';
 import './styles/FlatButton.css';
-import TweenMax from 'gsap';
+import { animateErrorButton } from '../../../utils/animations';
 
 class LoginScreen extends Component {
 
     constructor() {
         super()
         this.signInEmail = this.signInEmail.bind(this);
+        this.signInFacebook = this.signInFacebook.bind(this);
         this.handleError = this.handleError.bind(this);
     }
 
     componentWillMount() {
-        api.getRedirectResult()
+        api.auth.getRedirectResult()
         .then(res => {
             if (res.user && !this.props.userSignedOut) {
                 this.props.setRedirectLoading();
@@ -34,47 +34,33 @@ class LoginScreen extends Component {
             } 
         }) 
     }
- 
+    
+    signInFacebook() {
+        api.auth.signInWithFacebookRedirect();
+    }
+
     signInEmail (values) {
         const { email, password } = values;
-        return api.signInWithEmail(email, password)
+        return api.auth.signInWithEmail(email, password)
         .catch((e) => { throw new SubmissionError({ _error: e }); });
     }
 
-    handleError(error, dispatch, submitError, props) {
-        
-        TweenMax.to("#loginBtn", 1, {
-            backgroundColor: "#e74c3c"
-        }); 
-        TweenMax.to("#loginBtn", .1, {
-            x: -7,
-            ease: TweenMax.Quad.easeInOut
-        });
-        TweenMax.to("#loginBtn", .1, {
-            repeat: 4,
-            x: 7,
-            yoyo: true,
-            delay: .1,
-            ease: TweenMax.Quad.easeInOut
-        });
-        TweenMax.to("#loginBtn", .1, {
-            x: 0,
-            delay: .1 * 4
-        });
+    handleError() {
+        animateErrorButton("#loginBtn");
     }
     
 
     render() {
         return (
             <div className="login-screen">
-                {this.props.redirectLoading ? <RedirectLoader><HourGlass width="80" height="80" /></RedirectLoader> : null}
+                {this.props.redirectLoading ? <RedirectLoader><div className="loader" /></RedirectLoader> : null}
                 <Link className="register-link" to="/register">Register</Link>
                 <div className="login-screen__header">
                     <h1 className="login-screen__header__title">Welcome!</h1>
                 </div>
                 <div className="login-screen__form__wrapper">
                     <LoginForm onSubmit={this.signInEmail} onSubmitFail={this.handleError} />
-                    <button onClick={api.signInWithFacebook} className="flat-button flat-button--facebook spaced-item">Use Facebook</button>
+                    <button onClick={this.signInFacebook} className="flat-button flat-button--facebook spaced-item">Use Facebook</button>
                     {this.props.redirectError ? <RedirectError error={this.props.redirectErrorMsg}/> : null}
                 </div> 
             </div>

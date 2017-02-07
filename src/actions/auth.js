@@ -1,5 +1,5 @@
 //import { createAction } from 'redux-actions';
-import api from '../libs/api';
+import api from '../api/Api';
 import { push } from 'react-router-redux';
 
 
@@ -11,7 +11,7 @@ import { push } from 'react-router-redux';
 */
 export function listenForAuthChanges() {
     return (dispatch) => {
-        api.listenForAuthChanges(
+        api.auth.listenForAuthChanges(
             (user) => {
                 dispatch({type: 'USER_SIGNED_IN'});
                 dispatch(push('main'));
