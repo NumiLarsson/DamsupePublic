@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import api from '../../../api/Api';
+import MdAccountCircle from 'react-icons/lib/md/account-circle';
 
 class MainScreen extends Component {
     render() {
         return (
-            <button onClick={this.props.signOut}>Logout</button>
+            <header className="app-header">
+                <MdAccountCircle size="24" />
+                <button onClick={this.props.signOut}>Logout</button>
+            </header>
         )
     }
 }
@@ -15,7 +19,7 @@ class MainScreen extends Component {
 const mapDispatchToProps = dispatch => {
     return {
         signOut: () => api.auth.signOut().then(()=> {
-            dispatch({type: 'USER_SIGNED_OUT'});
+            dispatch({type: 'USER_LOGGED_OUT'});
         })
     }
 }
