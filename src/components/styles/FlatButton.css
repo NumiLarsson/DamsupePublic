@@ -20,6 +20,10 @@
     }
 }
 
+.flat-button:focus {
+    opacity: 1;
+}
+
 .flat-button--primary {
     background-color: #1abc9c; 
 }

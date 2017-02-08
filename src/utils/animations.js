@@ -1,5 +1,5 @@
 import TweenMax from 'gsap';
-
+import './animations.css'
 
 export function animateErrorButton(button) {
     TweenMax.to(button, 1, {
@@ -20,4 +20,8 @@ export function animateErrorButton(button) {
          x: 0,
         delay: .1 * 4
     });
+}
+
+export function rippleAnimation(button, event, timing) {
+    
 }
