@@ -1,17 +1,17 @@
 import api from '../../api/Api';
 
 module.exports = {
-    path: 'main',
+    path: 'register',
 
     onEnter: (nextState, replace) => {
-        if (!api.auth.getCurrentUser()) {
-            replace('/login');
+        if (api.auth.getCurrentUser()) {
+            replace('/main');
         }
     },
 
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
-            cb(null, require('./components/Main'));
+            cb(null, require('./components/Register'));
         });
     }
 }

@@ -1,30 +1,24 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import InputField from './InputField';
+import InputField from '../../../components/InputField';
 
-class LoginForm extends Component {
+const LoginForm = (props) => {
+    const { handleSubmit, submitFailed, error, pristine, submitting } = props;
+    return (
 
-    render() {
-
-        const { handleSubmit, submitFailed, error, pristine, submitting } = this.props;
-        return (
-            <form onSubmit={handleSubmit} className="login-screen__form">
-                <Field type="email" name="email" component={InputField} label="Email"/>
-                <Field type="password" name="password" component={InputField} label="Password" />
-                <button type="submit" 
-                    id="loginBtn" 
-                    disabled={pristine || submitting}
-                    className="flat-button spaced-item flat-button--primary">
-                    {submitting ? 'Loading' : (submitFailed ?  error : 'Sign In')}
-                </button>
-            </form>
-        )
-    }
+        <form onSubmit={handleSubmit} className="login-screen__form">
+            <Field fieldId="logName" required type="email" name="email" component={InputField} label="Email"/>
+            <Field fieldId="logPwd" required type="password" name="password" component={InputField} label="Password" />
+            <button type="submit" 
+                id="loginBtn" 
+                disabled={pristine || submitting}
+                className="flat-button spaced-item flat-button--primary">
+                {submitting ? 'Loading' : (submitFailed && error ?  error : 'Sign In')}
+            </button>
+        </form>
+    )
 }
 
-LoginForm = reduxForm({
+export default reduxForm({
   form: 'login'
 })(LoginForm);
-
-
-export default LoginForm;

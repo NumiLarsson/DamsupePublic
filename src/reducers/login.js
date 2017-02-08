@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
                 redirectLoading: false
             });
 
-        case 'USER_SIGNED_OUT':
+        case 'USER_LOGGED_OUT':
             return Object.assign({}, state, {
                 userSignedOut: true,
                 redirectError: false,
