@@ -14,9 +14,9 @@ class App extends Component {
             <ReactCSSTransitionGroup
               component="div"
               className="RouteContainer"
-              transitionName="route-transition"
-              transitionEnterTimeout={200}
-              transitionLeaveTimeout={200}
+              transitionName="route-transition" 
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={500}
             >
               {React.cloneElement(this.props.children, {
                 key: this.props.location.pathname

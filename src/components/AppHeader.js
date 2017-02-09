@@ -18,6 +18,7 @@ class AppHeader extends Component {
 
     goBack() {
         this.props.goBack();
+        this.props.dispatch({type: 'NavAnimation'});
     }
 
     render() {
