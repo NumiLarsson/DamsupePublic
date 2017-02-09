@@ -6,7 +6,6 @@ import RedirectLoader from './RedirectLoader';
 import RedirectError from './RedirectError';
 import api from '../../../api/Api';
 import './styles/Login.css';
-import './styles/FlatButton.css';
 import { animateErrorButton } from '../../../utils/animations';
 
 class LoginScreen extends Component {
@@ -34,8 +33,10 @@ class LoginScreen extends Component {
         }) 
     }
     
-    signInFacebook() {
+    signInFacebook(event) {
         api.auth.signInWithFacebookRedirect();
+        //let btn = document.getElementById('facebookBtn');
+        //rippleAnimation(btn, event, 0.75);
     }
 
     signInEmail (values) {
@@ -52,13 +53,20 @@ class LoginScreen extends Component {
     render() {
         return (
             <div className="login-screen">
-                {this.props.redirectLoading ? <RedirectLoader><div className="loader" /></RedirectLoader> : null}
+                {this.props.redirectLoading && 
+                    <RedirectLoader>
+                        <div className="spinner">
+                                <div className="dot1"></div>
+                                <div className="dot2"></div>
+                        </div>
+                    </RedirectLoader>
+                }
                 <div className="login-screen__header">
                     <h1 className="login-screen__header__title">Welcome!</h1>
                 </div>
                 <div className="login-screen__form__wrapper">
                     <LoginForm onSubmit={this.signInEmail} onSubmitFail={this.handleError} />
-                    <button onClick={this.signInFacebook} className="flat-button flat-button--facebook spaced-item">Use Facebook</button>
+                    <button id="facebookBtn" onClick={this.signInFacebook} className="flat-button flat-button--facebook spaced-item">Use Facebook</button>
                     {this.props.redirectError ? <RedirectError error={this.props.redirectErrorMsg}/> : null}
                 </div> 
             </div>

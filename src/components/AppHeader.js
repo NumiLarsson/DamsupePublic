@@ -18,6 +18,7 @@ class AppHeader extends Component {
 
     goBack() {
         this.props.goBack();
+        this.props.dispatch({type: 'NavAnimation'});
     }
 
     render() {
@@ -25,7 +26,7 @@ class AppHeader extends Component {
             
             <header className="app-header">
                 {backEnabled[this.props.location.pathname] && 
-                    <Back color="#1abc9c" size="32" onClick={this.goBack} />}
+                    <span className="backButton" role="button"><Back color="#1abc9c" size="32" onClick={this.goBack} /></span>}
                 <div className="app-header__divider">
                 </div>
                 {!this.props.signedIn && this.props.location.pathname === '/login' &&

@@ -10,7 +10,7 @@ class RegisterScreen extends Component {
 
 
     createUser(values) {
-        const { email, password, password2 } = values;
+        const { email, password } = values;
         //throw new SubmissionError({ _error: 'This is error' });
         return api.auth.createUser(email, password)
         .catch((e) => { throw new SubmissionError({ _error: e }); });
