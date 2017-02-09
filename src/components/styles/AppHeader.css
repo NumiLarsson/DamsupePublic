@@ -1,4 +1,5 @@
 .app-header {
+    position: relative;
     box-sizing: border-box;
     height: 54px;
     width: 100%;

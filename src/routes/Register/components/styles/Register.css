@@ -2,8 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center; 
-    flex: 1;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .register-screen__header {
