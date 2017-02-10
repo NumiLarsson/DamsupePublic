@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import api from '../../../api/Api';
+import './styles/Main.css';
 
 class MainScreen extends Component {
     render() {
         return (
-            <button onClick={this.props.signOut}>Logout</button>
+            <div className="main-screen">
+                <button onClick={this.props.signOut}>Logout</button>
+                <div style={{height: "500px", background: "#333"}}>
+                </div>
+            </div>
         )
     }
 }

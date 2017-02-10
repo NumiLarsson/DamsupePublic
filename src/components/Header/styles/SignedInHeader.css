@@ -1,0 +1,11 @@
+.signed-in-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0px 10px 0px 10px;
+    height: 100%;
+}
+
+.signed-in-header__divider {
+    flex:1;
+}

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import './styles/AppHeader.css';
-import Back from 'react-icons/lib/md/arrow-back';
 import { goBack } from 'react-router-redux';
+import NotSignedInHeader from './Header/NotSignedInHeader';
+import SignedInHeader from './Header/SignedInHeader';
 
-const backEnabled = {
-    "/register": true
-}
 
 class AppHeader extends Component {
     
@@ -18,20 +16,26 @@ class AppHeader extends Component {
 
     goBack() {
         this.props.goBack();
-        this.props.dispatch({type: 'NavAnimation'});
+    }
+
+    getHeader(signedIn) {
+        return (
+            !signedIn ? <NotSignedInHeader key={0} location={this.props.location} goBack={this.props.goBack} />
+            : <SignedInHeader key={1} location={this.props.location} goBack={this.props.goBack} />
+        )
     }
 
     render() {
-        return (
-            
-            <header className="app-header">
-                {backEnabled[this.props.location.pathname] && 
-                    <span className="backButton" role="button"><Back color="#1abc9c" size="32" onClick={this.goBack} /></span>}
-                <div className="app-header__divider">
-                </div>
-                {!this.props.signedIn && this.props.location.pathname === '/login' &&
-                    <Link className="emphesized-link" to="/register">Sign up</Link> }
-            </header>
+        return (       
+                <ReactCSSTransitionGroup
+                    component="header"
+                    className="app-header"
+                    transitionName="header-swap"
+                    transitionEnterTimeout={300}
+                    transitionLeaveTimeout={300}
+                >
+                    {this.getHeader(this.props.signedIn)}
+                </ReactCSSTransitionGroup>
         )
     }
 

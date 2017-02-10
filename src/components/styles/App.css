@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow-x: hidden;
 }
 
 /* Background COLORS */
@@ -134,24 +135,67 @@
   }
 }
 
+/*ROUTING*/
 .RouteContainer {
   position: relative;
+
 }
 
-.route-transition-enter {
-  opacity: 0.01;
-  transition: opacity .5s ease-in;
+/*ENTER LOGIN*/
+.route-transition-login-enter {
+  transform: translate3d(-100%, 0, 0); 
+  transition: transform .3s ease-in-out;
 }
 
-.route-transition-enter.route-transition-enter-active {
-  opacity: 1;
+.route-transition-login-enter.route-transition-login-enter-active {
+  transform: translate3d(0, 0, 0); 
 }
 
-.route-transition-leave {
-  opacity: 1;
-  transition: opacity .5s ease-in;
+.route-transition-login-leave {
+  transition: transform .3s ease-in-out;
 }
 
-.route-transition-leave.route-transition-leave-active {
-  opacity: 0;
+.route-transition-login-leave.route-transition-login-leave-active {
+  
+  transform: translate3d(100%, 0, 0);
+}
+
+/*ENTER REGISTER*/
+
+.route-transition-register-enter {
+  transform: translate3d(100%, 0, 0); 
+  transition: transform .3s ease-in-out;
+}
+
+.route-transition-register-enter.route-transition-register-enter-active {
+  transform: translate3d(0, 0, 0); 
+}
+
+.route-transition-register-leave {
+  transition: transform .3s ease-in-out;
+}
+
+.route-transition-register-leave.route-transition-register-leave-active {
+  
+  transform: translate3d(-100%, 0, 0);
+}
+
+/*ENTER MAIN*/
+
+.route-transition-main-enter {
+  transform: translate3d(100%, 0, 0); 
+  transition: transform .3s ease-in-out;
+}
+
+.route-transition-main-enter.route-transition-main-enter-active {
+  transform: translate3d(0, 0, 0); 
+}
+
+.route-transition-main-leave {
+  transition: transform .3s ease-in-out;
+}
+
+.route-transition-main-leave.route-transition-main-leave-active {
+  
+  transform: translate3d(-100%, 0, 0);
 }

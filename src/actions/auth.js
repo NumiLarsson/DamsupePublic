@@ -14,7 +14,7 @@ export function listenForAuthChanges() {
         api.auth.listenForAuthChanges(
             (user) => {
                 dispatch(signedIn(user.uid));
-                dispatch(push('main'));
+                dispatch(push('/main'));
             }, //Success
             () => {
                 dispatch(signedOut());

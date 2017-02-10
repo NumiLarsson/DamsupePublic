@@ -1,19 +1,11 @@
 .app-header {
-    position: relative;
     box-sizing: border-box;
     height: 54px;
     width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0px 10px 0px 10px;
     background: #34495e;
     border-width: 2px;
     box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
-}
-
-.app-header__divider {
-    flex:1;
+    overflow: hidden;
 }
 
 .emphesized-link {
@@ -24,4 +16,24 @@
 
 .backButton {
     cursor: pointer;
+}
+
+/*ENTER REGISTER*/
+
+.header-swap-enter {
+    opacity: 0.05;
+    transition: opacity 0.3s ease;
+}
+
+.header-swap-enter.header-swap-enter-active {
+    opacity: 1;
+}
+
+.header-swap-leave {
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+.header-swap-leave.header-swap-leave-active {
+    opacity: 0;
 }
