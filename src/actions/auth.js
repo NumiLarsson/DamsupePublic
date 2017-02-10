@@ -1,19 +1,25 @@
-//import { createAction } from 'redux-actions';
-import api from '../libs/api';
+import { createAction } from 'redux-actions';
+import api from '../api/Api';
 import { push } from 'react-router-redux';
 
 
-//const signedIn = createAction('USER_SIGNED_IN');
-//const signedOut = createAction('USER_SIGNED_OUT');
+const signedIn = createAction('USER_SIGNED_IN');
+const signedOut = createAction('USER_SIGNED_OUT');
 
 /*
  * Async Thunk functions
 */
 export function listenForAuthChanges() {
     return (dispatch) => {
-        api.listenForAuthChanges(
-            (user) => dispatch(push('main')), //Success
-            () => dispatch(push('login'))//Failure
+        api.auth.listenForAuthChanges(
+            (user) => {
+                dispatch(signedIn(user.uid));
+                dispatch(push('/main'));
+            }, //Success
+            () => {
+                dispatch(signedOut());
+                dispatch(push('/login'));
+            }
         );
     };
 }

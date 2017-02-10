@@ -1,28 +1,44 @@
-import { LOGIN_ACTIONS } from '../actions/login';
-const { SIGN_IN_EMAIL, RESET_ERROR } = LOGIN_ACTIONS;
 
 export const initialState = {
-    error: false,
-    errorMessage: ''
+    redirectError : false,
+    redirectErrorMsg: '',
+    redirectLoading: true,
+    userSignedOut: false
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
 
-        case SIGN_IN_EMAIL:
-            if (action.error) {
-                return Object.assign({}, state, {
-                    error: true,
-                    errorMessage: action.payload.message
-                });
-            }
-            return state;
-            
-        case RESET_ERROR:
+        case "NO_REDIRECT": 
             return Object.assign({}, state, {
-                error: initialState.error,
-                errorMessage: initialState.errorMessage
+                redirectError: false,
+                redirectLoading: false
             });
+
+        case 'USER_LOGGED_OUT':
+            return Object.assign({}, state, {
+                userSignedOut: true,
+                redirectError: false,
+                redirectLoading: false
+            })
+        
+        case 'USER_SIGNED_IN':
+            return Object.assign({}, state, {
+                userSignedOut: false
+            })
+
+        case 'REDIRECT_LOADING':
+            return Object.assign({}, state, {
+                    redirectLoading: true
+                });
+
+        case 'REDIRECT_ERROR':
+            return Object.assign({}, state, {
+                    redirectLoading: false,
+                    redirectError: true,
+                    redirectErrorMsg: action.payload
+                });
+
         default:
             return state;
     }  

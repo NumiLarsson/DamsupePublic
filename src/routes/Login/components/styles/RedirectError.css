@@ -1,0 +1,14 @@
+.redirect-error {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 48px;
+    width: 100%;
+    white-space: normal;
+    padding: 10px 19px;
+    font-size: 11px;
+    line-height: 1.471;
+    border: none;
+    font-weight: normal;
+    color: #fff;
+    background: #e74c3c;
+}
