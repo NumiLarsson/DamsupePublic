@@ -3,7 +3,8 @@ export const initialState = {
     redirectError : false,
     redirectErrorMsg: '',
     redirectLoading: true,
-    userSignedOut: false
+    userSignedOut: false,
+    loading: false
 }
 
 export default (state = initialState, action) => {
@@ -38,6 +39,16 @@ export default (state = initialState, action) => {
                     redirectError: true,
                     redirectErrorMsg: action.payload
                 });
+        
+        case 'LOGIN_LOADING':
+            return Object.assign({}, state, {
+                loading: true
+            });
+        
+        case 'LOGIN_DONE_LOADING':
+            return Object.assign({}, state, {
+                loading: false
+            });
 
         default:
             return state;

@@ -9,6 +9,14 @@ module.exports = {
         }
     },
 
+    getChildRoutes(partialNextState, cb) {
+        require.ensure([], (require) => {
+        cb(null, [
+            require('./routes/EventList')
+        ])
+        })
+    },
+
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
             cb(null, require('./components/Main'));

@@ -8,8 +8,18 @@ import { animateErrorButton } from '../../../utils/animations';
 
 class RegisterScreen extends Component {
 
+    constructor() {
+        super();
+        this.handleError = this.handleError.bind(this);
+        this.createUser = this.createUser.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.setDoneLoading();
+    }
 
     createUser(values) {
+        this.props.setLoading();
         const { email, password } = values;
         //throw new SubmissionError({ _error: 'This is error' });
         return api.auth.createUser(email, password)
@@ -17,6 +27,7 @@ class RegisterScreen extends Component {
     }
 
     handleError() {
+        this.props.setDoneLoading();
         animateErrorButton("#registerBtn");
     }
 
@@ -27,7 +38,7 @@ class RegisterScreen extends Component {
                     <h1 className="register-screen__header__title">Register!</h1>
                 </div>
                 <div className="register-screen__form__wrapper">
-                    <RegisterForm onSubmit={this.createUser} onSubmitFail={this.handleError} />
+                    <RegisterForm onSubmit={this.createUser} onSubmitFail={this.handleError} loading={this.props.loading} />
                 </div> 
             </div>
 
@@ -36,5 +47,19 @@ class RegisterScreen extends Component {
 
 }
 
+const mapStateToProps = state => {
+    return {
+        loading: state.register.loading
+    }
+}
 
-module.exports = connect(null, null)(RegisterScreen);
+const mapDispatchToProps = dispatch => {
+    return {
+        setLoading: () => dispatch({type: 'REGISTER_LOADING'}),
+        setDoneLoading: () => dispatch({type: 'REGISTER_DONE_LOADING'})
+    }
+}
+
+
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);

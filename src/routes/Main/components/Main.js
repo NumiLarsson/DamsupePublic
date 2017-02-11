@@ -1,28 +1,32 @@
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import api from '../../../api/Api';
+import React, { Component } from 'react';
+import Loader from './Loader';
 import './styles/Main.css';
 
 class MainScreen extends Component {
+
     render() {
-        return (
-            <div className="main-screen">
-                <button onClick={this.props.signOut}>Logout</button>
-                <div style={{height: "500px", background: "#333"}}>
+        let content;
+        let { children } = this.props;
+
+        if (children) {
+            content = children;
+        } else {
+            content = (
+                <div className="main-screen">
+                   
                 </div>
-            </div>
-        )
+            )
+        }
+        return content;
     }
 }
 
-//TODO: Fix this hack
+module.exports = MainScreen;
 
-const mapDispatchToProps = dispatch => {
-    return {
-        signOut: () => api.auth.signOut().then(()=> {
-            dispatch({type: 'USER_LOGGED_OUT'});
-        })
-    }
-}
-
-module.exports = connect(null, mapDispatchToProps)(MainScreen);
+/*
+ <Loader> 
+                        <div className="spinner">
+                            <div className="dot1"></div>
+                            <div className="dot2"></div>
+                        </div>
+                    </Loader> */

@@ -18,6 +18,7 @@ class LoginScreen extends Component {
     }
 
     componentWillMount() {
+        this.props.setDoneLoading();
         api.auth.getRedirectResult()
         .then(res => {
             if (res.user && !this.props.userSignedOut) {
@@ -35,17 +36,19 @@ class LoginScreen extends Component {
     
     signInFacebook(event) {
         api.auth.signInWithFacebookRedirect();
-        //let btn = document.getElementById('facebookBtn');
-        //rippleAnimation(btn, event, 0.75);
     }
 
     signInEmail (values) {
+        this.props.setLoading();
         const { email, password } = values;
         return api.auth.signInWithEmail(email, password)
-        .catch((e) => { throw new SubmissionError({ _error: e }); });
+        .catch((e) => { 
+            throw new SubmissionError({ _error: e }); 
+        });
     }
 
     handleError() {
+        this.props.setDoneLoading();
         animateErrorButton("#loginBtn");
     }
     
@@ -65,7 +68,7 @@ class LoginScreen extends Component {
                     <h1 className="login-screen__header__title">Welcome!</h1>
                 </div>
                 <div className="login-screen__form__wrapper">
-                    <LoginForm onSubmit={this.signInEmail} onSubmitFail={this.handleError} />
+                    <LoginForm onSubmit={this.signInEmail} onSubmitFail={this.handleError} loading={this.props.loading} />
                     <button id="facebookBtn" onClick={this.signInFacebook} className="flat-button flat-button--facebook spaced-item">Use Facebook</button>
                     {this.props.redirectError ? <RedirectError error={this.props.redirectErrorMsg}/> : null}
                 </div> 
@@ -80,7 +83,8 @@ const mapStateToProps = state => {
         redirectError: state.login.redirectError,
         redirectErrorMsg: state.login.redirectErrorMsg,
         redirectLoading: state.login.redirectLoading,
-        userSignedOut: state.login.userSignedOut
+        userSignedOut: state.login.userSignedOut,
+        loading: state.login.loading
     }
 }
 
@@ -88,7 +92,9 @@ const mapDispatchToProps = dispatch => {
     return {
         setRedirectError: (msg) => dispatch({type: 'REDIRECT_ERROR', payload: msg}),
         setRedirectLoading: () => dispatch({type: 'REDIRECT_LOADING'}),
-        setNoRedirect: () => dispatch({type: 'NO_REDIRECT'})
+        setNoRedirect: () => dispatch({type: 'NO_REDIRECT'}),
+        setLoading: () => dispatch({type: 'LOGIN_LOADING'}),
+        setDoneLoading: () => dispatch({type: 'LOGIN_DONE_LOADING'})
     }
 }
 

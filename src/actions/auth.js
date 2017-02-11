@@ -13,8 +13,7 @@ export function listenForAuthChanges() {
     return (dispatch) => {
         api.auth.listenForAuthChanges(
             (user) => {
-                dispatch(signedIn(user.uid));
-                dispatch(push('/main'));
+                handleUserSignIn(dispatch, user);
             }, //Success
             () => {
                 dispatch(signedOut());
@@ -22,4 +21,18 @@ export function listenForAuthChanges() {
             }
         );
     };
+}
+
+function handleUserSignIn(dispatch, user) {
+
+    api.user.createUserIfNotExists(user)
+    .then(() => {
+        dispatch(signedIn(user.uid));
+        dispatch(push('/main'));
+    }).catch(err => {
+        //TODO: Handle error gracefully
+        console.log(err);
+    })
+
+
 }
