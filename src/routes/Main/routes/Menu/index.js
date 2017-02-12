@@ -1,12 +1,9 @@
-
-import Splash from './components/Splash';
-
 module.exports = {
-    path: '/home',
+    path: '/menu',
 
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
-            cb(null, Splash);
+            cb(null, require('./components/MainMenu'));
         });
     }
 }

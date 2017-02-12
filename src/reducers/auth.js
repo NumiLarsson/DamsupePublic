@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
         case 'UPDATE_USER_INFO':
             return Object.assign({}, state, {
                 email: action.payload.email || "",
-                name: action.payload.displayName || "",
+                name: action.payload.name || "",
                 lastVisitedEvent: action.payload.lastVisitedEvent || ""
             });
 

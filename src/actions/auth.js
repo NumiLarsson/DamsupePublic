@@ -17,7 +17,7 @@ export function listenForAuthChanges() {
             }, //Success
             () => {
                 dispatch(signedOut());
-                dispatch(push('/login'));
+                dispatch(push('/'));
             }
         );
     };

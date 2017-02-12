@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
+import { goBack } from 'react-router-redux';
+import Back from 'react-icons/lib/md/arrow-back';
 import LoginForm from './LoginForm';
 import RedirectLoader from './RedirectLoader';
 import RedirectError from './RedirectError';
@@ -64,6 +66,7 @@ class LoginScreen extends Component {
                         </div>
                     </RedirectLoader>
                 }
+                <span className="backButton" role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
                 <div className="login-screen__header">
                     <h1 className="login-screen__header__title">Welcome!</h1>
                 </div>
@@ -94,7 +97,8 @@ const mapDispatchToProps = dispatch => {
         setRedirectLoading: () => dispatch({type: 'REDIRECT_LOADING'}),
         setNoRedirect: () => dispatch({type: 'NO_REDIRECT'}),
         setLoading: () => dispatch({type: 'LOGIN_LOADING'}),
-        setDoneLoading: () => dispatch({type: 'LOGIN_DONE_LOADING'})
+        setDoneLoading: () => dispatch({type: 'LOGIN_DONE_LOADING'}),
+        goBack: () => dispatch(goBack())
     }
 }
 

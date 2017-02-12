@@ -6,6 +6,9 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
 function getRouteTransition(path) {
+  if (path === '/') {
+    return 'route-transition-home';
+  }
   let currPath = path.split('/')[1];
   return `route-transition-${currPath}`;
 }
@@ -14,8 +17,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <AppHeader location={this.props.location} />
-            <ReactCSSTransitionGroup
+        <ReactCSSTransitionGroup
               component="div"
               className="RouteContainer"
               transitionName={getRouteTransition(this.props.location.pathname)}

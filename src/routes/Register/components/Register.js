@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
+import { goBack } from 'react-router-redux';
+import Back from 'react-icons/lib/md/arrow-back';
 import RegisterForm from './RegisterForm';
 import api from '../../../api/Api';
 import './styles/Register.css';
@@ -34,6 +36,7 @@ class RegisterScreen extends Component {
     render() {
         return (
              <div className="register-screen">
+                <span className="backButton" role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
                 <div className="register-screen__header">
                     <h1 className="register-screen__header__title">Register!</h1>
                 </div>
@@ -56,7 +59,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         setLoading: () => dispatch({type: 'REGISTER_LOADING'}),
-        setDoneLoading: () => dispatch({type: 'REGISTER_DONE_LOADING'})
+        setDoneLoading: () => dispatch({type: 'REGISTER_DONE_LOADING'}),
+        goBack: () => dispatch(goBack())
     }
 }
 

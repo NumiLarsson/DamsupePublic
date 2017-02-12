@@ -1,0 +1,46 @@
+
+.main-menu {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+}
+
+.main-menu__card {
+    box-sizing: border-box;
+    max-width: 960px;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px 0px 20px;
+}
+
+.main-menu__card.first {
+    background: #f3bb72
+}
+
+.main-menu__card.second {
+    background: #ff85a7
+}
+
+.main-menu__card.third {
+    background: #7beced
+}
+
+.main-menu__card.fourth {
+    background: #b1db73
+}
+
+.user-info {
+    flex:1;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+}
+
+.user-info__name {
+    
+}
