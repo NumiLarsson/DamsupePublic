@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Loader from './Loader';
 import { subscribeToUserData,  unsubscribeToUserData, checkIfUserHasPreviousEvent } from '../actions/user';
 import './styles/Main.css';
+import Announcement from 'react-icons/lib/md/announcement';
 
 class MainScreen extends Component {
 
@@ -34,7 +35,18 @@ class MainScreen extends Component {
         }
         return (
             <div className="main-screen">
-                {content}
+                <div className="main-nav__card first">
+                    <Announcement color="#fff" size="48" />
+                </div>
+                <div className="main-nav__card second">
+                    <Announcement color="#fff" size="48" />
+                </div>
+                <div className="main-nav__card third">
+                    <Announcement color="#fff" size="48" />
+                </div>
+                <div className="main-nav__card fourth">
+                    <Announcement color="#fff" size="48" />
+                </div>
             </div>
         );
     }
