@@ -50,7 +50,7 @@ export function expandCard(card, expandedClass, callback) {
         y: 0,
         scaleX: 1,
         scaleY: 1,
-        ease: TweenMax.Back.easeInOut,
+        ease: TweenMax.Bounce.easeOut,
         onComplete: callback
     });
     

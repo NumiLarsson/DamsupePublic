@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import api from '../../../api/Api';
-import Loader from './Loader';
-import { subscribeToUserData,  unsubscribeToUserData, checkIfUserHasPreviousEvent } from '../actions/user';
+import { subscribeToUserData,  unsubscribeToUserData } from '../actions/user';
 import './styles/Main.css';
 
 
@@ -10,24 +8,15 @@ class MainScreen extends Component {
 
     constructor() {
         super();
-        this.signOut = this.signOut.bind(this);
     }
 
     componentWillMount() {
         this.props.subscribeToUserData(this.props.userId);
-        console.log(this.props);
-        //this.props.checkIfUserHasPreviousEvent(this.props.userId);
+        this.props.resetMenu();
     }
 
     componentWillUnmount() {
         this.props.unsubscribeToUserData(this.props.userId);
-    }
-
-    signOut() {
-        let self = this;
-        api.auth.signOut().then(()=> {
-            self.props. dispatch({type: 'USER_LOGGED_OUT'});
-        });
     }
 
     render() {
@@ -42,14 +31,17 @@ class MainScreen extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        userId: state.auth.uid
+        userId: state.auth.uid,
+        currentEvent: state.auth.lastVisitedEvent
     }
 }
 
-const mapDispatchToProps = {
-    subscribeToUserData,
-    unsubscribeToUserData,
-    checkIfUserHasPreviousEvent
+const mapDispatchToProps = (dispatch) => {
+    return {
+        subscribeToUserData : (uid) => dispatch(subscribeToUserData(uid)),
+        unsubscribeToUserData : (uid) => dispatch(unsubscribeToUserData(uid)),
+        resetMenu: () => dispatch({type: 'RESET_MENU'})
+    }
 }
 
 

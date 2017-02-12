@@ -8,7 +8,10 @@ export const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-    
+        
+        case 'RESET_MENU':
+            return initialState;
+
         case 'INFO_SCREEN_OPEN':
             return Object.assign({}, state, {
                 infoScreenOpen: true
