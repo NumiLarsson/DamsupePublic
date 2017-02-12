@@ -138,6 +138,7 @@
 /*ROUTING*/
 .RouteContainer {
   position: relative;
+  flex: 1;
 }
 
 /*ENTER LOGIN*/
