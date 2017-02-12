@@ -4,16 +4,17 @@
     flex-direction: column;
     height: 100%;
     align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .main-menu__card {
     box-sizing: border-box;
-    max-width: 960px;
     width: 100%;
     flex: 1;
     display: flex;
     align-items: center;
-    padding: 0px 10px 0px 20px;
+    padding: 10px 10px 0px 10px;
 }
 
 .main-menu__card.first {
@@ -32,7 +33,18 @@
     background: #b1db73
 }
 
-.user-info {
+.card--expanded {
+    position: absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    pointer-events: none;
+}
+
+.card-info {
     flex:1;
     flex-direction: column;
     display: flex;
@@ -41,6 +53,13 @@
     font-size: 1.3em;
 }
 
-.user-info__name {
-    
+.card-info__header {
+    font-size: 1.3em;
+}
+
+.card__icon-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    pointer-events:all;
 }

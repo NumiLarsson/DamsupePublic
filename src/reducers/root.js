@@ -4,7 +4,8 @@ import { routerReducer } from 'react-router-redux';
 import auth from './auth';
 import login from './login';
 import register from './register';
+import main from './main';
 
-const root = combineReducers({auth, login, register, routing: routerReducer, form: formReducer});
+const root = combineReducers({auth, login, register, main, routing: routerReducer, form: formReducer});
 
 export default root;
