@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100%;
   overflow-x: hidden;
+  color: #fff;
 }
 
 /* Background COLORS */
@@ -138,12 +139,31 @@
 /*ROUTING*/
 .RouteContainer {
   position: relative;
+  flex: 1;
+}
 
+/*ENTER HOME*/
+.route-transition-home-enter {
+  transform: translate3d(-100%, 0, 0); 
+  transition: transform .3s ease-in-out;
+}
+
+.route-transition-home-enter.route-transition-home-enter-active {
+  transform: translate3d(0, 0, 0); 
+}
+
+.route-transition-home-leave {
+  transition: transform .3s ease-in-out;
+}
+
+.route-transition-home-leave.route-transition-home-leave-active {
+  
+  transform: translate3d(100%, 0, 0);
 }
 
 /*ENTER LOGIN*/
 .route-transition-login-enter {
-  transform: translate3d(-100%, 0, 0); 
+  transform: translate3d(100%, 0, 0); 
   transition: transform .3s ease-in-out;
 }
 
@@ -157,7 +177,7 @@
 
 .route-transition-login-leave.route-transition-login-leave-active {
   
-  transform: translate3d(100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
 }
 
 /*ENTER REGISTER*/

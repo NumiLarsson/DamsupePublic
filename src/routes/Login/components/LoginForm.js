@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import InputField from '../../../components/InputField';
 
 const LoginForm = (props) => {
-    const { handleSubmit, submitFailed, error, pristine, submitting } = props;
+    const { handleSubmit, submitFailed, error, pristine, submitting, loading } = props;
     return (
 
         <form onSubmit={handleSubmit} className="login-screen__form">
@@ -11,9 +11,9 @@ const LoginForm = (props) => {
             <Field fieldId="logPwd" required type="password" name="password" component={InputField} label="Password" />
             <button type="submit" 
                 id="loginBtn" 
-                disabled={pristine || submitting}
+                disabled={pristine || submitting || loading}
                 className="flat-button spaced-item flat-button--primary">
-                {submitting ? 'Loading' : (submitFailed && error ?  error : 'Sign In')}
+                {submitting || loading ? 'Loading' : (submitFailed && error ?  error : 'Sign In')}
             </button>
         </form>
     )

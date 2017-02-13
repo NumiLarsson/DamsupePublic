@@ -21,6 +21,13 @@ export default (state = initialState, action) => {
                 authenticated: true,
                 uid: action.payload
             });
+        
+        case 'UPDATE_USER_INFO':
+            return Object.assign({}, state, {
+                email: action.payload.email || "",
+                name: action.payload.name || "",
+                lastVisitedEvent: action.payload.lastVisitedEvent || ""
+            });
 
         default:
             return state;

@@ -1,0 +1,69 @@
+
+.main-menu {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-menu__card {
+    box-sizing: border-box;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 10px 10px 0px 10px;
+}
+
+.main-menu__card.first {
+    background: #f3bb72
+}
+
+.main-menu__card.second {
+    background: #ff85a7
+}
+
+.main-menu__card.third {
+    background: #7beced
+}
+
+.main-menu__card.fourth {
+    background: #b1db73
+}
+
+.card--expanded {
+    position: absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card-info {
+    flex:1;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+}
+
+.card-info__header {
+    font-size: 1.3em;
+}
+
+.card__icon-wrapper {
+    display: flex;
+    justify-content: space-between;
+    pointer-events:all;
+}
+
+.back-button {
+    position: absolute;
+    top:10px;
+    right: 10px;
+}

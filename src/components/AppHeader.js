@@ -20,7 +20,8 @@ class AppHeader extends Component {
 
     getHeader(signedIn) {
         return (
-            !signedIn ? <NotSignedInHeader key={0} location={this.props.location} goBack={this.props.goBack} />
+            !signedIn ? <NotSignedInHeader key={0} location={this.props.location} goBack={this.props.goBack} 
+                            loginLoading={this.props.loginLoading} redirectLoading={this.props.redirectLoading}/>
             : <SignedInHeader key={1} location={this.props.location} goBack={this.props.goBack} />
         )
     }
@@ -43,7 +44,9 @@ class AppHeader extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        signedIn: state.auth.authenticated
+        signedIn: state.auth.authenticated,
+        loginLoading: state.login.loading,
+        redirectLoading: state.login.redirectLoading
     }
 }
 

@@ -36,7 +36,7 @@ const validate = values => {
 
 const RegisterForm = (props) => {
 
-    const { handleSubmit, submitFailed, error, pristine, submitting } = props;
+    const { handleSubmit, submitFailed, error, pristine, submitting, loading } = props;
     return (
         <form onSubmit={handleSubmit} className="register-screen__form">
             <Field type="email" name="email" fieldId="regEmail" component={InputField} label="Email"/>
@@ -44,9 +44,9 @@ const RegisterForm = (props) => {
             <Field type="password" name="password2" fieldId="regPwd2" component={InputField} label="Type password again" />
             <button type="submit" 
                 id="registerBtn" 
-                disabled={pristine || submitting}
+                disabled={pristine || submitting || loading}
                 className="flat-button spaced-item flat-button--primary">
-                {submitting ? 'Loading' : (submitFailed && error ?  error : 'Register')}
+                {submitting || loading ? 'Loading' : (submitFailed && error ?  error : 'Register')}
             </button>
          </form>
     );

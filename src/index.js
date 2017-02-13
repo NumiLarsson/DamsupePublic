@@ -11,7 +11,6 @@ import { listenForAuthChanges } from './actions/auth';
 import './index.css';
 import App from './components/App';
 import TweenMax from 'gsap';
-//import Splash from './routes/Splash/components/Splash';
 
 /* Initialize api and start listening for auth changes*/
 store.dispatch(listenForAuthChanges());
@@ -24,7 +23,7 @@ const routes = {
         getIndexRoute(partialNextState, callback) {
             require.ensure([], function (require) {
             callback(null, {
-                component: require('./routes/Splash/components/Splash'),
+                component: require('./routes/Home/components/Home'),
             })
             })
         },
