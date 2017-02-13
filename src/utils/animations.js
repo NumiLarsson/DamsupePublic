@@ -52,6 +52,9 @@ export function expandCard(card, expandedClass, callback) {
         scaleY: 1,
         ease: TweenMax.Bounce.easeOut,
         onComplete: callback
-    });
-    
+    });   
+}
+
+export function fadeIn(target, fromOpacity, toOpacity) {
+    TweenMax.fromTo(target, 1, {opacity: fromOpacity}, {opacity: toOpacity});
 }

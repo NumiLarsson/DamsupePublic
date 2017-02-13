@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './styles/App.css';
-import './styles/FlatButton.css';
+import './styles/Buttons.css';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
@@ -21,7 +21,7 @@ class App extends Component {
               className="RouteContainer"
               transitionName={getRouteTransition(this.props.location.pathname)}
               transitionEnterTimeout={300}
-              transitionLeaveTimeout={300}
+              transitionLeaveTimeout={0}
             >
               
               {React.cloneElement(this.props.children, {

@@ -5,6 +5,8 @@ import Cart from 'react-icons/lib/md/shopping-cart';
 import Info from 'react-icons/lib/md/info';
 import Close from 'react-icons/lib/md/close';
 import UserScreen from './UserScreen';
+import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
+    infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from '../actions/menu';
 import { connect } from 'react-redux';
 import { expandCard } from '../../../../../utils/animations';
 import './styles/MainMenu.css';
@@ -24,10 +26,10 @@ class MainMenu extends Component  {
         this.closeShopCard = this.closeShopCard.bind(this);
     }
 
-    expandInfoCard() {this.expCard(this.infoCard, !this.props.infoScreenOpen, {type: 'INFO_SCREEN_OPEN'});}
-    expandMediaCard() {this.expCard(this.mediaCard, !this.props.mediaScreenOpen, {type: 'MEDIA_SCREEN_OPEN'});}
-    expandShopCard() {this.expCard(this.shopCard, !this.props.shopScreenOpen, {type: 'SHOP_SCREEN_OPEN'});}
-    expandUserCard() {this.expCard(this.userCard, !this.props.userScreenOpen, {type: 'USER_SCREEN_OPEN'});}
+    expandInfoCard() {this.expCard(this.infoCard, !this.props.infoScreenOpen, infoScreenOpen());}
+    expandMediaCard() {this.expCard(this.mediaCard, !this.props.mediaScreenOpen, mediaScreenOpen());}
+    expandShopCard() {this.expCard(this.shopCard, !this.props.shopScreenOpen, shopScreenOpen());}
+    expandUserCard() {this.expCard(this.userCard, !this.props.userScreenOpen, userScreenOpen());}
 
     expCard(target, shouldExpand, action) {
         if(shouldExpand) {
@@ -38,10 +40,10 @@ class MainMenu extends Component  {
         }
     }
 
-    closeInfoCard() {this.closeCard(this.infoCard, {type: 'INFO_SCREEN_CLOSE'});}
-    closeMediaCard() {this.closeCard(this.mediaCard, {type: 'MEDIA_SCREEN_CLOSE'});}
-    closeShopCard() {this.closeCard(this.shopCard, {type: 'SHOP_SCREEN_CLOSE'});}
-    closeUserCard() {this.closeCard(this.userCard, {type: 'USER_SCREEN_CLOSE'});}
+    closeInfoCard() {this.closeCard(this.infoCard, infoScreenClose());}
+    closeMediaCard() {this.closeCard(this.mediaCard, mediaScreenClose());}
+    closeShopCard() {this.closeCard(this.shopCard, shopScreenClose());}
+    closeUserCard() {this.closeCard(this.userCard, userScreenClose());}
 
     closeCard(target, action) {
         this.props.dispatch(action);
@@ -57,26 +59,26 @@ class MainMenu extends Component  {
                     <div className="card__icon-wrapper">
                         <Info color="#fff" size="72" />
                     </div>
-                    {this.props.infoScreenOpen && <Close className="back-button" onClick={this.closeInfoCard} color="#fff" size="72" />}
+                    {this.props.infoScreenOpen && <Close className="back-button" onClick={this.closeInfoCard} color="#fff" size="52" />}
                     <h2>{this.props.currentEvent}</h2>
                 </div>
                 <div ref={(r) => this.mediaCard = r} className="main-menu__card second" onClick={this.expandMediaCard}>
                     <div className="card__icon-wrapper">
                         <Media color="#fff" size="72" />
                     </div>
-                    {this.props.mediaScreenOpen && <Close className="back-button" onClick={this.closeMediaCard} color="#fff" size="72" />}
+                    {this.props.mediaScreenOpen && <Close className="back-button" onClick={this.closeMediaCard} color="#fff" size="52" />}
                 </div>
                 <div ref={(r) => this.shopCard = r} className="main-menu__card third" onClick={this.expandShopCard}>
                     <div className="card__icon-wrapper">
                         <Cart color="#fff" size="72" />
                     </div>
-                    {this.props.shopScreenOpen && <Close className="back-button" onClick={this.closeShopCard} color="#fff" size="72" />}
+                    {this.props.shopScreenOpen && <Close className="back-button" onClick={this.closeShopCard} color="#fff" size="52" />}
                 </div>
                 <div ref={(r) => this.userCard = r} className="main-menu__card fourth" onClick={this.expandUserCard}>
                     <div className="card__icon-wrapper">
                         <Face color="#fff" size="72" />
                     </div>
-                    {this.props.userScreenOpen && <Close className="back-button" onClick={this.closeUserCard} color="#fff" size="72" />}
+                    {this.props.userScreenOpen && <Close className="back-button" onClick={this.closeUserCard} color="#fff" size="52" />}
                     {this.props.userScreenOpen && <UserScreen />}
                 </div>
             </div>

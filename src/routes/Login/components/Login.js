@@ -72,7 +72,7 @@ class LoginScreen extends Component {
                 </div>
                 <div className="login-screen__form__wrapper">
                     <LoginForm onSubmit={this.signInEmail} onSubmitFail={this.handleError} loading={this.props.loading} />
-                    <button id="facebookBtn" onClick={this.signInFacebook} className="flat-button flat-button--facebook spaced-item">Use Facebook</button>
+                    <button id="facebookBtn" onClick={this.signInFacebook} className="flat-button flat-button--facebook spaced-item">USE FACEBOOK</button>
                     {this.props.redirectError ? <RedirectError error={this.props.redirectErrorMsg}/> : null}
                 </div> 
             </div>

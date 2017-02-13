@@ -1,0 +1,79 @@
+.flat-button {
+    position: relative;
+    height: 48px;
+    min-height: 48px;
+    backface-visibility: hidden;
+    width: 100%;
+    white-space: normal;
+    padding: 10px 19px;
+    font-size: 17px;
+    line-height: 1.471;
+    border-radius: 6px;
+    border: none;
+    font-weight: normal;
+    transition: opacity 0.2s linear;
+    cursor: pointer;
+    color: #fff;
+}
+
+@media (hover) {
+    .flat-button:hover {
+        opacity: 0.7;
+    }
+}
+
+.flat-button:focus {
+    opacity: 1;
+}
+
+.flat-button--primary {
+    background-color: #1abc9c; 
+}
+
+.flat-button--error {
+    background-color: #e74c3c; 
+}
+
+.flat-button--facebook {
+    background-color: #3b5998; 
+}
+
+.icon-button {
+    border: none;
+    transition: opacity 0.2s linear;
+    cursor: pointer;
+    color: #fff;
+    padding: 0;
+    background: transparent;
+    backface-visibility: hidden;
+    border-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    transition: opacity 0.2s linear;
+}
+
+.icon-button:active, .icon-button:focus {
+   box-shadow: none;
+   border-color: transparent;
+}
+
+
+.text-button {
+    border: none;
+    transition: opacity 0.2s linear;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1.3em;
+    backface-visibility: hidden;
+    padding: 0;
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    transition: opacity 0.2s linear;
+}
+
+.text-button:active, .text-button:focus {
+   box-shadow: none;
+   border-color: transparent;
+}
