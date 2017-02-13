@@ -4,6 +4,7 @@ export default class UserApi {
 
     constructor(database) {
         this.database = database;
+        this.subscriptions = {};
     }
 
     createUserIfNotExists(user) {
@@ -26,27 +27,18 @@ export default class UserApi {
     }
 
     subscribeToUserData(uid, cb) {
-        this.database().ref(`/users/${uid}`).on('value', (snapshot) => {
+        let ref = this.database().ref(`/users/${uid}`);
+        ref.on('value', (snapshot) => {
             cb(snapshot.val());
-        })
+        });
+        this.subscriptions[uid] = ref;
     }
 
-    unsubscribeToUserData(uid) {
-        this.database().ref(`/users/${uid}`).off();
+    clearSubscriptions(uid) {
+        for (var key in this.subscriptions) {
+            if (this.subscriptions.hasOwnProperty(key)) {
+                this.subscriptions[key].off();
+            }
+        }
     }
-
-    checkIfUserHasPreviousEvent(uid) {
-        let self = this;
-        
-        return new Promise((resolve, reject) => {
-            self.database().ref(`/users/${uid}/lastVisitedEvent`).once('value')
-            .then(snapshot => {
-                resolve(snapshot.val());
-            })
-            .catch(err => {
-                reject(err);
-            })
-        })
-    }
-
 }

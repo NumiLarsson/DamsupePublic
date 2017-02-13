@@ -64,19 +64,19 @@ class MainMenu extends Component  {
                     <div className="card__icon-wrapper">
                         <Media color="#fff" size="72" />
                     </div>
-                    {this.props.mediaScreenOpen && <Close onClick={this.closeMediaCard} color="#fff" size="72" />}
+                    {this.props.mediaScreenOpen && <Close className="back-button" onClick={this.closeMediaCard} color="#fff" size="72" />}
                 </div>
                 <div ref={(r) => this.shopCard = r} className="main-menu__card third" onClick={this.expandShopCard}>
                     <div className="card__icon-wrapper">
                         <Cart color="#fff" size="72" />
                     </div>
-                    {this.props.shopScreenOpen && <Close onClick={this.closeShopCard} color="#fff" size="72" />}
+                    {this.props.shopScreenOpen && <Close className="back-button" onClick={this.closeShopCard} color="#fff" size="72" />}
                 </div>
                 <div ref={(r) => this.userCard = r} className="main-menu__card fourth" onClick={this.expandUserCard}>
                     <div className="card__icon-wrapper">
                         <Face color="#fff" size="72" />
                     </div>
-                    {this.props.userScreenOpen && <Close onClick={this.closeUserCard} color="#fff" size="72" />}
+                    {this.props.userScreenOpen && <Close className="back-button" onClick={this.closeUserCard} color="#fff" size="72" />}
                     {this.props.userScreenOpen && <UserScreen />}
                 </div>
             </div>

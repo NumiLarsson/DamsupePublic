@@ -10,7 +10,7 @@ export default class EventApi {
      subscribeToEvent(event, cb) {
         let ref = this.database().ref(`/events/${event}`);
         ref.on('value', (snapshot) => {
-            if(snapshot) {
+            if(snapshot.val()) {
                 cb(snapshot.val());
             } 
         });
@@ -19,8 +19,9 @@ export default class EventApi {
 
     clearSubscriptions() {
         for (var key in this.subscriptions) {
-            if (this.subscriptions.hasOwnProperty(key)) {
+            if (this.subscriptions.hasOwnProperty(key) && this.subscriptions[key]) {
                 this.subscriptions[key].off();
+                this.subscriptions[key] = null;
             }
         }
     }

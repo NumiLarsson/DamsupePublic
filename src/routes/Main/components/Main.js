@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { subscribeToUserData,  unsubscribeToUserData } from '../actions/user';
 import './styles/Main.css';
 
 
@@ -11,12 +10,7 @@ class MainScreen extends Component {
     }
 
     componentWillMount() {
-        this.props.subscribeToUserData(this.props.userId);
         this.props.resetMenu();
-    }
-
-    componentWillUnmount() {
-        this.props.unsubscribeToUserData(this.props.userId);
     }
 
     render() {
@@ -38,8 +32,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        subscribeToUserData : (uid) => dispatch(subscribeToUserData(uid)),
-        unsubscribeToUserData : (uid) => dispatch(unsubscribeToUserData(uid)),
         resetMenu: () => dispatch({type: 'RESET_MENU'})
     }
 }
