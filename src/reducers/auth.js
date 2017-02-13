@@ -1,4 +1,3 @@
-
 export const initialState = {
     authenticated : false,
     uid: "",
