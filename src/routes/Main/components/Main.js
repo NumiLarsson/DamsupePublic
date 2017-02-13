@@ -5,10 +5,6 @@ import './styles/Main.css';
 
 class MainScreen extends Component {
 
-    constructor() {
-        super();
-    }
-
     componentWillMount() {
         this.props.resetMenu();
     }
@@ -38,22 +34,3 @@ const mapDispatchToProps = (dispatch) => {
 
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(MainScreen);
-
-/*
-        let content;
-        let { children } = this.props;
-
-        if (children) {
-            content = children;
-        } else {
-            content = (
-                <Loader> 
-                    <div className="spinner">
-                        <div className="dot1"></div>
-                        <div className="dot2"></div>
-                    </div>
-                 </Loader>  
-            )
-        }
-
-  */
