@@ -86,24 +86,3 @@
 .screen-content {
     width: 100%;
 }
-
-/*
-
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    height: 100%;
-    will-change: transform;
-    background: #b1db73;
-    position: relative;
-
-.screen {
-    width:100%;
-    overflow: auto;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
-*/

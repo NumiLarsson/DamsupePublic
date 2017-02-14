@@ -86,7 +86,7 @@ class MainMenu extends Component  {
                             <Face color="#fff" size="72" />
                             {this.props.userScreenOpen && <Close onClick={this.closeUserCard} color="#fff" size="52" />}
                         </div>
-                        {this.props.userScreenOpen && <UserScreen />}
+                        {this.props.userScreenOpen && <UserScreen uid={this.props.uid} currentEvent={this.props.currentEvent} />}
                     </div>
                 </div>
             </div>
@@ -99,6 +99,8 @@ class MainMenu extends Component  {
 const mapStateToProps = (state) => {
     return {
         userName: state.auth.name,
+        uid: state.auth.uid,
+        currentEvent: state.auth.lastVisitedEvent,
         infoScreenOpen: state.main.infoScreenOpen,
         mediaScreenOpen: state.main.mediaScreenOpen,
         shopScreenOpen: state.main.shopScreenOpen,

@@ -22,7 +22,6 @@ export default ({input, label, type, fieldId, placeholder, meta: {touched, valid
 }
 
 function getLabelClassName(value, active) {
-    console.log(value);
     return value || active ? `${base} ${raised}` : `${base}`;
 }
 

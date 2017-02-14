@@ -1,7 +1,8 @@
 
 export const initialState = {
     name: "",
-    active: false
+    active: false,
+    userData: {}
 }
 
 export default (state = initialState, action) => {
@@ -15,6 +16,13 @@ export default (state = initialState, action) => {
             return Object.assign({}, state, {
                 name, 
                 active
+            });
+        
+        case 'UPDATE_USER_EVENT_DATA':
+            return Object.assign({}, state, {
+                userData: Object.assign({}, state.userData, {
+                    ...action.payload
+                })
             });
 
         default:
