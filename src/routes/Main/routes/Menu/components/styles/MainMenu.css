@@ -1,20 +1,28 @@
 
 .main-menu {
+    flex:1;
+    overflow: auto;
+}
+
+.main-menu-card__wrapper {
+    height:100%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    height: 100%;
-    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+    align-content: flex-start;
     position: relative;
-    overflow: hidden;
 }
 
 .main-menu__card {
-    box-sizing: border-box;
     width: 100%;
-    flex: 1;
+    max-width: 300px;
+    height: 150px;
     display: flex;
     align-items: center;
-    padding: 10px;
+    margin: 5px;
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);
 }
 
 .main-menu__card.first {
@@ -39,27 +47,25 @@
     bottom:0;
     left: 0;
     right: 0;
+    max-width: none;
+    width: auto;
+    height: auto;
+    margin: 0;
+    box-shadow: none;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.card-info {
-    flex:1;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3em;
-}
-
-.card-info__header {
-    font-size: 1.3em;
-}
-
-.card__icon-wrapper {
+.card__header {
     display: flex;
     justify-content: space-between;
-    pointer-events:all;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px 0 10px;
+}
+
+.card__header--expanded {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
 }
 
 .back-button {
@@ -69,15 +75,35 @@
 }
 
 .screen {
+    padding: 10px;
     width:100%;
+    max-width: 760px;
+    margin:0 auto;
     flex:1;
+    overflow: auto;
+}
+
+.screen-content {
+    width: 100%;
+}
+
+/*
+
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    height: 100%;
+    will-change: transform;
+    background: #b1db73;
+    position: relative;
+
+.screen {
+    width:100%;
     overflow: auto;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.screen-content {
-    width: 100%;
-    height: 100%;
-}
+
+*/

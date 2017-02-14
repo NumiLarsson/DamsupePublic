@@ -42,8 +42,6 @@ export function expandCard(card, expandedClass, callback) {
         x: invertX,
         transformOrigin: '0 0'
     })
-
-    console.log(card.getBoundingClientRect().top);
     
     TweenMax.to(card, 0.5, {
         x: 0,

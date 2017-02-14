@@ -12,7 +12,7 @@ const LoginForm = (props) => {
             <button type="submit" 
                 id="loginBtn" 
                 disabled={pristine || submitting || loading}
-                className="flat-button spaced-item flat-button--primary">
+                className="flat-button spaced-item-x3 flat-button--primary">
                 {submitting || loading ? 'Loading' : (submitFailed && error ?  error : 'SIGN IN')}
             </button>
         </form>

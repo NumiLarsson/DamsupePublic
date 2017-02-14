@@ -25,14 +25,6 @@
     width: 100%;
 }
 
-.spaced-item {
-    margin-top: 5px;
-}
-
-.spaced-item-x2 {
-    margin-top: 10px;
-}
-
 .backButton {
     position: absolute;
     top: 10px;

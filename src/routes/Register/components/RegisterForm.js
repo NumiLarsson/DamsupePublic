@@ -45,7 +45,7 @@ const RegisterForm = (props) => {
             <button type="submit" 
                 id="registerBtn" 
                 disabled={pristine || submitting || loading}
-                className="flat-button spaced-item flat-button--primary">
+                className="flat-button spaced-item-x3 flat-button--primary">
                 {submitting || loading ? 'Loading' : (submitFailed && error ?  error : 'Register')}
             </button>
          </form>

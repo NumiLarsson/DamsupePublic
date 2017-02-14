@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { signOut } from '../actions/user';
 import './styles/Main.css';
 
 
@@ -12,6 +13,9 @@ class MainScreen extends Component {
     render() {
         return (
             <div className="main-screen">
+                <header id="main-header" className="main-header">
+                    <h2 onClick={this.props.signOut}>{this.props.currentEvent}</h2>
+                </header>
                 {this.props.children}
             </div>
         );
@@ -22,13 +26,14 @@ class MainScreen extends Component {
 const mapStateToProps = (state) => {
     return {
         userId: state.auth.uid,
-        currentEvent: state.auth.lastVisitedEvent
+        currentEvent: state.event.name
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        resetMenu: () => dispatch({type: 'RESET_MENU'})
+        resetMenu: () => dispatch({type: 'RESET_MENU'}),
+        signOut: () => dispatch(signOut())
     }
 }
 

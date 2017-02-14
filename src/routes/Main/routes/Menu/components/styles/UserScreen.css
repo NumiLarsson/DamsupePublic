@@ -1,31 +1,17 @@
-.user-screen {
-    box-sizing: border-box;
-}
 
 .user-screen__content {
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     padding: 5px;
 }
 
+/*
 .user-screen__form-wrapper {
     padding: 5px 5px 15px 5px;
-    flex: 1;
 }
 
 .user-screen__form--button {
     align-self: flex-end;
 }
 
-.spaced-item {
-    margin-top: 5px;
-}
-
-.spaced-item-x2 {
-    margin-top: 10px;
-}
-
-.spaced-item-x3 {
-    margin-top: 20px;
-}
+*/

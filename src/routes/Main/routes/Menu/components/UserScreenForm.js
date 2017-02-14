@@ -13,8 +13,8 @@ let UserScreenForm = (props) => {
     const { handleSubmit, submitFailed, error, pristine, submitting, loading } = props;
     return (
         <form onSubmit={handleSubmit} className="user-screen__form">
-            <Field onFocus={scrollTo} fieldId="userName" type="text" name="name" component={InputField} label="Name"/>
-            <Field onFocus={scrollTo} fieldId="tableNr"  type="text" name="table" component={InputField} label="Table"/>
+            <Field fieldId="userName" type="text" name="name" placeholder="Name" component={InputField} label="Name"/>
+            <Field fieldId="tableNr"  type="text" name="table" placeholder="Table" component={InputField} label="Table"/>
             <button type="submit" 
                 id="saveBtn" 
                 disabled={pristine || submitting || loading}
