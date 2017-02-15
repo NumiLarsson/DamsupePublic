@@ -41,7 +41,7 @@ export default class EventApi {
             const {name, table} = values;
             let updates = {};
             updates[`/users/${uid}/name`] = name;
-            updates[`/userEventData/${event}/${uid}/table`] = table;
+            updates[`/userEventData/${event}/${uid}/table`] = table || null;
             self.database().ref().update(updates)
             .then(() => {
                 resolve('SUCCESS');

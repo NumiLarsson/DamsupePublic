@@ -84,7 +84,7 @@ class MainMenu extends Component  {
                     <div ref={(r) => this.userCard = r} className="main-menu__card fourth" onClick={this.expandUserCard}>
                         <div className="card__header">
                             <Face color="#fff" size="72" />
-                            {this.props.userScreenOpen && <Close onClick={this.closeUserCard} color="#fff" size="52" />}
+                            {this.props.userScreenOpen && <Close className="back-button" onClick={this.closeUserCard} color="#fff" size="52" />}
                         </div>
                         {this.props.userScreenOpen && <UserScreen uid={this.props.uid} currentEvent={this.props.currentEvent} />}
                     </div>

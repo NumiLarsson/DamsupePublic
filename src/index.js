@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { Router } from 'react-router'
 import store, { history } from './store';
 import { listenForAuthChanges } from './actions/auth';
+import { listenForNetworkChanges } from './actions/network';
 
 /*APP SPECIFIC IMPORTS */
 import './index.css';
@@ -14,6 +15,7 @@ import TweenMax from 'gsap';
 
 /* Initialize api and start listening for auth changes*/
 store.dispatch(listenForAuthChanges());
+store.dispatch(listenForNetworkChanges());
 
 const routes = {
     childRoutes: [{

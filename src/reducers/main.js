@@ -3,7 +3,8 @@ export const initialState = {
     infoScreenOpen: false,
     mediaScreenOpen: false,
     shopScreenOpen: false,
-    userScreenOpen: false
+    userScreenOpen: false,
+    userScreenLoading:false
 }
 
 export default (state = initialState, action) => {
@@ -47,6 +48,10 @@ export default (state = initialState, action) => {
         case 'USER_SCREEN_CLOSE':
             return Object.assign({}, state, {
                 userScreenOpen: false
+            })
+        case 'USER_SCREEN_LOADING':
+            return Object.assign({}, state, {
+                userScreenLoading: action.payload
             })
 
         default:
