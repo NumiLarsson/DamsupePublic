@@ -11,7 +11,7 @@ module.exports = {
 
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
-            cb(null, require('./components/Login'));
+            cb(null, require('./containers/Login'));
         });
     }
 }

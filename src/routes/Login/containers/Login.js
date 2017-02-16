@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
 import { goBack } from 'react-router-redux';
 import Back from 'react-icons/lib/md/arrow-back';
-import LoginForm from './LoginForm';
-import RedirectLoader from './RedirectLoader';
-import RedirectError from './RedirectError';
 import api from '../../../api/Api';
-import './styles/Login.css';
 import { animateErrorButton } from '../../../utils/animations';
+
+//Components
+import LoginForm from '../components/LoginForm';
+import RedirectLoader from '../components/RedirectLoader';
+import RedirectError from '../components/RedirectError';
+
+//TODO: Use css modules
+import './styles/Login.css';
 
 class LoginScreen extends Component {
 
@@ -57,7 +61,7 @@ class LoginScreen extends Component {
 
     render() {
         return (
-            <div className="login-screen">
+            <div className="loginScreen">
                 {this.props.redirectLoading && 
                     <RedirectLoader>
                         <div className="spinner">
@@ -67,12 +71,12 @@ class LoginScreen extends Component {
                     </RedirectLoader>
                 }
                 <span className="backButton" role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
-                <div className="login-screen__header">
-                    <h1 className="login-screen__header__title">Welcome!</h1>
+                <div className="loginScreenHeader">
+                    <h1 className="loginScreenHeaderTitle">Welcome!</h1>
                 </div>
-                <div className="login-screen__form__wrapper">
+                <div className="loginScreenFormWrapper">
                     <LoginForm onSubmit={this.signInEmail} onSubmitFail={this.handleError} loading={this.props.loading} />
-                    <button id="facebookBtn" onClick={this.signInFacebook} className="flat-button flat-button--facebook spaced-item">USE FACEBOOK</button>
+                    <button id="facebookBtn" onClick={this.signInFacebook} className="flat-button flat-button--facebook spacedItem">USE FACEBOOK</button>
                     {this.props.redirectError ? <RedirectError error={this.props.redirectErrorMsg}/> : null}
                 </div> 
             </div>

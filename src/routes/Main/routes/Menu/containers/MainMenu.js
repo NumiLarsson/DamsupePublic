@@ -6,9 +6,11 @@ import Info from 'react-icons/lib/md/info';
 import Close from 'react-icons/lib/md/close';
 import UserScreen from './UserScreen';
 import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
-    infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from '../actions/menu';
+    infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from '../actions/main';
 import { connect } from 'react-redux';
 import { expandCard } from '../../../../../utils/animations';
+
+//TODO: Use css modules
 import './styles/MainMenu.css';
 
 class MainMenu extends Component  {
@@ -31,29 +33,28 @@ class MainMenu extends Component  {
     expandMediaCard() {this.expCard(this.mediaCard, !this.props.mediaScreenOpen, mediaScreenOpen());}
     expandShopCard() {this.expCard(this.shopCard, !this.props.shopScreenOpen, shopScreenOpen());}
     expandUserCard() {this.expCard(this.userCard, !this.props.userScreenOpen, userScreenOpen());}
+    closeInfoCard() {this.closeCard(this.infoCard, infoScreenClose());}
+    closeMediaCard() {this.closeCard(this.mediaCard, mediaScreenClose());}
+    closeShopCard() {this.closeCard(this.shopCard, shopScreenClose());}
+    closeUserCard() {this.closeCard(this.userCard, userScreenClose());}
 
     expCard(target, shouldExpand, action) {
         if(shouldExpand) {
             let dispatch = this.props.dispatch;
-            expandCard(target, "card--expanded", () => {
+            expandCard(target, "cardExpanded", () => {
                 dispatch(action);
-                target.querySelector('.card__header').classList.add('card__header--expanded');
+                target.querySelector('.cardHeader').classList.add('cardHeaderExpanded');
             });
             //TODO:FIX
             this.wrapper.style.overflow = "hidden";
         }
     }
 
-    closeInfoCard() {this.closeCard(this.infoCard, infoScreenClose());}
-    closeMediaCard() {this.closeCard(this.mediaCard, mediaScreenClose());}
-    closeShopCard() {this.closeCard(this.shopCard, shopScreenClose());}
-    closeUserCard() {this.closeCard(this.userCard, userScreenClose());}
-
     closeCard(target, action) {
         this.props.dispatch(action);
         target.removeAttribute("style");
-        target.classList.remove('card--expanded');
-        target.querySelector('.card__header').classList.remove('card__header--expanded');
+        target.classList.remove('cardExpanded');
+        target.querySelector('.cardHeader').classList.remove('cardHeaderExpanded');
         //TODO:FIX
         this.wrapper.style.overflow = "auto";
     }
@@ -61,30 +62,30 @@ class MainMenu extends Component  {
 
     render() {
         return (
-            <div className="main-menu">
-                <div ref={(r)=> this.wrapper = r} className="main-menu-card__wrapper">
-                    <div ref={(r) => this.infoCard = r} className="main-menu__card first" onClick={this.expandInfoCard}>
-                        <div className="card__header">
+            <div className="mainMenu">
+                <div ref={(r)=> this.wrapper = r} className="mainMenuCardWrapper">
+                    <div ref={(r) => this.infoCard = r} className="mainMenuCard first" onClick={this.expandInfoCard}>
+                        <div className="cardHeader">
                             <Info color="#fff" size="72" />
-                             {this.props.infoScreenOpen && <Close className="back-button" onClick={this.closeInfoCard} color="#fff" size="52" />}
+                             {this.props.infoScreenOpen && <Close className="backButton" onClick={this.closeInfoCard} color="#fff" size="52" />}
                         </div>
                     </div>
-                    <div ref={(r) => this.mediaCard = r} className="main-menu__card second" onClick={this.expandMediaCard}>
-                        <div className="card__header">
+                    <div ref={(r) => this.mediaCard = r} className="mainMenuCard second" onClick={this.expandMediaCard}>
+                        <div className="cardHeader">
                             <Media color="#fff" size="72" />
-                            {this.props.mediaScreenOpen && <Close className="back-button" onClick={this.closeMediaCard} color="#fff" size="52" />}
+                            {this.props.mediaScreenOpen && <Close className="backButton" onClick={this.closeMediaCard} color="#fff" size="52" />}
                         </div>
                     </div>
-                    <div ref={(r) => this.shopCard = r} className="main-menu__card third" onClick={this.expandShopCard}>
-                        <div className="card__header">
+                    <div ref={(r) => this.shopCard = r} className="mainMenuCard third" onClick={this.expandShopCard}>
+                        <div className="cardHeader">
                             <Cart color="#fff" size="72" />
-                            {this.props.shopScreenOpen && <Close className="back-button" onClick={this.closeShopCard} color="#fff" size="52" />}
+                            {this.props.shopScreenOpen && <Close className="backButton" onClick={this.closeShopCard} color="#fff" size="52" />}
                         </div>
                     </div>
-                    <div ref={(r) => this.userCard = r} className="main-menu__card fourth" onClick={this.expandUserCard}>
-                        <div className="card__header">
+                    <div ref={(r) => this.userCard = r} className="mainMenuCard fourth" onClick={this.expandUserCard}>
+                        <div className="cardHeader">
                             <Face color="#fff" size="72" />
-                            {this.props.userScreenOpen && <Close className="back-button" onClick={this.closeUserCard} color="#fff" size="52" />}
+                            {this.props.userScreenOpen && <Close className="backButton" onClick={this.closeUserCard} color="#fff" size="52" />}
                         </div>
                         {this.props.userScreenOpen && <UserScreen uid={this.props.uid} currentEvent={this.props.currentEvent} />}
                     </div>
@@ -108,6 +109,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-
-//{trimName(this.props.userName)}
 module.exports = connect(mapStateToProps, null)(MainMenu);

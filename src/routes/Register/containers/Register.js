@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
 import { goBack } from 'react-router-redux';
 import Back from 'react-icons/lib/md/arrow-back';
-import RegisterForm from './RegisterForm';
+import RegisterForm from '../components/RegisterForm';
 import api from '../../../api/Api';
-import './styles/Register.css';
 import { animateErrorButton } from '../../../utils/animations';
+
+//TODO: Use css modules
+import './styles/Register.css';
 
 class RegisterScreen extends Component {
 
@@ -23,7 +25,6 @@ class RegisterScreen extends Component {
     createUser(values) {
         this.props.setLoading();
         const { email, password } = values;
-        //throw new SubmissionError({ _error: 'This is error' });
         return api.auth.createUser(email, password)
         .catch((e) => { throw new SubmissionError({ _error: e }); });
     }
@@ -35,12 +36,12 @@ class RegisterScreen extends Component {
 
     render() {
         return (
-             <div className="register-screen">
+             <div className="registerScreen">
                 <span className="backButton" role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
-                <div className="register-screen__header">
-                    <h1 className="register-screen__header__title">REGISTER</h1>
+                <div className="registerScreenHeader">
+                    <h1 className="registerScreenHeaderTitle">REGISTER</h1>
                 </div>
-                <div className="register-screen__form__wrapper">
+                <div className="registerScreenFormWrapper">
                     <RegisterForm onSubmit={this.createUser} onSubmitFail={this.handleError} loading={this.props.loading} />
                 </div> 
             </div>

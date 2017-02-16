@@ -1,50 +1,17 @@
-
-.input-field__wrapper {
-    padding: 5px 0px 5px 0px;
-    width: 100%;
-}
-
-.input-field {
-    width: 100%;
-    outline: none;
-    box-sizing: border-box;
-    border-radius: 6px;
-    margin-top: 5px;
-    height: 42px;
-    border: 2px solid #fff;
-    opacity: 0.7;
-    color: #fff;
-    padding: 8px 12px;
-    font-size: 17px;
-    line-height: 1.467;
-    box-shadow: none;
-    background: transparent;
-    transition: opacity 1s linear;
-}
-
-.input-field:focus {
-    opacity: 1;
-}
-
-.input-field.error {
-    border-color: #e74c3c;
-    opacity: 1;
-}
-
-.input-field__error {
+.materialFieldError {
     position: absolute;
     width: 100%;
     top: 5px;
     color: #e74c3c;
 }
 
-.input-container {
+.inputContainer {
     position: relative;
     width: 100%;
     margin-top: 40px;
 }
 
-.material-field {
+.materialField {
     outline: none;
     z-index: 1;
     position: relative;
@@ -57,14 +24,14 @@
     font-weight: 400;
 }
 
-.material-field:focus ~ .material-bar:before  {
+.materialField:focus ~ .materialBar:before  {
     width: 50%;
 }
-.material-field:focus ~ .material-bar:after {
+.materialField:focus ~ .materialBar:after {
     width: 50%;
 }
 
-.material-label {
+.materialLabel {
     position: absolute;
     top: 0;
     left:0;
@@ -75,13 +42,13 @@
     transition: .2s ease;
 }
 
-.material-label--raised {
+.materialLabelRaised {
     opacity: 0.8;
     transform: translate(-12%, -70%) scale(0.75);
 }
 
 
-.material-bar {
+.materialBar {
     position: absolute;
     left:0;
     bottom: 0;
@@ -90,15 +57,15 @@
     height: 1px;
 }
 
-.material-bar:before {
+.materialBar:before {
     left: 50%;
 }
 
-.material-bar:after {
+.materialBar:after {
     right: 50%;
 }
 
-.material-bar:before, .material-bar:after {
+.materialBar:before, .materialBar:after {
     content: '';
     position: absolute;
     background: #fff;
@@ -107,14 +74,14 @@
     transition: .2s ease;
 }
 
-.spaced-item {
+.spacedItem {
     margin-top: 5px;
 }
 
-.spaced-item-x2 {
+.spacedItem10 {
     margin-top: 10px;
 }
 
-.spaced-item-x3 {
+.spacedItem30 {
     margin-top: 30px;
 }

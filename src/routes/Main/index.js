@@ -7,15 +7,12 @@ module.exports = {
         if (!api.auth.getCurrentUser()) {
             replace('/');
         }
-
-        
-
     },
 
     getIndexRoute(partialNextState, callback) {
             require.ensure([], function (require) {
             callback(null, {
-                component: require('./routes/Menu/components/MainMenu'),
+                component: require('./routes/Menu/containers/MainMenu'),
             })
         })
     },
@@ -29,7 +26,7 @@ module.exports = {
 
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
-            cb(null, require('./components/Main'));
+            cb(null, require('./containers/Main'));
         });
     }
 }

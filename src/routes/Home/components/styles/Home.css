@@ -1,4 +1,4 @@
-.home-screen {
+.homeScreen {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -22,20 +22,20 @@
   margin-bottom: 30px;
 }
 
-.emphesized-link {
+.emphesizedLink {
     color: #fff;
     text-decoration: none;
     font-size: 2em;
 }
 
-.link-wrapper {
+.linkWrapper {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.vertical-divider {
+.verticalDivider {
   display:block;
   width: 3px;
   height: 100%;

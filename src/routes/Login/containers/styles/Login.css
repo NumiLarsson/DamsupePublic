@@ -1,4 +1,4 @@
-.login-screen {
+.loginScreen {
     position: relative;
     height: 100%;
     display: flex;
@@ -8,21 +8,17 @@
     background: #b1db73;
 }
 
-.login-screen__header {
+.loginScreenHeader {
   padding: 10px;
 }
 
-.login-screen__header__title {
+.loginScreenHeaderTitle {
     font-size: 2em;
 }
 
-.login-screen__form__wrapper {
+.loginScreenFormWrapper {
     max-width: 250px;
     padding: 5px;
-}
-
-.login-screen__form {
-    width: 100%;
 }
 
 .backButton {

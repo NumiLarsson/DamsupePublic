@@ -1,11 +1,4 @@
-
-.user-screen__content {
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-}
-
-.user-screen__form {
+.userScreenForm {
     display: flex;
     flex-direction: column;
     align-items: flex-end;

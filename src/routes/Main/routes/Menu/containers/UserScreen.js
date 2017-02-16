@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
 import api from '../../../../../api/Api';
-import './styles/UserScreen.css';
 import { fadeIn, animateSuccessButton, animateErrorButton } from '../../../../../utils/animations';
-import UserScreenForm from './UserScreenForm';
+import {userScreenLoading, userScreenDoneLoading} from '../actions/main';
+import UserScreenForm from '../components/UserScreenForm';
+
+//TODO: Use css modules
+import './styles/UserScreen.css';
 
 class UserScreen extends Component {
 
@@ -20,12 +23,12 @@ class UserScreen extends Component {
 
     saveUserData(values) {
         let self = this;
-        self.props.dispatch({type: 'USER_SCREEN_LOADING', payload: true});
+        self.props.userScreenLoading();
         const { uid, currentEvent } = this.props;
         api.events.saveUserData(currentEvent, uid, values)
         .then(() => {
             animateSuccessButton(document.getElementById("saveBtn"), 'SUCCESS', () => {
-                self.props.dispatch({type: 'USER_SCREEN_LOADING', payload: false});
+                self.props.userScreenDoneLoading();
             });
         })
         .catch(err => {
@@ -34,14 +37,14 @@ class UserScreen extends Component {
     }
 
     handleSaveError(error) {
-        this.props.dispatch({type: 'USER_SCREEN_LOADING', payload: false});
+        this.props.userScreenDoneLoading();
         animateErrorButton("#saveBtn");
     }
 
     render() {
         return (
             <div className="screen" ref={(r) => this.userScreen = r}>
-                <div className="screen-content">
+                <div className="screenContent">
                     <UserScreenForm onSubmit={this.saveUserData} onSubmitFail={this.handleSaveError} />
                 </div>
             </div>
@@ -49,4 +52,9 @@ class UserScreen extends Component {
     }
 }
 
-export default connect(null, null)(UserScreen);
+const mapDispatchToProps = {
+    userScreenLoading,
+    userScreenDoneLoading
+}
+
+export default connect(null, mapDispatchToProps)(UserScreen);

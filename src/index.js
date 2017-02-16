@@ -9,8 +9,8 @@ import { listenForAuthChanges } from './actions/auth';
 import { listenForNetworkChanges } from './actions/network';
 
 /*APP SPECIFIC IMPORTS */
-import './index.css';
-import App from './components/App';
+require('./index.css');
+import App from './containers/App';
 import TweenMax from 'gsap';
 
 /* Initialize api and start listening for auth changes*/

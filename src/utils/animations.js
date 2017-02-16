@@ -1,6 +1,5 @@
 import TweenMax from 'gsap';
 import React from 'react';
-import './animations.css';
 
 export function animateErrorButton(button) {
     TweenMax.to(button, 1, {

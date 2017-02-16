@@ -51,7 +51,11 @@ export default (state = initialState, action) => {
             })
         case 'USER_SCREEN_LOADING':
             return Object.assign({}, state, {
-                userScreenLoading: action.payload
+                userScreenLoading: true
+            })
+        case 'USER_SCREEN_DONE_LOADING':
+            return Object.assign({}, state, {
+                userScreenLoading: false
             })
 
         default:
