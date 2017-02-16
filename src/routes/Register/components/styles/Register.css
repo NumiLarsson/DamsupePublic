@@ -4,7 +4,7 @@
     align-items: center; 
     height: 100%;
     will-change: transform;
-    background: #9b59b6;
+    background: #b1db73;
     position: relative;
 }
 
@@ -23,14 +23,6 @@
 
 .register-screen__form {
     width: 100%;
-}
-
-.spaced-item {
-    margin-top: 5px;
-}
-
-.spaced-item-x2 {
-    margin-top: 10px;
 }
 
 .backButton {

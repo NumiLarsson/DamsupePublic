@@ -1,0 +1,27 @@
+
+path /users/{uid} is User {
+  read() { isCurrentUser(uid)}
+  write() { isCurrentUser(uid)}
+}
+
+type User {
+  email: EmailString,
+  name : NameString | Null,
+  lastVisitedEvent: EventRef | Null
+}
+
+type EventRef extends String{
+  validate() {isEvent(this)}
+}
+
+type NameString extends String {
+  validate() {this.length > 0 && this.length < 100}
+}
+
+type EmailString extends String {
+  validate() {this.matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)}
+}
+
+isCurrentUser(uid) { isSignedIn() && auth.uid == uid }
+isSignedIn() { auth != null }
+isEvent(event) {prior(root.events[event]) != null}

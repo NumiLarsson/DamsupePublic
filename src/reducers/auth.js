@@ -9,6 +9,9 @@ export const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
 
+        case 'RESET_USER_DATA': 
+            return Object.assign({}, state, initialState);
+            
         case 'USER_SIGNED_OUT':
             return Object.assign({}, state, {
                 authenticated: false,
@@ -27,6 +30,7 @@ export default (state = initialState, action) => {
                 name: action.payload.name || "",
                 lastVisitedEvent: action.payload.lastVisitedEvent || ""
             });
+    
 
         default:
             return state;

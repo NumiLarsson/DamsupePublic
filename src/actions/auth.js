@@ -7,6 +7,7 @@ import { setupEventUserDataHooks } from './event';
 export const signedIn = createAction('USER_SIGNED_IN');
 export const signedOut = createAction('USER_SIGNED_OUT');
 export const updateUserInfo = createAction('UPDATE_USER_INFO');
+export const resetUserData = createAction('RESET_USER_DATA');
 
 /**
  * Listen for auth changes and handle user sign in and sign out.
@@ -19,7 +20,7 @@ export function listenForAuthChanges() {
             }, //Success
             () => {
                 dispatch(signedOut());
-                unsubscribeToUserData();
+                unsubscribeToUserData(dispatch, true);
                 dispatch(push('/'));
             }
         );
@@ -52,7 +53,7 @@ function handleUserSignIn(dispatch, user, getState) {
  * @param {function} getState - Redux thunk getState function
  */
 function subscribeToUserData (dispatch, uid, getState) {
-    unsubscribeToUserData();
+    unsubscribeToUserData(dispatch, false);
     api.user.subscribeToUserData(uid, (userData) => {
         const { lastVisitedEvent } = userData;
         const oldLastVisitedEvent = getState().auth.lastVisitedEvent;
@@ -68,7 +69,12 @@ function subscribeToUserData (dispatch, uid, getState) {
  * Unsubscribe to all user data. Used when the user signs out.
  */
 //TODO: CLEAR DATA, RESET_USER_DATA ACTION
-function unsubscribeToUserData() {
+function unsubscribeToUserData(dispatch, clear) {
+    
+    if(clear) {
+        dispatch(resetUserData());
+    }
+
     api.events.clearSubscriptions();
     api.user.clearSubscriptions();
 }

@@ -5,7 +5,7 @@
     flex-direction: column;
     align-items: center; 
     will-change: transform;
-    background:#9b59b6;
+    background: #b1db73;
 }
 
 .login-screen__header {
@@ -23,14 +23,6 @@
 
 .login-screen__form {
     width: 100%;
-}
-
-.spaced-item {
-    margin-top: 5px;
-}
-
-.spaced-item-x2 {
-    margin-top: 10px;
 }
 
 .backButton {

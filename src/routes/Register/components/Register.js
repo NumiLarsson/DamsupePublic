@@ -38,7 +38,7 @@ class RegisterScreen extends Component {
              <div className="register-screen">
                 <span className="backButton" role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
                 <div className="register-screen__header">
-                    <h1 className="register-screen__header__title">Register!</h1>
+                    <h1 className="register-screen__header__title">REGISTER</h1>
                 </div>
                 <div className="register-screen__form__wrapper">
                     <RegisterForm onSubmit={this.createUser} onSubmitFail={this.handleError} loading={this.props.loading} />
