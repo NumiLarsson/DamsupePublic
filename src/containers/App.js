@@ -7,7 +7,7 @@ require('../styles/spinners.css');
 require('../styles/Buttons.css');
 
 //TODO: Use css modules.
-import './styles/App.css';
+require('./styles/App.css');
 
 
 function getRouteTransition(path) {

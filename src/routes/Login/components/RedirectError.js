@@ -1,7 +1,7 @@
 import React from 'react';
 
 //TODO: Use css modules
-import './styles/RedirectError.css';
+require('./styles/RedirectError.css');
 
 
 export default (props) => {

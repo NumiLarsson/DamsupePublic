@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { signOut } from '../actions/user';
 
 //TODO: Use css modules
-import './styles/Main.css';
+require('./styles/Main.css');
 
 
 class MainScreen extends Component {

@@ -1,5 +1,4 @@
 import TweenMax from 'gsap';
-import React from 'react';
 
 export function animateErrorButton(button) {
     TweenMax.to(button, 1, {
@@ -59,7 +58,6 @@ export function fadeIn(target, fromOpacity, toOpacity) {
 
 export function animateSuccessButton(target, toElement, cb) {
 
-    let before = target.innerHTML;
     let tl = new TweenMax.TimelineMax();
     tl.to(target, 0.6, {backgroundColor: "green"}, TweenMax.easeInOut);
     tl.to(target, 0.6, {backgroundColor: '#34495e'}, TweenMax.easeInOut, "+=0.6");

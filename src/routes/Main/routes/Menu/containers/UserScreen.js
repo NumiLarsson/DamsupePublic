@@ -7,7 +7,7 @@ import {userScreenLoading, userScreenDoneLoading} from '../actions/main';
 import UserScreenForm from '../components/UserScreenForm';
 
 //TODO: Use css modules
-import './styles/UserScreen.css';
+require('./styles/UserScreen.css');
 
 class UserScreen extends Component {
 

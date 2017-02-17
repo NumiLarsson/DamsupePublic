@@ -19,7 +19,7 @@ import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
 import { expandCard } from '../../../../../utils/animations';
 
 //TODO: Use css modules
-import './styles/MainMenu.css';
+require('./styles/MainMenu.css');
 
 class MainMenu extends Component  {
 

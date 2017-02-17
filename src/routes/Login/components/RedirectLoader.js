@@ -1,7 +1,7 @@
 import React from 'react';
 
 //TODO: Use css modules
-import './styles/RedirectLoader.css';
+require('./styles/RedirectLoader.css');
 
 export default props => {
     return (
