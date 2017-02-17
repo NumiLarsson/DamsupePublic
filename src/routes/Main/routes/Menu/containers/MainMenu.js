@@ -34,7 +34,6 @@ class MainMenu extends Component  {
             let dispatch = this.props.dispatch;
             expandCard(target, styles.cardExpanded, () => {
                 dispatch(action());
-                console.log(styles.cardHeader);
                 target.querySelector(`.${styles.cardHeader}`).classList.add(styles.cardHeaderExpanded);
             });
             //TODO:FIX

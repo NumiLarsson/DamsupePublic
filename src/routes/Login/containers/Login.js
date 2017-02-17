@@ -17,6 +17,7 @@ import buttons from 'styles/buttons.css';
 import spinners from 'styles/spinners.css';
 import margins from 'styles/margins.css';
 
+
 class LoginScreen extends Component {
 
     constructor() {
@@ -64,7 +65,7 @@ class LoginScreen extends Component {
 
     render() {
         return (
-            <div className={styles.loginScreen}>
+            <div className={styles.loginScreenContent}>
                 {this.props.redirectLoading && 
                     <RedirectLoader>
                         <div className={spinners.spinner}>

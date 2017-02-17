@@ -1,23 +1,22 @@
 .enter { 
-  opacity: 0.01;
-  transition: opacity 1.5s ease-in;
+  transform: translate3d(100%, 0, 0); 
+  transition: transform .0.3s ease-in-out;
  }
 .enterActive { 
-  opacity: 1;
+  transform: translate3d(0, 0, 0); 
  }
 .leave { 
-  opacity: 1;
-  transition: opacity 1.5s ease-in;
+  transition: transform .3s ease-in-out;
 }
 .leaveActive { 
-  opacity: 0.01;
+  transform: translate3d(-100%, 0, 0);
  }
 .appear { 
   opacity: 0.01;
  }
 .appearActive { 
   opacity: 1;
-  transition: opacity 1.5s ease-in;
+  transition: opacity 5s ease-in;
 }
 
 /*
