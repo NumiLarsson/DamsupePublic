@@ -16,10 +16,10 @@ import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
     infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from '../actions/main';
 
 //Animations
-import { expandCard } from '../../../../../utils/animations';
+import { expandCard } from 'utils/animations';
 
-//TODO: Use css modules
-require('./styles/MainMenu.css');
+//Styles
+import styles from './styles/MainMenu.css';
 
 class MainMenu extends Component  {
 
@@ -29,13 +29,13 @@ class MainMenu extends Component  {
         this.closeCard = this.closeCard.bind(this);
     }
 
-
     expCard(target, shouldExpand, action) {
         if(shouldExpand) {
             let dispatch = this.props.dispatch;
-            expandCard(target, "cardExpanded", () => {
+            expandCard(target, styles.cardExpanded, () => {
                 dispatch(action());
-                target.querySelector('.cardHeader').classList.add('cardHeaderExpanded');
+                console.log(styles.cardHeader);
+                target.querySelector(`.${styles.cardHeader}`).classList.add(styles.cardHeaderExpanded);
             });
             //TODO:FIX
             this.wrapper.style.overflow = "hidden";
@@ -45,8 +45,8 @@ class MainMenu extends Component  {
     closeCard(target, action) {
         this.props.dispatch(action());
         target.removeAttribute("style");
-        target.classList.remove('cardExpanded');
-        target.querySelector('.cardHeader').classList.remove('cardHeaderExpanded');
+        target.classList.remove(styles.cardExpanded);
+        target.querySelector(`.${styles.cardHeader}`).classList.remove(styles.cardHeaderExpanded);
         //TODO:FIX
         this.wrapper.style.overflow = "auto";
     }
@@ -54,10 +54,11 @@ class MainMenu extends Component  {
 
     render() {
         return (
-            <div className="mainMenu">
-                <div ref={(r)=> this.wrapper = r} className="mainMenuCardWrapper">
+            <div className={styles.mainMenu}>
+                <div ref={(r)=> this.wrapper = r} className={styles.mainMenuCardWrapper}>
                     <MainMenuCard 
-                        styleClass="first" 
+                        styleClass={styles.first}
+                        headerStyle={styles.cardHeader} 
                         open={this.props.infoScreenOpen} 
                         expandCard={this.expCard} 
                         closeCard={this.closeCard}
@@ -66,7 +67,8 @@ class MainMenu extends Component  {
                             <Info color="#fff" size="72" />
                     </MainMenuCard>
                     <MainMenuCard 
-                        styleClass="second" 
+                        styleClass={styles.second}
+                        headerStyle={styles.cardHeader}  
                         open={this.props.mediaScreenOpen} 
                         expandCard={this.expCard} 
                         closeCard={this.closeCard}
@@ -75,7 +77,8 @@ class MainMenu extends Component  {
                             <Media color="#fff" size="72" />
                     </MainMenuCard>
                     <MainMenuCard 
-                        styleClass="third" 
+                        styleClass={styles.third}
+                        headerStyle={styles.cardHeader}  
                         open={this.props.shopScreenOpen} 
                         expandCard={this.expCard} 
                         closeCard={this.closeCard}
@@ -84,7 +87,8 @@ class MainMenu extends Component  {
                             <Cart color="#fff" size="72" />
                     </MainMenuCard>
                     <MainMenuCard 
-                        styleClass="fourth" 
+                        styleClass={styles.fourth}
+                        headerStyle={styles.cardHeader}  
                         open={this.props.userScreenOpen} 
                         expandCard={this.expCard} 
                         closeCard={this.closeCard}

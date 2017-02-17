@@ -9,7 +9,7 @@ import { listenForAuthChanges } from './actions/auth';
 import { listenForNetworkChanges } from './actions/network';
 
 /*APP SPECIFIC IMPORTS */
-require('./index.css');
+import './index.css';
 import App from './containers/App';
 import TweenMax from 'gsap';
 

@@ -1,22 +1,22 @@
 import React from 'react';
 
 //TODO: Use css modules
-require('./styles/MaterialField.css');
+import styles from './MaterialField.css';
 
-const base = 'materialLabel';
-const raised = 'materialLabelRaised';
+const base = styles.materialLabel; 
+const raised = styles.materialLabelRaised;
 
 export default ({input, label, type, fieldId, placeholder, meta: {touched, valid, error, active } }) => {
     return (
-        <div className="inputContainer">
+        <div className={styles.inputContainer}>
             <input
                 {...input}
                 id={fieldId} 
-                className={error && touched ? "materialField error" : "materialField"} 
+                className={error && touched ? (styles.materialField + ' error') : styles.materialField} 
                 type={type} />
             <label className={getLabelClassName(input.value, active)} htmlFor={fieldId}>{label} </label>
-            <div className="materialBar">
-                {touched && error && <span className="materialFieldError">{error}</span>}
+            <div className={styles.materialBar}>
+                {touched && error && <span className={styles.materialFieldError}>{error}</span>}
             </div>
             
         </div>

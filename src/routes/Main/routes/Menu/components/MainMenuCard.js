@@ -1,6 +1,7 @@
 import React from 'react';
 import Close from 'react-icons/lib/md/close';
 
+import styles from './styles/MainMenuCard.css';
 
 export default props => {
 
@@ -15,10 +16,10 @@ export default props => {
     }
 
     return (
-        <div ref={(card) => ref = card} className={'mainMenuCard ' + props.styleClass} onClick={expand}>
-            <div className="cardHeader">
+        <div ref={(card) => ref = card} className={[styles.mainMenuCard, props.styleClass].join(' ')} onClick={expand}>
+            <div className={props.headerStyle}>
                 {props.children[0] || props.children}
-                {props.open && <Close className="backButton" onClick={close} color="#fff" size="52" />}
+                {props.open && <Close className={styles.backButton} onClick={close} color="#fff" size="52" />}
             </div>
             {(props.open && props.children[1]) || null}
         </div>

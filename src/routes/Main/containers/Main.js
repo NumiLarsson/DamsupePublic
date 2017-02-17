@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { signOut } from '../actions/user';
 
 //TODO: Use css modules
-require('./styles/Main.css');
+import styles from './styles/Main.css';
 
 
 class MainScreen extends Component {
@@ -14,8 +14,8 @@ class MainScreen extends Component {
 
     render() {
         return (
-            <div className="mainScreen">
-                <header id="mainHeader" className="mainHeader">
+            <div className={styles.mainScreen}>
+                <header id={styles.mainHeader} className={styles.mainHeader}>
                     <h2 onClick={this.props.signOut}>{this.props.currentEvent}</h2>
                 </header>
                 {this.props.children}

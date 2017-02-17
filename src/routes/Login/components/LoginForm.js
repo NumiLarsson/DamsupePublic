@@ -1,6 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import MaterialField from '../../../components/MaterialField';
+import MaterialField from 'components/MaterialField/MaterialField';
+import buttons from 'styles/buttons.css';
+import margins from 'styles/margins.css';
 
 const LoginForm = (props) => {
     const { handleSubmit, submitFailed, error, pristine, submitting, loading } = props;
@@ -12,7 +14,7 @@ const LoginForm = (props) => {
             <button type="submit" 
                 id="loginBtn" 
                 disabled={pristine || submitting || loading}
-                className="flat-button spacedItem30 flat-button--primary">
+                className={[buttons.flatButtonPrimary, margins.spaced30].join(' ')}>
                 {submitting || loading ? 'Loading' : (submitFailed && error ?  error : 'SIGN IN')}
             </button>
         </form>

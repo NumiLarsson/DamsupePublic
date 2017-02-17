@@ -1,11 +1,11 @@
 import React from 'react';
 
 //TODO: Use css modules
-require('./styles/RedirectLoader.css');
+import styles from './styles/RedirectLoader.css';
 
 export default props => {
     return (
-        <div className="redirectLoader">
+        <div className={styles.redirectLoader}>
             {props.children}
         </div>
     )

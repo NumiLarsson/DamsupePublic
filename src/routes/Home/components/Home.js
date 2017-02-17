@@ -2,21 +2,21 @@ import React from 'react';
 import { Link } from 'react-router'
 
 //TODO: Use css modules.
-require('./styles/Home.css');
+import styles from './styles/Home.css';
 
 function HomeScreen(props) {
     return (
-        <div className="homeScreen">
+        <div className={styles.homeScreen}>
             <h1>DAMSUPE VT17</h1>
-            <div className="divider">
+            <div className={styles.divider}>
             </div>
-            <nav className="nav">
-                <div className="linkWrapper">
-                    <Link to="/register" className="emphesizedLink">JOIN</Link>
+            <nav className={styles.nav}>
+                <div className={styles.linkWrapper}>
+                    <Link to="/register" className={styles.emphesizedLink}>JOIN</Link>
                 </div>
-                <span className="verticalDivider"></span>
-                <div className="linkWrapper">
-                    <Link to="/login" className="emphesizedLink">LOGIN</Link>
+                <span className={styles.verticalDivider}></span>
+                <div className={styles.linkWrapper}>
+                    <Link to="/login" className={styles.emphesizedLink}>LOGIN</Link>
                 </div>
             </nav>
         </div>

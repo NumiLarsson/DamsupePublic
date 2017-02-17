@@ -8,7 +8,7 @@ import api from '../../../api/Api';
 import { animateErrorButton } from '../../../utils/animations';
 
 //TODO: Use css modules
-require('./styles/Register.css');
+import styles from './styles/Register.css';
 
 class RegisterScreen extends Component {
 
@@ -36,12 +36,12 @@ class RegisterScreen extends Component {
 
     render() {
         return (
-             <div className="registerScreen">
-                <span className="backButton" role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
-                <div className="registerScreenHeader">
-                    <h1 className="registerScreenHeaderTitle">REGISTER</h1>
+             <div className={styles.registerScreen}>
+                <span className={styles.backButton} role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
+                <div className={styles.registerScreenHeader}>
+                    <h1 className={styles.registerScreenHeaderTitle}>REGISTER</h1>
                 </div>
-                <div className="registerScreenFormWrapper">
+                <div className={styles.registerScreenFormWrapper}>
                     <RegisterForm onSubmit={this.createUser} onSubmitFail={this.handleError} loading={this.props.loading} />
                 </div> 
             </div>

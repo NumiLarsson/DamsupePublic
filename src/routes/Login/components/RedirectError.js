@@ -1,12 +1,13 @@
 import React from 'react';
 
 //TODO: Use css modules
-require('./styles/RedirectError.css');
+import styles from './styles/RedirectError.css';
+import margins from 'styles/margins.css';
 
 
 export default (props) => {
     return (
-        <div className="redirectError spaced-item-x2"> 
+        <div className={[styles.redirectError, margins.spaced20].join(' ')}> 
             {props.error}
         </div>
     )

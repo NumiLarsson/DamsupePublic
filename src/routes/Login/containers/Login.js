@@ -3,16 +3,19 @@ import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
 import { goBack } from 'react-router-redux';
 import Back from 'react-icons/lib/md/arrow-back';
-import api from '../../../api/Api';
-import { animateErrorButton } from '../../../utils/animations';
+import api from 'api/Api';
+import { animateErrorButton } from 'utils/animations';
 
 //Components
 import LoginForm from '../components/LoginForm';
 import RedirectLoader from '../components/RedirectLoader';
 import RedirectError from '../components/RedirectError';
 
-//TODO: Use css modules
-require('./styles/Login.css');
+//Styles
+import styles from './styles/Login.css';
+import buttons from 'styles/buttons.css';
+import spinners from 'styles/spinners.css';
+import margins from 'styles/margins.css';
 
 class LoginScreen extends Component {
 
@@ -61,22 +64,22 @@ class LoginScreen extends Component {
 
     render() {
         return (
-            <div className="loginScreen">
+            <div className={styles.loginScreen}>
                 {this.props.redirectLoading && 
                     <RedirectLoader>
-                        <div className="spinner">
-                                <div className="dot1"></div>
-                                <div className="dot2"></div>
+                        <div className={spinners.spinner}>
+                                <div className={spinners.dot1}></div>
+                                <div className={spinners.dot2}></div>
                         </div>
                     </RedirectLoader>
                 }
-                <span className="backButton" role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
-                <div className="loginScreenHeader">
-                    <h1 className="loginScreenHeaderTitle">Welcome!</h1>
+                <span className={styles.backButton} role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
+                <div className={styles.loginScreenHeader}>
+                    <h1 className={styles.loginScreenHeaderTitle}>Welcome!</h1>
                 </div>
-                <div className="loginScreenFormWrapper">
+                <div className={styles.loginScreenFormWrapper}>
                     <LoginForm onSubmit={this.signInEmail} onSubmitFail={this.handleError} loading={this.props.loading} />
-                    <button id="facebookBtn" onClick={this.signInFacebook} className="flat-button flat-button--facebook spacedItem">USE FACEBOOK</button>
+                    <button id="facebookBtn" onClick={this.signInFacebook} className={[buttons.flatButtonFacebook, margins.spaced5].join(' ')}>USE FACEBOOK</button>
                     {this.props.redirectError ? <RedirectError error={this.props.redirectErrorMsg}/> : null}
                 </div> 
             </div>

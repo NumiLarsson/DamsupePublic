@@ -7,7 +7,7 @@ import {userScreenLoading, userScreenDoneLoading} from '../actions/main';
 import UserScreenForm from '../components/UserScreenForm';
 
 //TODO: Use css modules
-require('./styles/UserScreen.css');
+import styles from './styles/UserScreen.css';
 
 class UserScreen extends Component {
 
@@ -43,8 +43,8 @@ class UserScreen extends Component {
 
     render() {
         return (
-            <div className="screen" ref={(r) => this.userScreen = r}>
-                <div className="screenContent">
+            <div className={styles.screen} ref={(r) => this.userScreen = r}>
+                <div className={styles.screenContent}>
                     <UserScreenForm onSubmit={this.saveUserData} onSubmitFail={this.handleSaveError} />
                 </div>
             </div>

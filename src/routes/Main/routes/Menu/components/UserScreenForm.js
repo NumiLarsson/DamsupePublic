@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form';
-import MaterialField from '../../../../../components/MaterialField';
+import MaterialField from 'components/MaterialField/MaterialField';
+import buttons from 'styles/buttons.css';
+import margins from 'styles/margins.css';
 
 //TODO: Use css modules
-require('./styles/UserScreenForm.css');
+import styles from './styles/UserScreenForm.css';
 
 const validate = values => {
     const errors = {};
@@ -21,13 +23,13 @@ const validate = values => {
 let UserScreenForm = (props) => {
     let { handleSubmit, submitFailed, error, submitting, loading } = props;
     return (
-        <form onSubmit={handleSubmit} className="user-screen__form">
+        <form onSubmit={handleSubmit} className={styles.UserScreenForm}>
             <Field fieldId="userName" required type="text" name="name" placeholder="Name" component={MaterialField} label="Name"/>
             <Field fieldId="tableNr" required type="text" name="table" placeholder="Table" component={MaterialField} label="Table"/>
             <button type="submit" 
                 id="saveBtn" 
                 disabled={submitting || loading}
-                className="flat-button flat-button--primary spaced-item-x3 ">
+                className={[buttons.flatButtonPrimary, margins.spaced30].join(' ')}>
                 {submitting || loading ? 'SAVE' : (submitFailed && error ?  error : 'SAVE')}
             </button>
         </form>

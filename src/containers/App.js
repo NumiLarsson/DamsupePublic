@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 //Global styles.
-require('../styles/routing.css');
+import transitions from 'styles/routing.css';
 require('../styles/spinners.css');
-require('../styles/Buttons.css');
+require('../styles/buttons.css');
 
 //TODO: Use css modules.
-require('./styles/App.css');
+import styles from './styles/App.css';
 
 
 function getRouteTransition(path) {
@@ -21,11 +21,11 @@ function getRouteTransition(path) {
 class App extends Component {
   render() {
     return (
-      <div className="app">
+      <div className={styles.app}>
         <ReactCSSTransitionGroup
               component="div"
-              className="routeContainer"
-              transitionName={getRouteTransition(this.props.location.pathname)}
+              className={styles.routeContainer}
+              transitionName={transitions}
               transitionEnterTimeout={300}
               transitionLeaveTimeout={300}
             >
