@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import MaterialField from '../../../components/MaterialField';
 
 //TODO: Use css modules. 
-import './styles/RegisterForm.css';
+require('./styles/RegisterForm.css');
 
 function isValidPassword(password) {
     return password.length >= 6;

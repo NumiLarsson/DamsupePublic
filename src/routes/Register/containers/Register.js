@@ -8,7 +8,7 @@ import api from '../../../api/Api';
 import { animateErrorButton } from '../../../utils/animations';
 
 //TODO: Use css modules
-import './styles/Register.css';
+require('./styles/Register.css');
 
 class RegisterScreen extends Component {
 

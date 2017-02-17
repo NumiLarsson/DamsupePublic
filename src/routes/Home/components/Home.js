@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router'
 
 //TODO: Use css modules.
-import './styles/Home.css';
+require('./styles/Home.css');
 
 function HomeScreen(props) {
     return (

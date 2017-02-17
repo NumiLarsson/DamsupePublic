@@ -1,5 +1,7 @@
 import React from 'react';
-import './styles/MaterialField.css';
+
+//TODO: Use css modules
+require('./styles/MaterialField.css');
 
 const base = 'materialLabel';
 const raised = 'materialLabelRaised';

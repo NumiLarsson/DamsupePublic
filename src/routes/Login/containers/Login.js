@@ -12,7 +12,7 @@ import RedirectLoader from '../components/RedirectLoader';
 import RedirectError from '../components/RedirectError';
 
 //TODO: Use css modules
-import './styles/Login.css';
+require('./styles/Login.css');
 
 class LoginScreen extends Component {
 

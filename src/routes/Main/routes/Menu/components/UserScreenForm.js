@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import MaterialField from '../../../../../components/MaterialField';
 
 //TODO: Use css modules
-import './styles/UserScreenForm.css';
+require('./styles/UserScreenForm.css');
 
 const validate = values => {
     const errors = {};
@@ -19,7 +19,7 @@ const validate = values => {
 }
 
 let UserScreenForm = (props) => {
-    let { handleSubmit, submitFailed, error, pristine, submitting, loading } = props;
+    let { handleSubmit, submitFailed, error, submitting, loading } = props;
     return (
         <form onSubmit={handleSubmit} className="user-screen__form">
             <Field fieldId="userName" required type="text" name="name" placeholder="Name" component={MaterialField} label="Name"/>
