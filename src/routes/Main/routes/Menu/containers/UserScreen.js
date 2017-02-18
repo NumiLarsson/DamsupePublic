@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
-import api from '../../../../../api/Api';
-import { fadeIn, animateSuccessButton, animateErrorButton } from '../../../../../utils/animations';
-import {userScreenLoading, userScreenDoneLoading} from '../actions/main';
+import api from 'api/Api';
+import { fadeIn, animateSuccessButton, animateErrorButton } from 'utils/animations';
+import {userScreenLoading, userScreenDoneLoading} from 'actions/userscreen';
 import UserScreenForm from '../components/UserScreenForm';
 
 //TODO: Use css modules

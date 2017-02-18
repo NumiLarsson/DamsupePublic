@@ -7,6 +7,11 @@ export default class UserApi {
         this.subscriptions = {};
     }
 
+    /**
+     * Create a user if it does not exist.
+     * @param {object} user - Firebase user object.
+     * @returns Promise resolving to a bool representing success and rejecting with an error.
+     */
     createUserIfNotExists(user) {
         let self = this;
         return new Promise((resolve, reject) => {
@@ -26,6 +31,12 @@ export default class UserApi {
         })
     }
 
+
+    /**
+     * Subscribe to data about the user.
+     * @param {string} uid - ID of the user.
+     * @param {function} cb - Function to call when the data changes.
+     */    
     subscribeToUserData(uid, cb) {
         let ref = this.database().ref(`/users/${uid}`);
         ref.on('value', (snapshot) => {
@@ -34,7 +45,10 @@ export default class UserApi {
         this.subscriptions[uid] = ref;
     }
 
-    clearSubscriptions(uid) {
+    /**
+    * Clear all subscriptions.
+    */    
+    clearSubscriptions() {
         for (var key in this.subscriptions) {
             if (this.subscriptions.hasOwnProperty(key)) {
                 this.subscriptions[key].off();

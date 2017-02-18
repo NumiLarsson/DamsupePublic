@@ -1,8 +1,13 @@
 import { createAction } from 'redux-actions';
 import api from '../api/Api';
 
-export const updateCurrentEvent = createAction('UPDATE_CURRENT_EVENT');
-export const updateUserEventData = createAction('UPDATE_USER_EVENT_DATA');
+export const EVENT_ACTIONS = {
+    UPDATE_CURRENT_EVENT: 'UPDATE_CURRENT_EVENT',
+    UPDATE_USER_EVENT_DATA: 'UPDATE_USER_EVENT_DATA'
+}
+
+export const updateCurrentEvent = createAction(EVENT_ACTIONS.UPDATE_CURRENT_EVENT);
+export const updateUserEventData = createAction(EVENT_ACTIONS.UPDATE_USER_EVENT_DATA);
 
  /**
  * Subscribe to data specific to a user or event or a combination.

@@ -1,15 +1,15 @@
 .loginScreen {
-    position: relative;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
     will-change: transform;
     background: #b1db73;
 }
 
 .loginScreenContent {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    position: relative;
 }
 
 .loginScreenHeader {

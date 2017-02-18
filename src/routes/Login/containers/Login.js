@@ -11,6 +11,9 @@ import LoginForm from '../components/LoginForm';
 import RedirectLoader from '../components/RedirectLoader';
 import RedirectError from '../components/RedirectError';
 
+//Actions
+import {setRedirectError, setRedirectLoading, setNoRedirect, setLoading, setDoneLoading} from 'actions/login';
+
 //Styles
 import styles from './styles/Login.css';
 import buttons from 'styles/buttons.css';
@@ -99,15 +102,13 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        setRedirectError: (msg) => dispatch({type: 'REDIRECT_ERROR', payload: msg}),
-        setRedirectLoading: () => dispatch({type: 'REDIRECT_LOADING'}),
-        setNoRedirect: () => dispatch({type: 'NO_REDIRECT'}),
-        setLoading: () => dispatch({type: 'LOGIN_LOADING'}),
-        setDoneLoading: () => dispatch({type: 'LOGIN_DONE_LOADING'}),
-        goBack: () => dispatch(goBack())
-    }
+const mapDispatchToProps = {
+    setRedirectError,
+    setRedirectLoading,
+    setNoRedirect,
+    setLoading,
+    setDoneLoading,
+    goBack
 }
 
 

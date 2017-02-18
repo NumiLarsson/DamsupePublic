@@ -1,15 +1,15 @@
 .registerScreen {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
     height: 100%;
     will-change: transform;
     background: #b1db73;
-    position: relative;
 }
 
 .registerContent {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; 
 }
 
 .registerScreenHeader {
