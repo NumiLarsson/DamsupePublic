@@ -8,6 +8,10 @@
     background: #b1db73;
 }
 
+.loginScreenContent {
+    height: 100%;
+}
+
 .loginScreenHeader {
   padding: 10px;
 }

@@ -52,8 +52,30 @@ export function expandCard(card, expandedClass, callback) {
     });   
 }
 
-export function fadeIn(target, fromOpacity, toOpacity) {
-    TweenMax.fromTo(target, 1, {opacity: fromOpacity}, {opacity: toOpacity});
+export function fadeIn(target, fromOpacity, toOpacity, cb) {
+    TweenMax.fromTo(target, 1, {opacity: fromOpacity}, {opacity: toOpacity, onComplete: cb});
+}
+
+export function leave(target, duration,  direction, cb) {
+    let dir = direction === 'right' ? '100%' : '-100%';
+    let tl = new TweenMax.TimelineMax();
+    tl.to(target, duration, {x : dir});
+    tl.add(cb);
+}
+
+export function enter(target, duration, from, cb) {
+    let dir = from ==='right' ? '100%' : '-100%';
+    let tl = new TweenMax.TimelineMax();
+    tl.fromTo(target, duration, {x : dir}, {x: '0%'});
+    tl.add(() => cb());
+    tl.play();
+}
+
+export function enterTop(target, duration, delay, cb) {
+    let tl = new TweenMax.TimelineMax();
+    tl.fromTo(target, duration, {y: '-100%'}, {y: '0%', ease: TweenMax.Bounce.easeOut}, delay);
+    tl.add(() => cb());
+    tl.play();
 }
 
 export function animateSuccessButton(target, toElement, cb) {
@@ -61,6 +83,6 @@ export function animateSuccessButton(target, toElement, cb) {
     let tl = new TweenMax.TimelineMax();
     tl.to(target, 0.6, {backgroundColor: "green"}, TweenMax.easeInOut);
     tl.to(target, 0.6, {backgroundColor: '#34495e'}, TweenMax.easeInOut, "+=0.6");
-    tl.add(cb);
-
+    tl.add(() => cb());
+    tl.play();
 }

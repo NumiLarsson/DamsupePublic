@@ -14,7 +14,7 @@ class MainScreen extends Component {
 
     render() {
         return (
-            <div className={styles.mainScreen}>
+            <div className={styles.mainContent}>
                 <header id={styles.mainHeader} className={styles.mainHeader}>
                     <h2 onClick={this.props.signOut}>{this.props.currentEvent}</h2>
                 </header>

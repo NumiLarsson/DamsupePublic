@@ -36,7 +36,7 @@ class RegisterScreen extends Component {
 
     render() {
         return (
-             <div className={styles.registerScreen}>
+             <div className={styles.registerContent}>
                 <span className={styles.backButton} role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
                 <div className={styles.registerScreenHeader}>
                     <h1 className={styles.registerScreenHeaderTitle}>REGISTER</h1>

@@ -8,6 +8,10 @@
     position: relative;
 }
 
+.registerContent {
+    height: 100%;
+}
+
 .registerScreenHeader {
   padding: 10px;
 }
