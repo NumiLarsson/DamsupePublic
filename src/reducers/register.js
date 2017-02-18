@@ -1,5 +1,5 @@
 
-import { REGISTER_ACTIONS } from 'actions/register';
+import { REGISTER_LOADING, REGISTER_DONE_LOADING } from 'actions/actionTypes';
 
 export const initialState = {
     loading: false
@@ -8,12 +8,12 @@ export const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
     
-        case REGISTER_ACTIONS.REGISTER_LOADING:
+        case REGISTER_LOADING:
             return Object.assign({}, state, {
                 loading: true
             });
         
-        case REGISTER_ACTIONS.REGISTER_DONE_LOADING:
+        case REGISTER_DONE_LOADING:
             return Object.assign({}, state, {
                 loading: false
             });

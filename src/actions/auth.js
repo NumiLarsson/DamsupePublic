@@ -1,20 +1,14 @@
 import { createAction } from 'redux-actions';
 import api from '../api/Api';
 import { push } from 'react-router-redux';
-import { setupEventUserDataHooks } from './event';
-
-export const AUTH_ACTIONS = {
-    USER_SIGNED_IN: 'USER_SIGNED_IN',
-    USER_SIGNED_OUT: 'USER_SIGNED_OUT',
-    UPDATE_USER_INFO: 'UPDATE_USER_INFO',
-    RESET_USER_DATA: 'RESET_USER_DATA'
-}
+import { setupEventUserDataHooks, eventLoading } from './event';
+import { USER_SIGNED_IN, USER_SIGNED_OUT, UPDATE_USER_INFO, RESET_USER_DATA} from './actionTypes';
 
 
-export const signedIn = createAction(AUTH_ACTIONS.USER_SIGNED_IN);
-export const signedOut = createAction(AUTH_ACTIONS.USER_SIGNED_OUT);
-export const updateUserInfo = createAction(AUTH_ACTIONS.UPDATE_USER_INFO);
-export const resetUserData = createAction(AUTH_ACTIONS.RESET_USER_DATA);
+export const signedIn = createAction(USER_SIGNED_IN);
+export const signedOut = createAction(USER_SIGNED_OUT);
+export const updateUserInfo = createAction(UPDATE_USER_INFO);
+export const resetUserData = createAction(RESET_USER_DATA);
 
 /**
  * Listen for auth changes and handle user sign in and sign out.
@@ -65,6 +59,7 @@ function subscribeToUserData (dispatch, uid, getState) {
         const { lastVisitedEvent } = userData;
         const oldLastVisitedEvent = getState().auth.lastVisitedEvent;
         if(lastVisitedEvent && (lastVisitedEvent !== oldLastVisitedEvent)) {
+            dispatch(eventLoading());
             setupEventUserDataHooks(dispatch, uid, lastVisitedEvent);
         }
         dispatch(updateUserInfo(userData));
