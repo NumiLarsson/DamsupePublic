@@ -13,7 +13,7 @@ import Info from 'react-icons/lib/md/info';
 
 //Actions
 import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
-    infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from '../actions/main';
+    infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from 'actions/menu';
 
 //Animations
 import { expandCard } from 'utils/animations';
@@ -109,10 +109,10 @@ const mapStateToProps = (state) => {
         userName: state.auth.name,
         uid: state.auth.uid,
         currentEvent: state.auth.lastVisitedEvent,
-        infoScreenOpen: state.main.infoScreenOpen,
-        mediaScreenOpen: state.main.mediaScreenOpen,
-        shopScreenOpen: state.main.shopScreenOpen,
-        userScreenOpen: state.main.userScreenOpen
+        infoScreenOpen: state.main.menu.infoScreenOpen,
+        mediaScreenOpen: state.main.menu.mediaScreenOpen,
+        shopScreenOpen: state.main.menu.shopScreenOpen,
+        userScreenOpen: state.main.menu.userScreenOpen
     }
 }
 

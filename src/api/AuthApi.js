@@ -25,16 +25,28 @@ const FACEBOOK_LOGIN_ERRORS = {
     'auth/timeout' : 'Request timed out'
 }
 
+/**
+ * Authentication API.
+ */
 export default class AuthApi {
 
     constructor(auth) {
         this.auth = auth;
     }
 
+    /**
+     * Get the currently signed in user.
+     * @returns Firebase user object representing the currently signed in user or null.
+     */
     getCurrentUser() {
         return this.auth().currentUser;
     }
 
+    /**
+     * Listen for changes in Authentication status.
+     * @param {function} signedIn - Function to call when a user has signed in.
+     * @param {function} signedOut - Function to call when a user has signed out.
+     */
     listenForAuthChanges(signedIn, signedOut) {
         this.auth().onAuthStateChanged((user) => {
             if (user) {
@@ -45,6 +57,12 @@ export default class AuthApi {
         });
     }
 
+    /**
+     * Sign in user email/password.
+     * @param {string} email - The email of the user.
+     * @param {string} password - The password of the user.
+     * @returns Promise resolving to a success message and rejecting with an error.
+     */
     signInWithEmail(email="", password="") {
         let self = this;
         return new Promise((resolve, reject) => {
@@ -59,6 +77,12 @@ export default class AuthApi {
         })
     }
 
+    /**
+     * Create an email/password user.
+     * @param {string} email - The email of the user.
+     * @param {string} password - The password of the user.
+     * @returns Promise resolving to a success message and rejecting with an error.
+     */
     createUser(email="", password="") {
         let self = this;
         return new Promise((resolve, reject) => {
@@ -73,12 +97,18 @@ export default class AuthApi {
         })
     }    
 
-    //Todo: Add error handling
+    /**
+     * Sign in using Facebook redirect.
+     */
     signInWithFacebookRedirect() {
         const provider = new this.auth.FacebookAuthProvider();
         this.auth().signInWithRedirect(provider)
     }
 
+     /**
+     * Get the result of a Facebook redirect.
+     * @returns Promise resolving to a Firebase user object and rejecting with an error.
+     */
     getRedirectResult() {
         let self = this;
         return new Promise((resolve, reject) => {
@@ -92,7 +122,10 @@ export default class AuthApi {
         })
     }
     
-
+     /**
+     * Sign out of the application
+     * @returns Promise resolving to a success message and rejecting with an error.
+     */
     signOut() {
         let self = this;
         return new Promise((resolve, reject) => {

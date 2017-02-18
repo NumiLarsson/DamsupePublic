@@ -1,3 +1,4 @@
+import { NETWORK_ACTIONS } from 'actions/network';
 
 
 export const initialState = {
@@ -7,12 +8,12 @@ export const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
 
-        case 'USER_IS_ONLINE': 
+        case NETWORK_ACTIONS.USER_IS_ONLINE: 
             return Object.assign({}, state, {
                 online: true
             });
             
-        case 'USER_IS_OFFLINE':
+        case NETWORK_ACTIONS.USER_IS_OFFLINE:
             return Object.assign({}, state, {
                 online: false
             });

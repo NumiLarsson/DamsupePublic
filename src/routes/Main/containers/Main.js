@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { signOut } from '../actions/user';
+import { signOut } from 'actions/user';
+import { resetMenu } from 'actions/menu';
 
 //TODO: Use css modules
 import styles from './styles/Main.css';
@@ -32,11 +33,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        resetMenu: () => dispatch({type: 'RESET_MENU'}),
-        signOut: () => dispatch(signOut())
-    }
+const mapDispatchToProps = {
+    resetMenu,
+    signOut
 }
 
 

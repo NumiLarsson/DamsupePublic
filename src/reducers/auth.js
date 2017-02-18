@@ -1,3 +1,5 @@
+import { AUTH_ACTIONS } from 'actions/auth';
+
 export const initialState = {
     authenticated : false,
     uid: "",
@@ -9,22 +11,22 @@ export const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
 
-        case 'RESET_USER_DATA': 
+        case AUTH_ACTIONS.RESET_USER_DATA: 
             return Object.assign({}, state, initialState);
             
-        case 'USER_SIGNED_OUT':
+        case AUTH_ACTIONS.USER_SIGNED_OUT:
             return Object.assign({}, state, {
                 authenticated: false,
                 uid: ""
             });
         
-        case 'USER_SIGNED_IN':
+        case AUTH_ACTIONS.USER_SIGNED_IN:
             return Object.assign({}, state, {
                 authenticated: true,
                 uid: action.payload
             });
         
-        case 'UPDATE_USER_INFO':
+        case AUTH_ACTIONS.UPDATE_USER_INFO:
             return Object.assign({}, state, {
                 email: action.payload.email || "",
                 name: action.payload.name || "",

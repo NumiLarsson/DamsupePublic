@@ -13,8 +13,11 @@ const config = {
 
 fb.initializeApp(config);
 
+/** 
+ * Client Side API
+ */
 class Api {
-
+    
     auth = new AuthApi(fb.auth);
     user = new UserApi(fb.database);
     events = new EventApi(fb.database);

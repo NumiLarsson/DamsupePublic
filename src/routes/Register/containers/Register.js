@@ -4,10 +4,10 @@ import { SubmissionError } from 'redux-form';
 import { goBack } from 'react-router-redux';
 import Back from 'react-icons/lib/md/arrow-back';
 import RegisterForm from '../components/RegisterForm';
-import api from '../../../api/Api';
-import { animateErrorButton } from '../../../utils/animations';
+import api from 'api/Api';
+import { animateErrorButton } from 'utils/animations';
+import {registerLoading, registerDoneLoading } from 'actions/register';
 
-//TODO: Use css modules
 import styles from './styles/Register.css';
 
 class RegisterScreen extends Component {
@@ -19,18 +19,18 @@ class RegisterScreen extends Component {
     }
 
     componentWillMount() {
-        this.props.setDoneLoading();
+        this.props.registerDoneLoading();
     }
 
     createUser(values) {
-        this.props.setLoading();
+        this.props.registerLoading();
         const { email, password } = values;
         return api.auth.createUser(email, password)
         .catch((e) => { throw new SubmissionError({ _error: e }); });
     }
 
     handleError() {
-        this.props.setDoneLoading();
+        this.props.registerDoneLoading();
         animateErrorButton("#registerBtn");
     }
 
@@ -57,12 +57,10 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        setLoading: () => dispatch({type: 'REGISTER_LOADING'}),
-        setDoneLoading: () => dispatch({type: 'REGISTER_DONE_LOADING'}),
-        goBack: () => dispatch(goBack())
-    }
+const mapDispatchToProps =  {
+    registerLoading,
+    registerDoneLoading,
+    goBack
 }
 
 
