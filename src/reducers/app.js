@@ -2,7 +2,7 @@ import { USER_IS_ONLINE, USER_IS_OFFLINE, APP_LOADING, APP_DONE_LOADING } from '
 
 export const initialState = {
     online : true,
-    loading: false
+    loading: true
 }
 
 export default (state = initialState, action) => {

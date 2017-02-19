@@ -42,14 +42,21 @@ export function expandCard(card, expandedClass, callback) {
         transformOrigin: '0 0'
     })
     
-    TweenMax.to(card, 0.5, {
+    TweenMax.to(card, 0.2, {
         x: 0,
         y: 0,
         scaleX: 1,
         scaleY: 1,
-        ease: TweenMax.Bounce.easeOut,
+        ease: TweenMax.ease,
         onComplete: callback
     });   
+}
+
+export function expand(card, expandedClass, callback) {
+    let header = document.getElementById('mainHeader');
+    let tl = new TweenMax.TimelineMax();
+    tl.to(header, 0.1, {y: '-100%'});
+    tl.add(() => {expandCard(card, expandedClass, callback)});
 }
 
 export function fadeIn(target, fromOpacity, toOpacity, cb) {

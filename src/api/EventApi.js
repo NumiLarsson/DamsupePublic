@@ -21,7 +21,8 @@ export default class EventApi {
                 cb(snapshot.val());
             } 
         });
-        this.subscriptions[event] = ref;
+        let key = `eventData_${eventId}`;
+        this.subscriptions[key] = ref;
     }
 
     /**

@@ -1,6 +1,5 @@
 import { createAction } from 'redux-actions';
 import api from '../api/Api';
-import { appDoneLoading } from './app';
 
 import { UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, 
          EVENT_DATA_DONE_LOADING, USER_EVENT_DATA_LOADING, USER_EVENT_DATA_DONE_LOADING} from './actionTypes';

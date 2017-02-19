@@ -16,7 +16,7 @@ import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
     infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from 'actions/menu';
 
 //Animations
-import { expandCard } from 'utils/animations';
+import { expand } from 'utils/animations';
 
 //Styles
 import styles from './styles/MainMenu.css';
@@ -32,7 +32,7 @@ class MainMenu extends Component  {
     expCard(target, shouldExpand, action) {
         if(shouldExpand) {
             let dispatch = this.props.dispatch;
-            expandCard(target, styles.cardExpanded, () => {
+            expand(target, styles.cardExpanded, () => {
                 dispatch(action());
                 target.querySelector(`.${styles.cardHeader}`).classList.add(styles.cardHeaderExpanded);
             });
@@ -44,11 +44,12 @@ class MainMenu extends Component  {
     closeCard(target, action) {
         this.props.dispatch(action());
         target.removeAttribute("style");
+        document.getElementById('mainHeader').removeAttribute("style");
         target.classList.remove(styles.cardExpanded);
         target.querySelector(`.${styles.cardHeader}`).classList.remove(styles.cardHeaderExpanded);
         //TODO:FIX
         this.wrapper.style.overflow = "auto";
-    }
+    }   
 
 
     render() {

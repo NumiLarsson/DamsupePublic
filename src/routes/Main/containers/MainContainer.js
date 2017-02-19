@@ -7,7 +7,7 @@ import styles from './styles/Main.css';
 class MainContainer extends Component {
 
     componentWillEnter(callback) {
-        enterTop(this.container, 0.4, '+=0.4', callback);
+        enterTop(this.container, 0.4, '+=0.3', callback);
     }
 
     componentWillLeave(callback) {

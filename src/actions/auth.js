@@ -2,6 +2,7 @@ import { createAction } from 'redux-actions';
 import api from '../api/Api';
 import { push } from 'react-router-redux';
 import { setupEventUserDataHooks, eventLoading } from './event';
+import { appDoneLoading } from './app';
 import { USER_SIGNED_IN, USER_SIGNED_OUT, UPDATE_USER_INFO, RESET_USER_DATA} from './actionTypes';
 
 
@@ -23,6 +24,9 @@ export function listenForAuthChanges() {
                 dispatch(signedOut());
                 unsubscribeToUserData(dispatch, true);
                 dispatch(push('/'));
+                if(getState().app.loading) {
+                    dispatch(appDoneLoading());
+                }
             }
         );
     };
@@ -40,6 +44,9 @@ function handleUserSignIn(dispatch, user, getState) {
     .then(() => {
         dispatch(signedIn(user.uid));
         subscribeToUserData(dispatch, user.uid, getState);
+        if(getState().app.loading) {
+            dispatch(appDoneLoading());
+        }
         dispatch(push('/main'));
     }).catch(err => {
         //TODO: Handle error gracefully

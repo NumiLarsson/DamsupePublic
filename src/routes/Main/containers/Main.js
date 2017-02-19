@@ -7,7 +7,6 @@ import Loader from 'components/Loader/Loader';
 //TODO: Use css modules
 import styles from './styles/Main.css';
 
-
 class MainScreen extends Component {
 
     componentWillMount() {
@@ -19,8 +18,8 @@ class MainScreen extends Component {
         return (
             <div className={styles.mainContent}>
                 <Loader show={eventDataLoading || userEventDataLoading} />
-                <header id={styles.mainHeader} className={styles.mainHeader}>
-                    <h2 onClick={signOut}>{currentEvent}</h2>
+                <header id="mainHeader" className={styles.mainHeader}>
+                   <h2 onClick={signOut}>{currentEvent}</h2>
                 </header>
                 {this.props.children}
             </div>
@@ -34,7 +33,7 @@ const mapStateToProps = (state) => {
         userId: state.auth.uid,
         currentEvent: state.event.name,
         eventDataLoading: state.event.eventDataLoading,
-        userEventDataLoading: state.event.userEventDataLoading,
+        userEventDataLoading: state.event.userEventDataLoading
     }
 }
 
@@ -43,5 +42,5 @@ const mapDispatchToProps = {
     signOut
 }
 
-
+//
 module.exports = connect(mapStateToProps, mapDispatchToProps)(MainScreen);
