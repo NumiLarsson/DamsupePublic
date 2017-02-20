@@ -66,7 +66,10 @@ class MainMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={infoScreenOpen}
                         closeAction={infoScreenClose}>
-                            <Info color="#fff" size="72" />
+                            <div className={styles.cardHeaderTitle}>
+                                <Info color="#fff" size="72" />
+                                <h2 className={styles.cardHeaderTitleText}>Information</h2>
+                            </div>
                     </MainMenuCard>
                     <MainMenuCard 
                         styleClass={styles.second}
@@ -76,7 +79,10 @@ class MainMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={mediaScreenOpen}
                         closeAction={mediaScreenClose}>
-                            <Media color="#fff" size="72" />
+                            <div className={styles.cardHeaderTitle}>
+                                <Media color="#fff" size="72" />
+                                <h2 className={styles.cardHeaderTitleText}>Media</h2>
+                            </div>
                     </MainMenuCard>
                     <MainMenuCard 
                         styleClass={styles.third}
@@ -86,7 +92,10 @@ class MainMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={shopScreenOpen}
                         closeAction={shopScreenClose}>
-                            <Cart color="#fff" size="72" />
+                            <div className={styles.cardHeaderTitle}>
+                                <Cart color="#fff" size="72" />
+                                <h2 className={styles.cardHeaderTitleText}>Store</h2>
+                            </div>
                     </MainMenuCard>
                     <MainMenuCard 
                         styleClass={styles.fourth}
@@ -96,7 +105,10 @@ class MainMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={userScreenOpen}
                         closeAction={userScreenClose}>
-                            <Face color="#fff" size="72" />
+                            <div className={styles.cardHeaderTitle}>
+                                <Face color="#fff" size="72" />
+                                <h2 className={styles.cardHeaderTitleText}>User</h2>
+                            </div>
                             <UserScreen uid={this.props.uid} currentEvent={this.props.currentEvent} />
                     </MainMenuCard>
                 </div>
@@ -112,6 +124,7 @@ const mapStateToProps = (state) => {
         userName: state.auth.name,
         uid: state.auth.uid,
         currentEvent: state.auth.lastVisitedEvent,
+        currentEventName: state.event.name,
         infoScreenOpen: state.main.menu.infoScreenOpen,
         mediaScreenOpen: state.main.menu.mediaScreenOpen,
         shopScreenOpen: state.main.menu.shopScreenOpen,

@@ -32,11 +32,11 @@ export default class EventApi {
      * @param {function} cb - Callback function, called when the data changes.
      */
     subscribeToUserEventData(eventId, uid, cb) {
-        let ref = this.database().ref(`/userEventData/${eventId}/${uid}`);
+        let ref = this.database().ref(`/userEventData/${uid}/${eventId}`);
         ref.on('value', (snapshot) => {
             cb(snapshot.val());
         })
-        let key = `userEventData_${eventId}`
+        let key = `userEventData_${uid}_${eventId}`;
         this.subscriptions[key] = ref;
     }
 
@@ -65,7 +65,7 @@ export default class EventApi {
             const {name, table} = values;
             let updates = {};
             updates[`/users/${uid}/name`] = name;
-            updates[`/userEventData/${eventId}/${uid}/table`] = table || null;
+            updates[`/userEventData/${uid}/${eventId}/table`] = table || null;
             self.database().ref().update(updates)
             .then(() => {
                 resolve('SUCCESS');
