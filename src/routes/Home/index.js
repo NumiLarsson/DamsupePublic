@@ -1,5 +1,5 @@
 
-import Home from './components/Home';
+import Home from './components/HomeContainer';
 
 module.exports = {
     path: '/home',

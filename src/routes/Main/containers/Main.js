@@ -17,7 +17,6 @@ class MainScreen extends Component {
         let {eventDataLoading, userEventDataLoading, currentEvent, signOut} = this.props;
         return (
             <div className={styles.mainContent}>
-                <Loader show={eventDataLoading || userEventDataLoading} />
                 <header id="mainHeader" className={styles.mainHeader}>
                    <h2 onClick={signOut}>{currentEvent}</h2>
                 </header>

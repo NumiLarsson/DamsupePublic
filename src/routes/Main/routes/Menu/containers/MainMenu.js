@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 //Components
 import UserScreen from './UserScreen';
 import MainMenuCard from '../components/MainMenuCard';
+import Loader from 'components/Loader/Loader';
 
 //Icons
 import Media from 'react-icons/lib/md/perm-media';
@@ -55,6 +56,7 @@ class MainMenu extends Component  {
     render() {
         return (
             <div className={styles.mainMenu}>
+                <Loader show={this.props.eventDataLoading || this.props.userEventDataLoading} />
                 <div ref={(r)=> this.wrapper = r} className={styles.mainMenuCardWrapper}>
                     <MainMenuCard 
                         styleClass={styles.first}
@@ -113,7 +115,9 @@ const mapStateToProps = (state) => {
         infoScreenOpen: state.main.menu.infoScreenOpen,
         mediaScreenOpen: state.main.menu.mediaScreenOpen,
         shopScreenOpen: state.main.menu.shopScreenOpen,
-        userScreenOpen: state.main.menu.userScreenOpen
+        userScreenOpen: state.main.menu.userScreenOpen,
+        eventDataLoading: state.event.eventDataLoading,
+        userEventDataLoading: state.event.userEventDataLoading
     }
 }
 

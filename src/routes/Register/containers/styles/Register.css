@@ -21,8 +21,9 @@
 }
 
 .registerScreenFormWrapper {
-    max-width: 250px;
-    padding: 5px 5px 15px 5px;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
 }
 
 .backButton {
