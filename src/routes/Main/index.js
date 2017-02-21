@@ -9,17 +9,19 @@ module.exports = {
         }
     },
 
+    /*
     getIndexRoute(partialNextState, callback) {
             require.ensure([], function (require) {
             callback(null, {
                 component: require('./routes/Menu/containers/MainMenu'),
             })
         })
-    },
+    },*/
 
     getChildRoutes(partialNextState, cb) {
         require.ensure([], (require) => {
         cb(null, [
+            require('./routes/Event')
         ])
         })
     },

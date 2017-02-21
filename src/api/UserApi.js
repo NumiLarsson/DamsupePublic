@@ -31,6 +31,27 @@ export default class UserApi {
         })
     }
 
+    /*
+    
+     */
+     getLastVisitedEvent(uid) {
+         let self = this;
+
+         return new Promise((resolve, reject) => {
+             self.database().ref(`/users/${uid}/lastVisitedEvent`).once('value')
+             .then(snapshot => {
+                 let val = snapshot.val();
+                 if (val) {
+                     resolve(val);
+                 } else {
+                     reject('No value');
+                 }
+             })
+             .catch(err => {
+                 reject(err);
+             })
+         })
+     }
 
     /**
      * Subscribe to data about the user.

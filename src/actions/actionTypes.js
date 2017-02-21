@@ -7,6 +7,7 @@ export const RESET_USER_DATA              = 'RESET_USER_DATA';
 export const USER_SIGNED_IN               = 'USER_SIGNED_IN';
 export const USER_SIGNED_OUT              = 'USER_SIGNED_OUT';
 export const UPDATE_USER_INFO             = 'UPDATE_USER_INFO';
+export const USER_LOGGED_OUT              = 'USER_LOGGED_OUT';
 
 //Event
 export const UPDATE_CURRENT_EVENT         = 'UPDATE_CURRENT_EVENT';

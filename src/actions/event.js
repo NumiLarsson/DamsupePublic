@@ -30,21 +30,23 @@ export function eventLoading() {
  * @param {string} uid - Firebase.Auth UserID
  * @param {string} lastVisitedEvent - The event that is currently selected by the user.
  */
-export function setupEventUserDataHooks(dispatch, uid, lastVisitedEvent) {
-    api.events.clearSubscriptions();
-    api.events.subscribeToEvent(lastVisitedEvent, (event) => {
-        dispatch(updateCurrentEventAsync(event));
-    });
+export function setupEventUserDataHooks(uid, lastVisitedEvent) {
+    return (dispatch) => {
+        api.events.clearSubscriptions();
+        api.events.subscribeToEvent(lastVisitedEvent, (event) => {
+            dispatch(updateCurrentEventAsync(event));
+        });
 
-    api.events.subscribeToUserEventData(lastVisitedEvent, uid, (data) => {
-        dispatch(updateUserEventDataAsync(data));
-    });
+        api.events.subscribeToUserEventData(lastVisitedEvent, uid, (data) => {
+            dispatch(updateUserEventDataAsync(data));
+        });
+    }
 }
 
 function updateCurrentEventAsync(event) {
     return (dispatch, getState) => {
         dispatch(updateCurrentEvent(event))
-        let loading = getState().event.eventDataLoading;
+        let loading = getState().event.event.eventDataLoading;
         if (loading) {
             dispatch(eventDataDoneLoading());
         }
@@ -54,7 +56,7 @@ function updateCurrentEventAsync(event) {
 function updateUserEventDataAsync(data) {
      return (dispatch, getState) => {
         dispatch(updateUserEventData(data))
-        let loading = getState().event.userEventDataLoading;
+        let loading = getState().event.event.userEventDataLoading;
         if (loading) {
             dispatch(userEventDataDoneLoading());
         }

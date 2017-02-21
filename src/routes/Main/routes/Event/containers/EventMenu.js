@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 //Components
 import UserScreen from './UserScreen';
-import MainMenuCard from '../components/MainMenuCard';
+import EventMenuCard from '../components/EventMenuCard';
 import Loader from 'components/Loader/Loader';
 
 //Icons
@@ -14,20 +14,33 @@ import Info from 'react-icons/lib/md/info';
 
 //Actions
 import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
-    infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from 'actions/menu';
+    infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from 'actions/eventmenu';
+import { resetMenu } from 'actions/eventmenu';
+import { setupEventUserDataHooks, eventLoading, resetEventData } from 'actions/event';
 
 //Animations
 import { expand } from 'utils/animations';
 
 //Styles
-import styles from './styles/MainMenu.css';
+import styles from './styles/EventMenu.css';
 
-class MainMenu extends Component  {
+class EventMenu extends Component  {
 
     constructor() {
         super();
         this.expCard = this.expCard.bind(this);
         this.closeCard = this.closeCard.bind(this);
+    }
+
+    componentWillMount() {
+        const {eventId} = this.props.params;
+        this.props.resetMenu();
+        this.props.eventLoading();
+        this.props.setupEventUserDataHooks(this.props.uid, eventId);
+    }
+
+    componentWillUnmount () {
+        this.props.resetEventData();
     }
 
     expCard(target, shouldExpand, action) {
@@ -55,11 +68,11 @@ class MainMenu extends Component  {
 
     render() {
         return (
-            <div className={styles.mainMenu}>
+            <div className={styles.eventMenu}>
                 <Loader show={this.props.eventDataLoading || this.props.userEventDataLoading} />
-                <div ref={(r)=> this.wrapper = r} className={styles.mainMenuCardWrapper}>
-                    <MainMenuCard
-                        disabled={!this.props.eventIsChosen} 
+                <div ref={(r)=> this.wrapper = r} className={styles.eventMenuCardWrapper}>
+                    <EventMenuCard
+                        disabled={false} 
                         styleClass={styles.first}
                         headerStyle={styles.cardHeader} 
                         open={this.props.infoScreenOpen} 
@@ -71,9 +84,9 @@ class MainMenu extends Component  {
                                 <Info color="#fff" size="72" />
                                 <h2 className={styles.cardHeaderTitleText}>Information</h2>
                             </div>
-                    </MainMenuCard>
-                    <MainMenuCard 
-                        disabled={!this.props.eventIsChosen} 
+                    </EventMenuCard>
+                    <EventMenuCard 
+                        disabled={false} 
                         styleClass={styles.second}
                         headerStyle={styles.cardHeader}  
                         open={this.props.mediaScreenOpen} 
@@ -85,9 +98,9 @@ class MainMenu extends Component  {
                                 <Media color="#fff" size="72" />
                                 <h2 className={styles.cardHeaderTitleText}>Media</h2>
                             </div>
-                    </MainMenuCard>
-                    <MainMenuCard 
-                        disabled={!this.props.eventIsChosen} 
+                    </EventMenuCard>
+                    <EventMenuCard 
+                        disabled={false} 
                         styleClass={styles.third}
                         headerStyle={styles.cardHeader}  
                         open={this.props.shopScreenOpen} 
@@ -99,9 +112,9 @@ class MainMenu extends Component  {
                                 <Cart color="#fff" size="72" />
                                 <h2 className={styles.cardHeaderTitleText}>Store</h2>
                             </div>
-                    </MainMenuCard>
-                    <MainMenuCard
-                        disabled={!this.props.eventIsChosen}  
+                    </EventMenuCard>
+                    <EventMenuCard
+                        disabled={false}  
                         styleClass={styles.fourth}
                         headerStyle={styles.cardHeader}  
                         open={this.props.userScreenOpen} 
@@ -114,7 +127,7 @@ class MainMenu extends Component  {
                                 <h2 className={styles.cardHeaderTitleText}>User</h2>
                             </div>
                             <UserScreen uid={this.props.uid} currentEvent={this.props.currentEvent} />
-                    </MainMenuCard>
+                    </EventMenuCard>
                 </div>
             </div>
         )
@@ -127,16 +140,28 @@ const mapStateToProps = (state) => {
     return {
         userName: state.auth.name,
         uid: state.auth.uid,
-        eventIsChosen: state.auth.lastVisitedEvent ? true : false,
         currentEvent: state.auth.lastVisitedEvent,
-        currentEventName: state.event.name,
-        infoScreenOpen: state.main.menu.infoScreenOpen,
-        mediaScreenOpen: state.main.menu.mediaScreenOpen,
-        shopScreenOpen: state.main.menu.shopScreenOpen,
-        userScreenOpen: state.main.menu.userScreenOpen,
-        eventDataLoading: state.event.eventDataLoading,
-        userEventDataLoading: state.event.userEventDataLoading
+        currentEventName: state.event.event.name,
+        infoScreenOpen: state.event.menu.infoScreenOpen,
+        mediaScreenOpen: state.event.menu.mediaScreenOpen,
+        shopScreenOpen: state.event.menu.shopScreenOpen,
+        userScreenOpen: state.event.menu.userScreenOpen,
+        eventDataLoading: state.event.event.eventDataLoading,
+        userEventDataLoading: state.event.event.userEventDataLoading
     }
 }
 
-module.exports = connect(mapStateToProps, null)(MainMenu);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        resetMenu: () => dispatch(resetMenu()),
+        dispatch, 
+        setupEventUserDataHooks: (uid, lastVisitedEvent) => {
+            dispatch(setupEventUserDataHooks(uid, lastVisitedEvent))
+        },
+        eventLoading: () => dispatch(eventLoading()),
+        resetEventData: () => dispatch(resetEventData())
+    }
+    
+}
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(EventMenu);

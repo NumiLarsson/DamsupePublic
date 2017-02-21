@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signOut } from 'actions/user';
-import { resetMenu } from 'actions/menu';
-import Loader from 'components/Loader/Loader';
 import MainHeader from '../components/MainHeader';
 
 //TODO: Use css modules
 import styles from './styles/Main.css';
 
 class MainScreen extends Component {
-
-    componentWillMount() {
-        this.props.resetMenu();
-    }
 
     render() {
         let {currentEvent, signOut, eventIsChosen} = this.props;
@@ -25,16 +19,14 @@ class MainScreen extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => {
     return {
         eventIsChosen: state.auth.lastVisitedEvent ? true : false,
-        currentEvent: state.event.name
+        currentEvent: state.event.event.name
     }
 }
 
 const mapDispatchToProps = {
-    resetMenu,
     signOut
 }
 
