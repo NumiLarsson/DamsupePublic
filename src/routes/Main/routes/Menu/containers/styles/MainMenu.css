@@ -32,7 +32,7 @@
 }
 
 .cardExpanded {
-    position: absolute;
+    position: fixed;
     top:0;
     bottom:0;
     left: 0;
@@ -52,6 +52,16 @@
     align-items: center;
     width: 100%;
     padding: 0 10px 0 10px;
+}
+
+.cardHeaderTitle {
+    display: flex;
+    flex: 1;
+}
+
+.cardHeaderTitleText {
+    align-self: center;
+    margin-left: 10px;
 }
 
 .cardHeaderExpanded {

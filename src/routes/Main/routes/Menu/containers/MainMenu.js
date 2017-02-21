@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 //Components
 import UserScreen from './UserScreen';
 import MainMenuCard from '../components/MainMenuCard';
+import Loader from 'components/Loader/Loader';
 
 //Icons
 import Media from 'react-icons/lib/md/perm-media';
@@ -16,7 +17,7 @@ import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
     infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from 'actions/menu';
 
 //Animations
-import { expandCard } from 'utils/animations';
+import { expand } from 'utils/animations';
 
 //Styles
 import styles from './styles/MainMenu.css';
@@ -32,7 +33,7 @@ class MainMenu extends Component  {
     expCard(target, shouldExpand, action) {
         if(shouldExpand) {
             let dispatch = this.props.dispatch;
-            expandCard(target, styles.cardExpanded, () => {
+            expand(target, styles.cardExpanded, () => {
                 dispatch(action());
                 target.querySelector(`.${styles.cardHeader}`).classList.add(styles.cardHeaderExpanded);
             });
@@ -44,18 +45,21 @@ class MainMenu extends Component  {
     closeCard(target, action) {
         this.props.dispatch(action());
         target.removeAttribute("style");
+        document.getElementById('mainHeader').removeAttribute("style");
         target.classList.remove(styles.cardExpanded);
         target.querySelector(`.${styles.cardHeader}`).classList.remove(styles.cardHeaderExpanded);
         //TODO:FIX
         this.wrapper.style.overflow = "auto";
-    }
+    }   
 
 
     render() {
         return (
             <div className={styles.mainMenu}>
+                <Loader show={this.props.eventDataLoading || this.props.userEventDataLoading} />
                 <div ref={(r)=> this.wrapper = r} className={styles.mainMenuCardWrapper}>
-                    <MainMenuCard 
+                    <MainMenuCard
+                        disabled={!this.props.eventIsChosen} 
                         styleClass={styles.first}
                         headerStyle={styles.cardHeader} 
                         open={this.props.infoScreenOpen} 
@@ -63,9 +67,13 @@ class MainMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={infoScreenOpen}
                         closeAction={infoScreenClose}>
-                            <Info color="#fff" size="72" />
+                            <div className={styles.cardHeaderTitle}>
+                                <Info color="#fff" size="72" />
+                                <h2 className={styles.cardHeaderTitleText}>Information</h2>
+                            </div>
                     </MainMenuCard>
                     <MainMenuCard 
+                        disabled={!this.props.eventIsChosen} 
                         styleClass={styles.second}
                         headerStyle={styles.cardHeader}  
                         open={this.props.mediaScreenOpen} 
@@ -73,9 +81,13 @@ class MainMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={mediaScreenOpen}
                         closeAction={mediaScreenClose}>
-                            <Media color="#fff" size="72" />
+                            <div className={styles.cardHeaderTitle}>
+                                <Media color="#fff" size="72" />
+                                <h2 className={styles.cardHeaderTitleText}>Media</h2>
+                            </div>
                     </MainMenuCard>
                     <MainMenuCard 
+                        disabled={!this.props.eventIsChosen} 
                         styleClass={styles.third}
                         headerStyle={styles.cardHeader}  
                         open={this.props.shopScreenOpen} 
@@ -83,9 +95,13 @@ class MainMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={shopScreenOpen}
                         closeAction={shopScreenClose}>
-                            <Cart color="#fff" size="72" />
+                            <div className={styles.cardHeaderTitle}>
+                                <Cart color="#fff" size="72" />
+                                <h2 className={styles.cardHeaderTitleText}>Store</h2>
+                            </div>
                     </MainMenuCard>
-                    <MainMenuCard 
+                    <MainMenuCard
+                        disabled={!this.props.eventIsChosen}  
                         styleClass={styles.fourth}
                         headerStyle={styles.cardHeader}  
                         open={this.props.userScreenOpen} 
@@ -93,7 +109,10 @@ class MainMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={userScreenOpen}
                         closeAction={userScreenClose}>
-                            <Face color="#fff" size="72" />
+                            <div className={styles.cardHeaderTitle}>
+                                <Face color="#fff" size="72" />
+                                <h2 className={styles.cardHeaderTitleText}>User</h2>
+                            </div>
                             <UserScreen uid={this.props.uid} currentEvent={this.props.currentEvent} />
                     </MainMenuCard>
                 </div>
@@ -108,11 +127,15 @@ const mapStateToProps = (state) => {
     return {
         userName: state.auth.name,
         uid: state.auth.uid,
+        eventIsChosen: state.auth.lastVisitedEvent ? true : false,
         currentEvent: state.auth.lastVisitedEvent,
+        currentEventName: state.event.name,
         infoScreenOpen: state.main.menu.infoScreenOpen,
         mediaScreenOpen: state.main.menu.mediaScreenOpen,
         shopScreenOpen: state.main.menu.shopScreenOpen,
-        userScreenOpen: state.main.menu.userScreenOpen
+        userScreenOpen: state.main.menu.userScreenOpen,
+        eventDataLoading: state.event.eventDataLoading,
+        userEventDataLoading: state.event.userEventDataLoading
     }
 }
 

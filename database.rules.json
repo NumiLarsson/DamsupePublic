@@ -18,6 +18,54 @@
         ".read": "auth != null && auth.uid == $uid",
         ".write": "auth != null && auth.uid == $uid"
       }
+    },
+    "events": {
+      "$event": {
+        ".validate": "newData.hasChildren(['active', 'name'])",
+        "active": {
+          ".validate": "newData.isBoolean()"
+        },
+        "name": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 100"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".read": "auth != null && root.child('eventParticipants').child($event).child(auth.uid).val() != null"
+      }
+    },
+    "eventParticipants": {
+      "$event": {
+        ".validate": "newData.hasChildren()",
+        ".write": "auth.isAdmin == true && root.child('events').child($event).val() != null",
+        "$uid": {
+          ".validate": "newData.isBoolean() && root.child('users').child($uid).val() != null"
+        }
+      }
+    },
+    "userEventParticipations": {
+      "$uid": {
+        ".validate": "newData.hasChildren()",
+        ".write": "auth.isAdmin == true && root.child('users').child($uid).val() != null",
+        "$event": {
+          ".validate": "newData.isBoolean() && root.child('events').child($event).val() != null"
+        }
+      }
+    },
+    "userEventData": {
+      "$uid": {
+        "$event": {
+          ".validate": "newData.hasChildren()",
+          "table": {
+            ".validate": "newData.isString()"
+          },
+          "$other": {
+            ".validate": "false"
+          },
+          ".read": "auth != null && auth.uid == $uid && root.child('eventParticipants').child($event).child(auth.uid).val() != null",
+          ".write": "auth != null && auth.uid == $uid && root.child('events').child($event).val() != null && root.child('eventParticipants').child($event).child(auth.uid).val() != null"
+        }
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 .loginScreen {
     height: 100%;
     will-change: transform;
-    background: #b1db73;
+    background: #f3bb72;
 }
 
 .loginScreenContent {
@@ -21,8 +21,9 @@
 }
 
 .loginScreenFormWrapper {
-    max-width: 250px;
-    padding: 5px;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
 }
 
 .backButton {

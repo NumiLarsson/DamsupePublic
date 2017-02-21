@@ -25,7 +25,7 @@ const routes = {
         getIndexRoute(partialNextState, callback) {
             require.ensure([], function (require) {
             callback(null, {
-                component: require('./routes/Home/components/Home'),
+                component: require('./routes/Home/containers/HomeContainer'),
             })
             })
         },

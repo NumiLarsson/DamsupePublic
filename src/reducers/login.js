@@ -1,4 +1,5 @@
-import { LOGIN_ACTIONS } from 'actions/login';
+import { REDIRECT_ERROR, REDIRECT_LOADING, NO_REDIRECT, 
+    LOGIN_LOADING, LOGIN_DONE_LOADING, USER_SIGNED_IN, USER_LOGGED_OUT } from 'actions/actionTypes';
 
 export const initialState = {
     redirectError : false,
@@ -11,42 +12,42 @@ export const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
 
-        case LOGIN_ACTIONS.NO_REDIRECT: 
+        case NO_REDIRECT: 
             return Object.assign({}, state, {
                 redirectError: false,
                 redirectLoading: false
             });
 
-        case LOGIN_ACTIONS.USER_LOGGED_OUT:
+        case USER_LOGGED_OUT:
             return Object.assign({}, state, {
                 userSignedOut: true,
                 redirectError: false,
                 redirectLoading: false
             })
         
-        case LOGIN_ACTIONS.USER_SIGNED_IN:
+        case USER_SIGNED_IN:
             return Object.assign({}, state, {
                 userSignedOut: false
             })
 
-        case LOGIN_ACTIONS.REDIRECT_LOADING:
+        case REDIRECT_LOADING:
             return Object.assign({}, state, {
                     redirectLoading: true
                 });
 
-        case LOGIN_ACTIONS.REDIRECT_ERROR:
+        case REDIRECT_ERROR:
             return Object.assign({}, state, {
                     redirectLoading: false,
                     redirectError: true,
                     redirectErrorMsg: action.payload
                 });
         
-        case LOGIN_ACTIONS.LOGIN_LOADING:
+        case LOGIN_LOADING:
             return Object.assign({}, state, {
                 loading: true
             });
         
-        case LOGIN_ACTIONS.LOGIN_DONE_LOADING:
+        case LOGIN_DONE_LOADING:
             return Object.assign({}, state, {
                 loading: false
             });

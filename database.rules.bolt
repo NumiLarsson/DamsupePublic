@@ -1,4 +1,8 @@
 
+/*
+ * Users
+ */
+
 path /users/{uid} is User {
   read() { isCurrentUser(uid)}
   write() { isCurrentUser(uid)}
@@ -9,6 +13,63 @@ type User {
   name : NameString | Null,
   lastVisitedEvent: EventRef | Null
 }
+
+/*
+ * Events
+ */
+path /events/{event} is Event {
+	read() {isSignedIn() && userIsParticipantOf(event)}
+	write() {false}
+}
+
+type Event {
+	active: Boolean,
+	name: NameString
+}
+
+/*
+ * Event Participation
+ */
+
+
+
+path /eventParticipants/{event} is Object {
+	read() {false}
+	write() {auth.isAdmin == true && isEvent(event)}
+}
+
+path /eventParticipants/{event}/{uid} is Boolean {
+	validate() {isUser(uid)}
+}
+
+
+path /userEventParticipations/{uid} is Object {
+	read() {false}
+	write() {auth.isAdmin == true && isUser(uid)}
+}
+
+path /userEventParticipations/{uid}/{event} is Boolean {
+	validate() {isEvent(event)}
+}
+
+
+/*
+ * userEventData
+ */
+path /userEventData/{uid}/{event} is UserEventData {
+	read() {isCurrentUser(uid) && userIsParticipantOf(event)}
+	write() {isCurrentUser(uid) && isEvent(event) && userIsParticipantOf(event)}
+}
+
+type UserEventData {
+	table: String | Null
+}
+
+
+/*
+ * Helper functions and types
+ */
+
 
 type EventRef extends String{
   validate() {isEvent(this)}
@@ -22,6 +83,9 @@ type EmailString extends String {
   validate() {this.matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)}
 }
 
+
+userIsParticipantOf(event) {prior(root.eventParticipants[event][auth.uid] != null)}
+isUser(uid) {prior(root.users[uid] != null)}
 isCurrentUser(uid) { isSignedIn() && auth.uid == uid }
 isSignedIn() { auth != null }
 isEvent(event) {prior(root.events[event]) != null}

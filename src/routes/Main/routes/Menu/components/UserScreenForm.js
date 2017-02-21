@@ -23,9 +23,9 @@ const validate = values => {
 let UserScreenForm = (props) => {
     let { handleSubmit, submitFailed, error, submitting, loading } = props;
     return (
-        <form onSubmit={handleSubmit} className={styles.UserScreenForm}>
+        <form onSubmit={handleSubmit} className={styles.UserScreenForm} autoComplete="off">
             <Field fieldId="userName" required type="text" name="name" placeholder="Name" component={MaterialField} label="Name"/>
-            <Field fieldId="tableNr" required type="text" name="table" placeholder="Table" component={MaterialField} label="Table"/>
+            <Field fieldId="tableNr" autocomplete="off" required type="text" name="table" placeholder="Table" component={MaterialField} label="Table"/>
             <button type="submit" 
                 id="saveBtn" 
                 disabled={submitting || loading}
