@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 import api from '../api/Api';
 import { push } from 'react-router-redux';
-import { setupEventUserDataHooks, eventLoading } from './event';
+import { setupEventUserDataHooks, eventLoading, resetEventData } from './event';
 import { appDoneLoading } from './app';
 import { USER_SIGNED_IN, USER_SIGNED_OUT, UPDATE_USER_INFO, RESET_USER_DATA} from './actionTypes';
 
@@ -69,6 +69,11 @@ function subscribeToUserData (dispatch, uid, getState) {
             dispatch(eventLoading());
             setupEventUserDataHooks(dispatch, uid, lastVisitedEvent);
         }
+
+        if(!lastVisitedEvent) {
+            dispatch(resetEventData());
+        }
+
         dispatch(updateUserInfo(userData));
     });
 }

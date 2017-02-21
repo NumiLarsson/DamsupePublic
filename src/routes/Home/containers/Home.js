@@ -11,7 +11,7 @@ class HomeScreen extends Component {
     render() {
         return (
                 <div className={styles.homeContent}>
-                    <h1>DAMSUPE VT17</h1>
+                    <h1>Smalands Events</h1>
                     <div className={styles.divider}>
                         {this.props.loading && <MiniLoader show={true} />}
                     </div>

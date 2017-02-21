@@ -1,4 +1,4 @@
-import { UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, RESET_USER_DATA, 
+import { UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, RESET_USER_DATA, RESET_EVENT_DATA,
          EVENT_DATA_DONE_LOADING, USER_EVENT_DATA_LOADING, USER_EVENT_DATA_DONE_LOADING} from 'actions/actionTypes';
 
 export const initialState = {
@@ -15,6 +15,9 @@ export default (state = initialState, action) => {
     switch (action.type) {
 
         case RESET_USER_DATA: 
+            return Object.assign({}, state, initialState);
+
+        case RESET_EVENT_DATA: 
             return Object.assign({}, state, initialState);
 
         case EVENT_DATA_LOADING:

@@ -15,6 +15,7 @@ export const EVENT_DATA_LOADING           = 'EVENT_DATA_LOADING';
 export const EVENT_DATA_DONE_LOADING      = 'EVENT_DATA_DONE_LOADING';
 export const USER_EVENT_DATA_LOADING      = 'USER_EVENT_DATA_LOADING';
 export const USER_EVENT_DATA_DONE_LOADING = 'USER_EVENT_DATA_DONE_LOADING';
+export const RESET_EVENT_DATA             = 'RESET_EVENT_DATA';
 
 //Login
 export const REDIRECT_ERROR               = 'REDIRECT_ERROR';

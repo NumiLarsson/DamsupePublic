@@ -8,7 +8,9 @@ export default props => {
     let ref = null;
 
     function expand() {
-        props.expandCard(ref, !props.open, props.openAction);
+        if (!props.disabled) {
+            props.expandCard(ref, !props.open, props.openAction);
+        }
     }
 
     function close() {
@@ -16,7 +18,7 @@ export default props => {
     }
 
     return (
-        <div ref={(card) => ref = card} className={[styles.mainMenuCard, props.styleClass].join(' ')} onClick={expand}>
+        <div disabled={props.disabled} ref={(card) => ref = card} className={[styles.mainMenuCard, props.styleClass].join(' ')} onClick={expand}>
             <div className={props.headerStyle}>
                 {props.children[0] || props.children}
                 {props.open && <Close className={styles.backButton} onClick={close} color="#fff" size="52" />}

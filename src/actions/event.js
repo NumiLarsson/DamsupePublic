@@ -1,11 +1,12 @@
 import { createAction } from 'redux-actions';
 import api from '../api/Api';
 
-import { UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, 
+import { UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, RESET_EVENT_DATA, 
          EVENT_DATA_DONE_LOADING, USER_EVENT_DATA_LOADING, USER_EVENT_DATA_DONE_LOADING} from './actionTypes';
 
 export const updateCurrentEvent = createAction(UPDATE_CURRENT_EVENT);
 export const updateUserEventData = createAction(UPDATE_USER_EVENT_DATA);
+export const resetEventData = createAction(RESET_EVENT_DATA);
 
 const eventDataLoading = createAction(EVENT_DATA_LOADING);
 const eventDataDoneLoading = createAction(EVENT_DATA_DONE_LOADING);

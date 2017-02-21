@@ -58,7 +58,8 @@ class MainMenu extends Component  {
             <div className={styles.mainMenu}>
                 <Loader show={this.props.eventDataLoading || this.props.userEventDataLoading} />
                 <div ref={(r)=> this.wrapper = r} className={styles.mainMenuCardWrapper}>
-                    <MainMenuCard 
+                    <MainMenuCard
+                        disabled={!this.props.eventIsChosen} 
                         styleClass={styles.first}
                         headerStyle={styles.cardHeader} 
                         open={this.props.infoScreenOpen} 
@@ -72,6 +73,7 @@ class MainMenu extends Component  {
                             </div>
                     </MainMenuCard>
                     <MainMenuCard 
+                        disabled={!this.props.eventIsChosen} 
                         styleClass={styles.second}
                         headerStyle={styles.cardHeader}  
                         open={this.props.mediaScreenOpen} 
@@ -85,6 +87,7 @@ class MainMenu extends Component  {
                             </div>
                     </MainMenuCard>
                     <MainMenuCard 
+                        disabled={!this.props.eventIsChosen} 
                         styleClass={styles.third}
                         headerStyle={styles.cardHeader}  
                         open={this.props.shopScreenOpen} 
@@ -97,7 +100,8 @@ class MainMenu extends Component  {
                                 <h2 className={styles.cardHeaderTitleText}>Store</h2>
                             </div>
                     </MainMenuCard>
-                    <MainMenuCard 
+                    <MainMenuCard
+                        disabled={!this.props.eventIsChosen}  
                         styleClass={styles.fourth}
                         headerStyle={styles.cardHeader}  
                         open={this.props.userScreenOpen} 
@@ -123,6 +127,7 @@ const mapStateToProps = (state) => {
     return {
         userName: state.auth.name,
         uid: state.auth.uid,
+        eventIsChosen: state.auth.lastVisitedEvent ? true : false,
         currentEvent: state.auth.lastVisitedEvent,
         currentEventName: state.event.name,
         infoScreenOpen: state.main.menu.infoScreenOpen,

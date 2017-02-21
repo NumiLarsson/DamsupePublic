@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { signOut } from 'actions/user';
 import { resetMenu } from 'actions/menu';
 import Loader from 'components/Loader/Loader';
+import MainHeader from '../components/MainHeader';
 
 //TODO: Use css modules
 import styles from './styles/Main.css';
@@ -14,12 +15,10 @@ class MainScreen extends Component {
     }
 
     render() {
-        let {eventDataLoading, userEventDataLoading, currentEvent, signOut} = this.props;
+        let {currentEvent, signOut, eventIsChosen} = this.props;
         return (
             <div className={styles.mainContent}>
-                <header id="mainHeader" className={styles.mainHeader}>
-                   <h2 onClick={signOut}>{currentEvent}</h2>
-                </header>
+                <MainHeader signOut={signOut} currentEvent={currentEvent} eventIsChosen={eventIsChosen}/>
                 {this.props.children}
             </div>
         );
@@ -29,10 +28,8 @@ class MainScreen extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        userId: state.auth.uid,
-        currentEvent: state.event.name,
-        eventDataLoading: state.event.eventDataLoading,
-        userEventDataLoading: state.event.userEventDataLoading
+        eventIsChosen: state.auth.lastVisitedEvent ? true : false,
+        currentEvent: state.event.name
     }
 }
 
