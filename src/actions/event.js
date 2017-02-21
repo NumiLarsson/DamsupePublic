@@ -32,7 +32,6 @@ export function eventLoading() {
  */
 export function setupEventUserDataHooks(uid, lastVisitedEvent) {
     return (dispatch) => {
-        api.events.clearSubscriptions();
         api.events.subscribeToEvent(lastVisitedEvent, (event) => {
             dispatch(updateCurrentEventAsync(event));
         });
@@ -61,4 +60,10 @@ function updateUserEventDataAsync(data) {
             dispatch(userEventDataDoneLoading());
         }
     }
+}
+
+export function unsubscribeToEventUserDataHooks() {
+    return (dispatch) => {
+        api.events.clearSubscriptions();
+    } 
 }

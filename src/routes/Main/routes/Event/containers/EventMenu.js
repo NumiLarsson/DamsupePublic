@@ -16,7 +16,7 @@ import Info from 'react-icons/lib/md/info';
 import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
     infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from 'actions/eventmenu';
 import { resetMenu } from 'actions/eventmenu';
-import { setupEventUserDataHooks, eventLoading, resetEventData } from 'actions/event';
+import { setupEventUserDataHooks, eventLoading, resetEventData, unsubscribeToEventUserDataHooks } from 'actions/event';
 
 //Animations
 import { expand } from 'utils/animations';
@@ -41,6 +41,7 @@ class EventMenu extends Component  {
 
     componentWillUnmount () {
         this.props.resetEventData();
+        this.props.unsubscribeToEventUserDataHooks();
     }
 
     expCard(target, shouldExpand, action) {
@@ -159,7 +160,8 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(setupEventUserDataHooks(uid, lastVisitedEvent))
         },
         eventLoading: () => dispatch(eventLoading()),
-        resetEventData: () => dispatch(resetEventData())
+        resetEventData: () => dispatch(resetEventData()),
+        unsubscribeToEventUserDataHooks: () => dispatch(unsubscribeToEventUserDataHooks())
     }
     
 }

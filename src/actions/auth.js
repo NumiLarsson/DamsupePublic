@@ -89,30 +89,3 @@ function unsubscribeToUserData(dispatch, clear) {
     }
     api.user.clearSubscriptions();
 }
-
-/**
-    function subscribeToUserData (dispatch, uid, getState) {
-    unsubscribeToUserData(dispatch, false);
-    api.user.subscribeToUserData(uid, (userData) => {
-        const { lastVisitedEvent } = userData;
-        const oldLastVisitedEvent = getState().auth.lastVisitedEvent;
-        if(lastVisitedEvent && (lastVisitedEvent !== oldLastVisitedEvent)) {
-            dispatch(push(`/main/event/${lastVisitedEvent}`));
-            //dispatch(eventLoading());
-            //setupEventUserDataHooks(dispatch, uid, lastVisitedEvent);
-        }
-
-        if(!lastVisitedEvent) {
-            //dispatch(resetEventData());
-            dispatch(push(`/main/eventList`));
-        }
-
-        if(getState().app.loading) {
-            dispatch(appDoneLoading());
-        }
-
-        dispatch(updateUserInfo(userData));
-    });
-}
-
- */
