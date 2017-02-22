@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import styles from './styles/MainHeader.css';
 import Settings from 'react-icons/lib/md/settings';
 import List from 'react-icons/lib/md/list';
@@ -13,11 +14,9 @@ export default props => {
             </div>
             <span className={styles.divider} />
             <nav className={styles.controlPanel}>
-                <List style={{marginRight: '5px'}} color="#fff" size="32" />
+                <Link to="/main/eventlist"><List style={{marginRight: '5px'}} color="#fff" size="32" /></Link>
                 <Settings color="#fff" size="32" onClick={signOut} />
             </nav>
         </header>
     )
 }
-
-//<Settings color="#fff" size="32" onClick={signOut} />

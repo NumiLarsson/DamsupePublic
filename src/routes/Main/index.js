@@ -21,7 +21,8 @@ module.exports = {
     getChildRoutes(partialNextState, cb) {
         require.ensure([], (require) => {
         cb(null, [
-            require('./routes/Event')
+            require('./routes/Event'),
+            require('./routes/EventList')
         ])
         })
     },
