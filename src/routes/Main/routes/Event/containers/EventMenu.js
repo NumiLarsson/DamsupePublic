@@ -19,7 +19,7 @@ import { resetMenu } from 'actions/eventmenu';
 import { setupEventUserDataHooks, eventLoading, resetEventData, unsubscribeToEventUserDataHooks } from 'actions/event';
 
 //Animations
-import { expand } from 'utils/animations';
+import { expandCard } from 'utils/animations';
 
 //Styles
 import styles from './styles/EventMenu.css';
@@ -47,7 +47,7 @@ class EventMenu extends Component  {
     expCard(target, shouldExpand, action) {
         if(shouldExpand) {
             let dispatch = this.props.dispatch;
-            expand(target, styles.cardExpanded, () => {
+            expandCard(target, styles.cardExpanded, () => {
                 dispatch(action());
                 target.querySelector(`.${styles.cardHeader}`).classList.add(styles.cardHeaderExpanded);
             });
@@ -59,7 +59,6 @@ class EventMenu extends Component  {
     closeCard(target, action) {
         this.props.dispatch(action());
         target.removeAttribute("style");
-        document.getElementById('mainHeader').removeAttribute("style");
         target.classList.remove(styles.cardExpanded);
         target.querySelector(`.${styles.cardHeader}`).classList.remove(styles.cardHeaderExpanded);
         //TODO:FIX

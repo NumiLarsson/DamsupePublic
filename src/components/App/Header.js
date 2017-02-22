@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import styles from './styles/MainHeader.css';
+import styles from './Header.css';
 import Settings from 'react-icons/lib/md/settings';
 import List from 'react-icons/lib/md/list';
 
