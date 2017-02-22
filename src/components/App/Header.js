@@ -5,16 +5,17 @@ import Settings from 'react-icons/lib/md/settings';
 import List from 'react-icons/lib/md/list';
 
 export default props => {
-    let {signOut, currentEvent, eventIsChosen} = props;
+    let {signOut, show, currentEvent, eventIsChosen} = props;
+    
     return (
-        <header id="mainHeader" className={styles.mainHeader}>
+        <header id="mainHeader" className={show ? `${styles.mainHeader} ${styles.show}` : styles.mainHeader}>
             <div className={styles.eventTitleSection}>
                 {eventIsChosen && <h2>{currentEvent}</h2>}
                 {!eventIsChosen && <h2>Choose Event</h2>}
             </div>
             <span className={styles.divider} />
             <nav className={styles.controlPanel}>
-                <Link to="/main"><List style={{marginRight: '5px'}} color="#fff" size="32" /></Link>
+                <Link to="/main/eventlist"><List style={{marginRight: '5px'}} color="#fff" size="32" /></Link>
                 <Settings color="#fff" size="32" onClick={signOut} />
             </nav>
         </header>

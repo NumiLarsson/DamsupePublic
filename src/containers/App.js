@@ -9,11 +9,12 @@ import styles from './styles/App.css';
 
 class App extends Component {
   render() {
+    let { isAuthenticated, loading, children, signOut} = this.props;
     return (
       <div className={styles.app}>
-        <Header signOut={this.props.signOut}/>
+        <Header show={isAuthenticated && !loading} signOut={signOut}/>
         <ReactTransitionGroup component="div" className={styles.routeContainer}>
-              {React.cloneElement(this.props.children, {
+              {React.cloneElement(children, {
                 key: this.props.location.pathname
             })}
           </ReactTransitionGroup>
@@ -22,9 +23,15 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.authenticated,
+    loading: state.app.loading
+  }
+}
 
 const mapDispatchToProps = {
   signOut
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -55,7 +55,7 @@ export function expandCard(card, expandedClass, callback) {
 export function expand(card, expandedClass, callback) {
     let header = document.getElementById('mainHeader');
     let tl = new TweenMax.TimelineMax();
-    tl.to(header, 0.1, {y: '-100%'}, TweenMax.ease);
+    tl.to(header, 0.1, {y: '-120%'}, TweenMax.ease);
     tl.add(() => {expandCard(card, expandedClass, callback)});
 }
 
