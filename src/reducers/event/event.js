@@ -1,58 +1,46 @@
+import Immutable from 'immutable';
 import { UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, RESET_USER_DATA, RESET_EVENT_DATA,
          EVENT_DATA_DONE_LOADING, USER_EVENT_DATA_LOADING, USER_EVENT_DATA_DONE_LOADING} from 'actions/actionTypes';
 
-export const initialState = {
+export const initialState = Immutable.Map({
+    id: '',
+    eventChosen: false,
     eventDataLoading: false,
     userEventDataLoading: false,
     name: "",
     active: false,
-    userData: {
+    userData: Immutable.Map({
         table: ''
-    }
-}
+    })
+});
 
 export default (state = initialState, action) => {
     switch (action.type) {
 
         case RESET_USER_DATA: 
-            return Object.assign({}, state, initialState);
+            return initialState;
 
         case RESET_EVENT_DATA: 
-            return Object.assign({}, state, initialState);
+            return initialState;
 
         case EVENT_DATA_LOADING:
-            return Object.assign({}, state, {
-                eventDataLoading: true
-            });
+            return state.set('eventDataLoading', true);     
 
         case EVENT_DATA_DONE_LOADING:
-            return Object.assign({}, state, {
-                eventDataLoading: false
-            });
+           return state.set('eventDataLoading', false);
 
         case USER_EVENT_DATA_LOADING:
-            return Object.assign({}, state, {
-                userEventDataLoading: true
-            });
+            return state.set('userEventDataLoading', true);
             
         case USER_EVENT_DATA_DONE_LOADING:
-            return Object.assign({}, state, {
-                userEventDataLoading: false
-            });
+            return state.set('userEventDataLoading', false);
 
         case UPDATE_CURRENT_EVENT:
-            const {name, active} = action.payload;
-            return Object.assign({}, state, {
-                name, 
-                active
-            });
+            const upd = Immutable.Map(action.payload).set('eventChosen', true);
+            return state.merge(upd);
         
         case UPDATE_USER_EVENT_DATA:
-            return Object.assign({}, state, {
-                userData: Object.assign({}, state.userData, {
-                    table: action.payload ? action.payload.table || '' : ''
-                })
-            });
+            return state.set('userData', Immutable.Map(action.payload));
 
         default:
             return state;

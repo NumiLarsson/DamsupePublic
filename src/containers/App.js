@@ -9,10 +9,14 @@ import styles from './styles/App.css';
 
 class App extends Component {
   render() {
-    let { isAuthenticated, loading, children, signOut} = this.props;
+    let { isAuthenticated, loading, children, signOut, eventIsChosen, currentEventName} = this.props;
     return (
       <div className={styles.app}>
-        <Header show={isAuthenticated && !loading} signOut={signOut}/>
+        <Header 
+          show={isAuthenticated && !loading} 
+          signOut={signOut} 
+          eventIsChosen={eventIsChosen} 
+          currentEvent={currentEventName}/>
         <ReactTransitionGroup component="div" className={styles.routeContainer}>
               {React.cloneElement(children, {
                 key: this.props.location.pathname
@@ -26,7 +30,9 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.authenticated,
-    loading: state.app.loading
+    loading: state.app.loading,
+    eventIsChosen: state.event.event.get('eventChosen'),
+    currentEventName: state.event.event.get('name')
   }
 }
 

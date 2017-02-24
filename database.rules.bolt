@@ -17,12 +17,14 @@ type User {
 /*
  * Events
  */
-path /events/{event} is Event {
-	read() {isSignedIn() && userIsParticipantOf(event)}
+path /events is Event[] {
+	read() {true}
 	write() {false}
 }
 
 type Event {
+	validate() {this.id == key()}
+	id: EventRef,
 	active: Boolean,
 	name: NameString
 }
@@ -52,7 +54,7 @@ path /userEventParticipations/{uid}/{event} is Boolean {
 	validate() {isEvent(event)}
 }
 
-
+//auth != null && root.child('eventParticipants').child($event).child(auth.uid).val() != null
 /*
  * userEventData
  */

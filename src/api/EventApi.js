@@ -6,7 +6,8 @@ export default class EventApi {
 
     constructor(database) {
         this.database = database;
-        this.subscriptions = {};
+        this.eventSubscriptions = {};
+        this.eventListSubscription = null;
     }
 
     /**
@@ -22,7 +23,7 @@ export default class EventApi {
             } 
         });
         let key = `eventData_${eventId}`;
-        this.subscriptions[key] = ref;
+        this.eventSubscriptions[key] = ref;
     }
 
     /**
@@ -37,17 +38,17 @@ export default class EventApi {
             cb(snapshot.val());
         })
         let key = `userEventData_${uid}_${eventId}`;
-        this.subscriptions[key] = ref;
+        this.eventSubscriptions[key] = ref;
     }
 
     /**
-     * Clear all subscriptions.
+     * Clear all subscriptions related to a single event.
      */
-    clearSubscriptions() {
-        for (var key in this.subscriptions) {
-            if (this.subscriptions.hasOwnProperty(key) && this.subscriptions[key]) {
-                this.subscriptions[key].off();
-                this.subscriptions[key] = null;
+    clearEventSubscriptions() {
+        for (var key in this.eventSubscriptions) {
+            if (this.eventSubscriptions.hasOwnProperty(key) && this.eventSubscriptions[key]) {
+                this.eventSubscriptions[key].off();
+                this.eventSubscriptions[key] = null;
             }
         }
     }
@@ -77,4 +78,44 @@ export default class EventApi {
 
     }
 
+    /**
+     * Subscribe to all events
+     */
+    subscribeToEvents(added, changed, deleted) {
+        let ref = this.database().ref('/events/');
+
+        ref.on('child_added', (snapshot) => {
+            added(snapshot.val());
+        })
+        
+        ref.on('child_changed', (snapshot) => {
+            changed(snapshot.val());
+        })
+        
+        ref.on('child_removed', (snapshot) => {
+            deleted(snapshot.val());
+        })
+        
+        if(this.eventListSubscription) {
+            this.eventListSubscription.off();
+        }
+        
+
+        this.eventListSubscription = ref;
+    }
+
+    getEvents() {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            self.database().ref('/events').once('value')
+            .then(snapshot => {
+                resolve(snapshot.val());
+            })
+            .catch(err => {
+                reject(err);
+            })
+        })
+    }
+
 }
+

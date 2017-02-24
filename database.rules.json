@@ -20,8 +20,11 @@
       }
     },
     "events": {
-      "$event": {
-        ".validate": "newData.hasChildren(['active', 'name'])",
+      "$key1": {
+        ".validate": "newData.hasChildren(['id', 'active', 'name']) && newData.child('id').val() == $key1",
+        "id": {
+          ".validate": "newData.isString() && root.child('events').child(data.val()).val() != null"
+        },
         "active": {
           ".validate": "newData.isBoolean()"
         },
@@ -30,9 +33,10 @@
         },
         "$other": {
           ".validate": "false"
-        },
-        ".read": "auth != null && root.child('eventParticipants').child($event).child(auth.uid).val() != null"
-      }
+        }
+      },
+      ".validate": "newData.hasChildren()",
+      ".read": "true"
     },
     "eventParticipants": {
       "$event": {

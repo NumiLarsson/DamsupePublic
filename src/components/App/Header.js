@@ -1,23 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router';
 import styles from './Header.css';
 import Settings from 'react-icons/lib/md/settings';
-import List from 'react-icons/lib/md/list';
+import EventHeader from './EventHeader';
+import EventListHeader from './EventListHeader';
 
 export default props => {
     let {signOut, show, currentEvent, eventIsChosen} = props;
     
     return (
         <header id="mainHeader" className={show ? `${styles.mainHeader} ${styles.show}` : styles.mainHeader}>
-            <div className={styles.eventTitleSection}>
-                {eventIsChosen && <h2>{currentEvent}</h2>}
-                {!eventIsChosen && <h2>Choose Event</h2>}
-            </div>
-            <span className={styles.divider} />
-            <nav className={styles.controlPanel}>
-                <Link to="/main/eventlist"><List style={{marginRight: '5px'}} color="#fff" size="32" /></Link>
-                <Settings color="#fff" size="32" onClick={signOut} />
-            </nav>
+            {eventIsChosen ? <EventHeader title={currentEvent}/> : <EventListHeader title={'Choose Event'} />}
+            <Settings color="#fff" size="32" onClick={signOut} />
         </header>
     )
 }

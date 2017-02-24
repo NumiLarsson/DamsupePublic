@@ -141,14 +141,13 @@ const mapStateToProps = (state) => {
     return {
         userName: state.auth.name,
         uid: state.auth.uid,
-        currentEvent: state.auth.lastVisitedEvent,
-        currentEventName: state.event.event.name,
+        currentEvent: state.event.event.get('id'),
         infoScreenOpen: state.event.menu.infoScreenOpen,
         mediaScreenOpen: state.event.menu.mediaScreenOpen,
         shopScreenOpen: state.event.menu.shopScreenOpen,
         userScreenOpen: state.event.menu.userScreenOpen,
-        eventDataLoading: state.event.event.eventDataLoading,
-        userEventDataLoading: state.event.event.userEventDataLoading
+        eventDataLoading: state.event.event.get('eventDataLoading'),
+        userEventDataLoading: state.event.event.get('userEventDataLoading')
     }
 }
 

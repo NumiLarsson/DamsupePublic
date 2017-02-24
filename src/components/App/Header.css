@@ -18,8 +18,21 @@
 }
 
 .eventTitleSection {
-    overflow: hidden;
     padding-right: 5px;
+    overflow: hidden;
+}
+
+.eventHeader {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.eventListHeader {
+    flex: 1;
+    overflow: hidden;
 }
 
 .eventTitleSection > h2 {

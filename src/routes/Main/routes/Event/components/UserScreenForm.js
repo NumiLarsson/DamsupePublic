@@ -45,7 +45,7 @@ UserScreenForm = reduxForm({
 UserScreenForm = connect(state => (
     {initialValues: {
         name: state.auth.name, 
-        table: state.event.event.userData.table
+        table: state.event.event.get('userData').get('table')
     },
     loading: state.event.userscreen.userScreenLoading}))(UserScreenForm);
 
