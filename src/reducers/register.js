@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
             return state.set('loading', true);
         
         case REGISTER_DONE_LOADING:
-            return state.set('loading', true);
+            return state.set('loading', false);
 
         default:
             return state;

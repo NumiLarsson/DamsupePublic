@@ -1,4 +1,4 @@
-
+import Immutable from 'immutable';
 /**
  * Event API.
  */
@@ -6,7 +6,9 @@ export default class EventApi {
 
     constructor(database) {
         this.database = database;
-        this.eventSubscriptions = {};
+        this.eventSubscriptions = Immutable.Map();
+        this.eventUserSubscriptions = Immutable.Map();
+        this.eventAccessSubscription = Immutable.Map();
         this.eventListSubscription = null;
     }
 
@@ -17,14 +19,30 @@ export default class EventApi {
      */
      subscribeToEvent(eventId, cb) {
         let ref = this.database().ref(`/events/${eventId}`);
-        ref.on('value', (snapshot) => {
+        ref.on('value', snapshot => {
             if(snapshot.val()) {
                 cb(snapshot.val());
             } 
         });
-        let key = `eventData_${eventId}`;
-        this.eventSubscriptions[key] = ref;
+        let key = `event_${eventId}`;
+        this.eventSubscriptions.set(key, ref);
     }
+
+     /**
+     * Subscribe to the access status of a user for the selected event.
+     * @param {string} uid - ID of the user.
+     * @param {string} eventId - ID of the event.
+     * @param {function} cb - Function to call when the status changes.
+     */
+     subscribeToEventAccessStatus(uid, eventId, cb) {
+        let ref = this.database().ref(`userEventParticipations/${uid}/${eventId}`);
+        ref.on('value', snapshot => {
+            cb(snapshot.val());
+        })
+        let key = `userEventAccess_${uid}_${eventId}`;
+        this.eventAccessSubscription.set(key, ref);
+     }
+
 
     /**
      * Subscribe to user data connected to an event.
@@ -38,19 +56,35 @@ export default class EventApi {
             cb(snapshot.val());
         })
         let key = `userEventData_${uid}_${eventId}`;
-        this.eventSubscriptions[key] = ref;
+        this.eventUserSubscriptions.set(key, ref);
     }
 
     /**
-     * Clear all subscriptions related to a single event.
+     * Clear all subscriptions related to the user related data of an event..
+     */
+    clearEventUserSubscriptions() {
+        this.eventUserSubscriptions.toList().forEach(ref => {
+            ref.off();
+        })        
+    }
+
+    /**
+     * Clear the subscriptions to user access to an event.
+     */
+    clearEventUserAccessSubscriptions() {
+        this.eventAccessSubscription.toList().forEach(ref => {
+            ref.off();
+        })        
+    }
+
+
+     /**
+     * Clear all event subscriptions
      */
     clearEventSubscriptions() {
-        for (var key in this.eventSubscriptions) {
-            if (this.eventSubscriptions.hasOwnProperty(key) && this.eventSubscriptions[key]) {
-                this.eventSubscriptions[key].off();
-                this.eventSubscriptions[key] = null;
-            }
-        }
+        this.eventSubscriptions.toList().forEach(ref => {
+            ref.off();
+        })        
     }
 
     /**

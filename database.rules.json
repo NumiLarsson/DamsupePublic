@@ -10,7 +10,7 @@
           ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 100"
         },
         "lastVisitedEvent": {
-          ".validate": "newData.isString() && root.child('events').child(data.val()).val() != null"
+          ".validate": "newData.isString()"
         },
         "$other": {
           ".validate": "false"
@@ -50,6 +50,7 @@
     "userEventParticipations": {
       "$uid": {
         ".validate": "newData.hasChildren()",
+        ".read": "auth != null && auth.uid == $uid",
         ".write": "auth.isAdmin == true && root.child('users').child($uid).val() != null",
         "$event": {
           ".validate": "newData.isBoolean() && root.child('events').child($event).val() != null"

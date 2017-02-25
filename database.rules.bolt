@@ -11,7 +11,7 @@ path /users/{uid} is User {
 type User {
   email: EmailString,
   name : NameString | Null,
-  lastVisitedEvent: EventRef | Null
+  lastVisitedEvent: String | Null
 }
 
 /*
@@ -34,7 +34,6 @@ type Event {
  */
 
 
-
 path /eventParticipants/{event} is Object {
 	read() {false}
 	write() {auth.isAdmin == true && isEvent(event)}
@@ -46,7 +45,7 @@ path /eventParticipants/{event}/{uid} is Boolean {
 
 
 path /userEventParticipations/{uid} is Object {
-	read() {false}
+	read() {isCurrentUser(uid)}
 	write() {auth.isAdmin == true && isUser(uid)}
 }
 

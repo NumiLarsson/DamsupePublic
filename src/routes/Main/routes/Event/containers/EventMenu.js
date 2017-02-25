@@ -16,7 +16,7 @@ import Info from 'react-icons/lib/md/info';
 import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
     infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from 'actions/eventmenu';
 import { resetMenu } from 'actions/eventmenu';
-import { setupEventUserDataHooks, eventLoading, resetEventData, unsubscribeToEventUserDataHooks } from 'actions/event';
+import { setupEventUserDataHooks, eventLoading, resetEventData, unsubscribeToEvent } from 'actions/event';
 
 //Animations
 import { expand } from 'utils/animations';
@@ -41,7 +41,7 @@ class EventMenu extends Component  {
 
     componentWillUnmount () {
         this.props.resetEventData();
-        this.props.unsubscribeToEventUserDataHooks();
+        this.props.unsubscribeToEvent();
     }
 
     expCard(target, shouldExpand, action) {
@@ -87,7 +87,7 @@ class EventMenu extends Component  {
                             </div>
                     </EventMenuCard>
                     <EventMenuCard 
-                        disabled={false} 
+                        disabled={!this.props.userHasAccess} 
                         styleClass={styles.second}
                         headerStyle={styles.cardHeader}  
                         open={this.props.mediaScreenOpen} 
@@ -101,7 +101,7 @@ class EventMenu extends Component  {
                             </div>
                     </EventMenuCard>
                     <EventMenuCard 
-                        disabled={false} 
+                        disabled={!this.props.userHasAccess} 
                         styleClass={styles.third}
                         headerStyle={styles.cardHeader}  
                         open={this.props.shopScreenOpen} 
@@ -115,7 +115,7 @@ class EventMenu extends Component  {
                             </div>
                     </EventMenuCard>
                     <EventMenuCard
-                        disabled={false}  
+                        disabled={!this.props.userHasAccess}  
                         styleClass={styles.fourth}
                         headerStyle={styles.cardHeader}  
                         open={this.props.userScreenOpen} 
@@ -139,8 +139,8 @@ class EventMenu extends Component  {
 
 const mapStateToProps = (state) => {
     return {
-        userName: state.auth.get('name'),
         uid: state.auth.get('uid'),
+        userHasAccess: state.event.event.get('userHasAccess'),
         currentEvent: state.event.event.get('id'),
         infoScreenOpen: state.event.menu.get('infoScreenOpen'),
         mediaScreenOpen: state.event.menu.get('mediaScreenOpen'),
@@ -160,7 +160,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         eventLoading: () => dispatch(eventLoading()),
         resetEventData: () => dispatch(resetEventData()),
-        unsubscribeToEventUserDataHooks: () => dispatch(unsubscribeToEventUserDataHooks())
+        unsubscribeToEvent: () => dispatch(unsubscribeToEvent())
     }
     
 }

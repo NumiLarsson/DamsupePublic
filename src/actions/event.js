@@ -3,12 +3,14 @@ import api from '../api/Api';
 
 import { UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, RESET_EVENT_DATA, 
          EVENT_DATA_DONE_LOADING, USER_EVENT_DATA_LOADING, USER_EVENT_DATA_DONE_LOADING,
-        ADD_EVENT_TO_EVENT_LIST, REMOVE_EVENT_FROM_EVENT_LIST, UPDATE_EVENT_IN_EVENT_LIST} from './actionTypes';
+        ADD_EVENT_TO_EVENT_LIST, REMOVE_EVENT_FROM_EVENT_LIST, UPDATE_EVENT_IN_EVENT_LIST,
+        UPDATE_USER_EVENT_ACCESS} from './actionTypes';
 
 export const addEventToEventList = createAction(ADD_EVENT_TO_EVENT_LIST);
 export const removeEventFromEventList = createAction(REMOVE_EVENT_FROM_EVENT_LIST);
 export const updateEventInEventList = createAction(UPDATE_EVENT_IN_EVENT_LIST);
 
+export const updateUserEventAccess = createAction(UPDATE_USER_EVENT_ACCESS);
 export const updateCurrentEvent = createAction(UPDATE_CURRENT_EVENT);
 export const updateUserEventData = createAction(UPDATE_USER_EVENT_DATA);
 export const resetEventData = createAction(RESET_EVENT_DATA);
@@ -35,15 +37,27 @@ export function eventLoading() {
  * @param {string} uid - Firebase.Auth UserID
  * @param {string} lastVisitedEvent - The event that is currently selected by the user.
  */
-export function setupEventUserDataHooks(uid, lastVisitedEvent) {
+export function setupEventUserDataHooks(uid, currentEvent) {
     return dispatch => {
-        api.events.subscribeToEvent(lastVisitedEvent, (event) => {
+
+        api.user.setLastVisitedEvent(uid, currentEvent);
+        api.events.subscribeToEvent(currentEvent, event => {
             dispatch(updateCurrentEventAsync(event));
         });
-
-        api.events.subscribeToUserEventData(lastVisitedEvent, uid, (data) => {
-            dispatch(updateUserEventDataAsync(data));
-        });
+        
+        api.events.subscribeToEventAccessStatus(uid, currentEvent, status => {
+            if(status) {
+                dispatch(updateUserEventAccess(true));
+                dispatch(userEventDataLoading());
+                api.events.subscribeToUserEventData(currentEvent, uid, data => {
+                    dispatch(updateUserEventDataAsync(data));
+                });
+            } else {
+                dispatch(updateUserEventAccess(false));
+                dispatch(userEventDataDoneLoading());
+                api.events.clearEventUserSubscriptions();
+            }
+        })
     }
 }
 
@@ -78,8 +92,10 @@ function updateUserEventDataAsync(data) {
 /**
  * unsubscribe to all event and event/user updates.
  */
-export function unsubscribeToEventUserDataHooks() {
+export function unsubscribeToEvent() {
     return dispatch => {
+        api.events.clearEventUserAccessSubscriptions();
+        api.events.clearEventUserSubscriptions();
         api.events.clearEventSubscriptions();
     } 
 }
