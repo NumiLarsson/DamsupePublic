@@ -29,8 +29,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.authenticated,
-    loading: state.app.loading,
+    isAuthenticated: state.auth.get('authenticated'),
+    loading: state.app.get('loading'),
     eventIsChosen: state.event.event.get('eventChosen'),
     currentEventName: state.event.event.get('name')
   }

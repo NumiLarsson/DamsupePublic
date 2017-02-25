@@ -139,13 +139,13 @@ class EventMenu extends Component  {
 
 const mapStateToProps = (state) => {
     return {
-        userName: state.auth.name,
-        uid: state.auth.uid,
+        userName: state.auth.get('name'),
+        uid: state.auth.get('uid'),
         currentEvent: state.event.event.get('id'),
-        infoScreenOpen: state.event.menu.infoScreenOpen,
-        mediaScreenOpen: state.event.menu.mediaScreenOpen,
-        shopScreenOpen: state.event.menu.shopScreenOpen,
-        userScreenOpen: state.event.menu.userScreenOpen,
+        infoScreenOpen: state.event.menu.get('infoScreenOpen'),
+        mediaScreenOpen: state.event.menu.get('mediaScreenOpen'),
+        shopScreenOpen: state.event.menu.get('shopScreenOpen'),
+        userScreenOpen: state.event.menu.get('userScreenOpen'),
         eventDataLoading: state.event.event.get('eventDataLoading'),
         userEventDataLoading: state.event.event.get('userEventDataLoading')
     }

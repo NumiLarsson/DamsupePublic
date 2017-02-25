@@ -1,22 +1,18 @@
-
+import Immutable from 'immutable';
 import { REGISTER_LOADING, REGISTER_DONE_LOADING } from 'actions/actionTypes';
 
-export const initialState = {
+export const initialState = Immutable.Map({
     loading: false
-}
+})
 
 export default (state = initialState, action) => {
     switch (action.type) {
     
         case REGISTER_LOADING:
-            return Object.assign({}, state, {
-                loading: true
-            });
+            return state.set('loading', true);
         
         case REGISTER_DONE_LOADING:
-            return Object.assign({}, state, {
-                loading: false
-            });
+            return state.set('loading', true);
 
         default:
             return state;

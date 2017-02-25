@@ -17,27 +17,21 @@ class EventList extends Component  {
         this.props.setupEventListSubscription();
     }
 
-    renderEvents(events) {
-        let list = [];
-        events.map(event => {
-            let id = event.get('id');
-            list.push(<EventListItem key={id} name={event.get('name')} active={event.get('active')} eventId={id} />)
-        });
-        return list;
-    }
-
     render() {
         return (
             <div className={styles.eventListScreen}>
                 <ul className={styles.eventList}>
-                    {this.renderEvents(this.props.events)}
+                    {this.props.events.map(event => {
+                        let id = event.get('id');
+                        return <EventListItem key={id} name={event.get('name')} active={event.get('active')} eventId={id} />
+                    })}
                 </ul>
             </div>
         )
     }
     
 }
-
+//this.renderEvents(this.props.events)
 const mapStateToProps = (state) => {
     return {
         events: state.event.eventlist

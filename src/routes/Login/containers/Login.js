@@ -94,11 +94,11 @@ class LoginScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-        redirectError: state.login.redirectError,
-        redirectErrorMsg: state.login.redirectErrorMsg,
-        redirectLoading: state.login.redirectLoading,
-        userSignedOut: state.login.userSignedOut,
-        loading: state.login.loading
+        redirectError: state.login.get('redirectError'),
+        redirectErrorMsg: state.login.get('redirectErrorMsg'),
+        redirectLoading: state.login.get('redirectLoading'),
+        userSignedOut: state.login.get('userSignedOut'),
+        loading: state.login.get('loading')
     }
 }
 

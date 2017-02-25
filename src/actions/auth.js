@@ -23,7 +23,7 @@ export function listenForAuthChanges() {
                 dispatch(signedOut());
                 unsubscribeToUserData(dispatch, true);
                 dispatch(push('/'));
-                if(getState().app.loading) {
+                if(getState().app.get('loading')) {
                     dispatch(appDoneLoading());
                 }
             }
@@ -48,13 +48,13 @@ function handleUserSignIn(dispatch, user, getState) {
         api.user.getLastVisitedEvent(user.uid)
         .then(eventId => {
             dispatch(push(`/main/event/${eventId}`))
-            if(getState().app.loading) {
+            if(getState().app.get('loading')) {
                 dispatch(appDoneLoading());
             }
         })
         .catch(() => {
             dispatch(push(`/main/eventList`));
-            if(getState().app.loading) {
+            if(getState().app.get('loading')) {
                 dispatch(appDoneLoading());
             }
         })

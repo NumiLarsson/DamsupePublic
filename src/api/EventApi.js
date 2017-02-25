@@ -60,12 +60,11 @@ export default class EventApi {
      * @param {object} values - Object containing the values to be saved.
      * @returns Promise resolving to a success message and rejecting with an error.
      */
-    saveUserData(eventId, uid, values) {
+    saveUserEventData(eventId, uid, values) {
         let self = this;
         return new Promise((resolve, reject) => {
-            const {name, table} = values;
+            const {table} = values;
             let updates = {};
-            updates[`/users/${uid}/name`] = name;
             updates[`/userEventData/${uid}/${eventId}/table`] = table || null;
             self.database().ref().update(updates)
             .then(() => {
