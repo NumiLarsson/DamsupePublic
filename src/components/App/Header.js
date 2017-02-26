@@ -10,7 +10,7 @@ export default props => {
     return (
         <header id="mainHeader" className={show ? `${styles.mainHeader} ${styles.show}` : styles.mainHeader}>
             {eventIsChosen ? <EventHeader title={currentEvent}/> : <EventListHeader title={'Choose Event'} />}
-            <Settings color="#fff" size="32" onClick={signOut} />
+            <Settings className={styles.headerButton} color="#fff" size="32" onClick={signOut} />
         </header>
     )
 }

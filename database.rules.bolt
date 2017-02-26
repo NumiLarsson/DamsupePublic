@@ -68,6 +68,74 @@ type UserEventData {
 
 
 /*
+* QUEUES
+*/
+
+type Task {
+	validate() {auth.canProcessTasks == true && this._state != null && this._state_changed != null && this._progress != null}
+	_state: String | Null,
+	_state_changed: StateChange | Null,
+	_owner: String | Null,
+	_progress: Progress | Null,
+	_error_details: ErrorDetails | Null,
+	_id: String | Null
+}
+
+type StateChange extends Number {
+	validate() {this == now || prior(this) == this}
+}
+
+type Progress extends Number {
+	validate() {this >= 0 && this <= 100}
+}
+
+type ErrorDetails extends Object {
+	error : String | Null,
+	error_stack: String | Null,
+	previous_state: String | Null,
+	original_task: Any | Null,
+	attempts: AttemptCount | Null
+}
+
+type AttemptCount extends Number {
+	validate() {this > 0}
+}
+
+path /eventAccessRequests/tasks is EventAccessTaskList {
+	index() {["_state"]}
+}
+
+type EventAccessTaskList extends EventAccessTask[] {
+	read() {auth.canProcessTasks == true}
+	write() {auth.canAddTasks == true || auth.canProcessTasks == true}
+}
+
+type EventAccessTask {
+	validate() {
+		this.uid != null &&
+		this.eventId != null &&
+		this.password != null ||
+		(auth.canProcessTasks == true && 
+		this._state != null && 
+		this._state_changed != null && 
+		this._progress != null)
+	}
+	_state: String | Null,
+	_state_changed: StateChange | Null,
+	_owner: String | Null,
+	_progress: Progress | Null,
+	_error_details: ErrorDetails | Null,
+	_id: String | Null,
+	uid: String | Null,
+	eventId: String | Null,
+	password: String | Null
+}
+
+
+
+
+
+/*
  * Helper functions and types
  */
 
