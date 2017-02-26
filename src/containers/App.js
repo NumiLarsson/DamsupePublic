@@ -9,12 +9,13 @@ import styles from './styles/App.css';
 
 class App extends Component {
   render() {
-    let { isAuthenticated, loading, children, signOut, eventIsChosen, currentEventName} = this.props;
+    let { isAuthenticated, loading, children, signOut, eventIsChosen, currentEventName, location} = this.props;
     return (
       <div className={styles.app}>
         <Header 
           show={isAuthenticated && !loading} 
           signOut={signOut} 
+          location={location}
           eventIsChosen={eventIsChosen} 
           currentEvent={currentEventName}/>
         <ReactTransitionGroup component="div" className={styles.routeContainer}>
