@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
-import { goBack } from 'react-router-redux';
-import Back from 'react-icons/lib/md/arrow-back';
 import api from 'api/Api';
 import { animateErrorButton } from 'utils/animations';
 
@@ -13,6 +11,7 @@ import RedirectError from '../components/RedirectError';
 
 //Actions
 import {setRedirectError, setRedirectLoading, setNoRedirect, setLoading, setDoneLoading} from 'actions/login';
+import { navigateOrGoBack } from 'actions/app';
 
 //Styles
 import styles from './styles/Login.css';
@@ -55,6 +54,9 @@ class LoginScreen extends Component {
         this.props.setLoading();
         const { email, password } = values;
         return api.auth.signInWithEmail(email, password)
+        .then(user => {
+            this.props.navigateOrGoBack('/app/eventlist');
+        })
         .catch((e) => { 
             throw new SubmissionError({ _error: e }); 
         });
@@ -68,7 +70,7 @@ class LoginScreen extends Component {
 
     render() {
         return (
-            <div className={styles.loginScreenContent}>
+            <div className={styles.loginScreen}>
                 {this.props.redirectLoading && 
                     <RedirectLoader>
                         <div className={spinners.spinner}>
@@ -77,7 +79,6 @@ class LoginScreen extends Component {
                         </div>
                     </RedirectLoader>
                 }
-                <span className={styles.backButton} role="button"><Back color="#fff" size="32" onClick={this.props.goBack} /></span>
                 <div className={styles.loginScreenHeader}>
                     <h1 className={styles.loginScreenHeaderTitle}>Welcome!</h1>
                 </div>
@@ -108,7 +109,7 @@ const mapDispatchToProps = {
     setNoRedirect,
     setLoading,
     setDoneLoading,
-    goBack
+    navigateOrGoBack
 }
 
 

@@ -27,37 +27,57 @@ const userEventDataDoneLoading = createAction(USER_EVENT_DATA_DONE_LOADING);
 export function eventLoading() {
     return dispatch => {
         dispatch(eventDataLoading());
-        dispatch(userEventDataLoading());
     }
 }
 
- /**
- * Subscribe to data specific to a user or event or a combination.
- * @param {function} dispatch - Redux dispatch function
- * @param {string} uid - Firebase.Auth UserID
- * @param {string} lastVisitedEvent - The event that is currently selected by the user.
- */
-export function setupEventUserDataHooks(uid, currentEvent) {
-    return dispatch => {
 
-        api.user.setLastVisitedEvent(uid, currentEvent);
-        api.events.subscribeToEvent(currentEvent, event => {
+function setupEventDataHooks(eventId) {
+    return (dispatch) => {
+        api.events.subscribeToEvent(eventId, event => {
             dispatch(updateCurrentEventAsync(event));
         });
-        
-        api.events.subscribeToEventAccessStatus(uid, currentEvent, status => {
+    }
+} 
+
+function setupUserDataHooks(uid, eventId) {
+    return (dispatch) => {
+        api.user.setLastVisitedEvent(uid, eventId);
+        dispatch(userEventDataLoading());
+        api.events.subscribeToUserEventData(eventId, uid, data => {
+            dispatch(updateUserEventDataAsync(data));
+        });
+    }
+}
+
+export function subscribeToUserEventAccess(uid, eventId) {
+    return (dispatch) => {
+        api.events.subscribeToEventAccessStatus(uid, eventId, status => {
             if(status) {
                 dispatch(updateUserEventAccess(true));
-                dispatch(userEventDataLoading());
-                api.events.subscribeToUserEventData(currentEvent, uid, data => {
-                    dispatch(updateUserEventDataAsync(data));
-                });
+                dispatch(setupUserDataHooks(uid, eventId));
             } else {
                 dispatch(updateUserEventAccess(false));
                 dispatch(userEventDataDoneLoading());
                 api.events.clearEventUserSubscriptions();
             }
-        })
+        });
+    }
+}
+
+ /**
+ * Subscribe to event data.
+ * @param {function} eventId - Id of the event.
+ */
+export function setupEventUserDataHooks(eventId) {
+    return (dispatch, getState) => {
+
+        dispatch(setupEventDataHooks(eventId));
+        const auth = getState().auth;
+        const signedIn = auth.get('authenticated');
+        if(signedIn) {
+            const uid = auth.get('uid');
+            dispatch(subscribeToUserEventAccess(uid, eventId));
+        }
     }
 }
 

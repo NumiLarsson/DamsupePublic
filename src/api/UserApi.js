@@ -62,7 +62,6 @@ export default class UserApi {
      setLastVisitedEvent(uid, eventId) {
         let self = this;
         return new Promise((resolve, reject) => {
-            let update = {};
             self.database().ref(`users/${uid}/lastVisitedEvent`).set(eventId)
             .then(() => {
                 resolve('SUCCESS');

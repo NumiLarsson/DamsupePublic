@@ -1,17 +1,17 @@
-import api from '../../api/Api';
+import api from 'api/Api';
 
 module.exports = {
-    path: 'register',
+    path: 'login',
 
     onEnter: (nextState, replace) => {
         if (api.auth.getCurrentUser()) {
-            replace('/main');
+            replace('/app/eventlist');
         }
     },
 
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
-            cb(null, require('./containers/RegisterContainer'));
+            cb(null, require('./containers/Login'));
         });
     }
 }

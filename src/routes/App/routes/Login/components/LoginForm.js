@@ -8,9 +8,9 @@ const LoginForm = (props) => {
     const { handleSubmit, submitFailed, error, pristine, submitting, loading } = props;
     return (
 
-        <form onSubmit={handleSubmit} className="loginForm">
-            <Field fieldId="logName" required type="email" name="email" component={MaterialField} label="Email"/>
-            <Field fieldId="logPwd" required type="password" name="password" component={MaterialField} label="Password" />
+        <form onSubmit={handleSubmit}>
+            <Field fieldId="logName" color="#34495e" required type="email" name="email" component={MaterialField} label="Email"/>
+            <Field fieldId="logPwd"  color="#34495e" required type="password" name="password" component={MaterialField} label="Password" />
             <button type="submit" 
                 id="loginBtn" 
                 disabled={pristine || submitting || loading}

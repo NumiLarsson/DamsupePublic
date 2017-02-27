@@ -17,6 +17,7 @@ import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
     infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from 'actions/eventmenu';
 import { resetMenu } from 'actions/eventmenu';
 import { setupEventUserDataHooks, eventLoading, resetEventData, unsubscribeToEvent } from 'actions/event';
+import { updateCanGoBack } from 'actions/app';
 
 //Animations
 import { expand } from 'utils/animations';
@@ -36,7 +37,8 @@ class EventMenu extends Component  {
         const {eventId} = this.props.params;
         this.props.resetMenu();
         this.props.eventLoading();
-        this.props.setupEventUserDataHooks(this.props.uid, eventId);
+        this.props.setupEventUserDataHooks(eventId);
+        this.props.updateCanGoBack(true);
     }
 
     componentWillUnmount () {
@@ -62,7 +64,6 @@ class EventMenu extends Component  {
         document.getElementById('mainHeader').removeAttribute("style");
         target.classList.remove(styles.cardExpanded);
         target.querySelector(`.${styles.cardHeader}`).classList.remove(styles.cardHeaderExpanded);
-        //TODO:FIX
         this.wrapper.style.overflow = "auto";
     }   
 
@@ -87,7 +88,7 @@ class EventMenu extends Component  {
                             </div>
                     </EventMenuCard>
                     <EventMenuCard 
-                        disabled={!this.props.userHasAccess} 
+                        disabled={false} 
                         styleClass={styles.second}
                         headerStyle={styles.cardHeader}  
                         open={this.props.mediaScreenOpen} 
@@ -101,7 +102,7 @@ class EventMenu extends Component  {
                             </div>
                     </EventMenuCard>
                     <EventMenuCard 
-                        disabled={!this.props.userHasAccess} 
+                        disabled={false} 
                         styleClass={styles.third}
                         headerStyle={styles.cardHeader}  
                         open={this.props.shopScreenOpen} 
@@ -139,6 +140,7 @@ class EventMenu extends Component  {
 
 const mapStateToProps = (state) => {
     return {
+        isSignedIn: state.auth.get('authenticated'),
         uid: state.auth.get('uid'),
         userHasAccess: state.event.event.get('userHasAccess'),
         currentEvent: state.event.event.get('id'),
@@ -155,12 +157,13 @@ const mapDispatchToProps = (dispatch) => {
     return {
         resetMenu: () => dispatch(resetMenu()),
         dispatch, 
-        setupEventUserDataHooks: (uid, lastVisitedEvent) => {
-            dispatch(setupEventUserDataHooks(uid, lastVisitedEvent))
+        setupEventUserDataHooks: (eventId) => {
+            dispatch(setupEventUserDataHooks(eventId))
         },
         eventLoading: () => dispatch(eventLoading()),
         resetEventData: () => dispatch(resetEventData()),
-        unsubscribeToEvent: () => dispatch(unsubscribeToEvent())
+        unsubscribeToEvent: () => dispatch(unsubscribeToEvent()),
+        updateCanGoBack: (val) => dispatch(updateCanGoBack(val))
     }
     
 }

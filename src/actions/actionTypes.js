@@ -2,6 +2,7 @@
 export const APP_LOADING                  = 'APP_LOADING';
 export const APP_DONE_LOADING             = 'APP_DONE_LOADING';
 export const RESET_USER_DATA              = 'RESET_USER_DATA';
+export const UPDATE_CAN_GO_BACK           = 'UPDATE_CAN_GO_BACK';
 
 //Auth
 export const USER_SIGNED_IN               = 'USER_SIGNED_IN';

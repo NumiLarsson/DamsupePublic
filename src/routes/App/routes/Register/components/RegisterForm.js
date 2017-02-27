@@ -42,9 +42,9 @@ const RegisterForm = (props) => {
     const { handleSubmit, submitFailed, error, pristine, submitting, loading } = props;
     return (
         <form onSubmit={handleSubmit} className={styles.registerForm}>
-            <Field type="email" name="email" fieldId="regEmail" component={MaterialField} label="Email"/>
-            <Field type="password" name="password" fieldId="regPwd1" component={MaterialField} label="Password" />
-            <Field type="password" name="password2" fieldId="regPwd2" component={MaterialField} label="Type password again" />
+            <Field type="email" color="#34495e" name="email" fieldId="regEmail" component={MaterialField} label="Email"/>
+            <Field type="password" color="#34495e" name="password" fieldId="regPwd1" component={MaterialField} label="Password" />
+            <Field type="password" color="#34495e" name="password2" fieldId="regPwd2" component={MaterialField} label="Type password again" />
             <button type="submit" 
                 id="registerBtn" 
                 disabled={pristine || submitting || loading}

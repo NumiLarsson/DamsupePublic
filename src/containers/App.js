@@ -9,11 +9,12 @@ import styles from './styles/App.css';
 
 class App extends Component {
   render() {
-    let { isAuthenticated, loading, children, signOut, eventIsChosen, currentEventName, location} = this.props;
+    let {children, signOut, eventIsChosen, currentEventName, location} = this.props;
+    const path = location.pathname.split('/');
     return (
       <div className={styles.app}>
         <Header 
-          show={isAuthenticated && !loading} 
+          show={path[1] === 'app'} 
           signOut={signOut} 
           location={location}
           eventIsChosen={eventIsChosen} 
@@ -31,7 +32,6 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.get('authenticated'),
-    loading: state.app.get('loading'),
     eventIsChosen: state.event.event.get('eventChosen'),
     currentEventName: state.event.event.get('name')
   }
