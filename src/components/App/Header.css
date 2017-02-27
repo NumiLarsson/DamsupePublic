@@ -1,0 +1,54 @@
+.mainHeader {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+    width: 100%;
+    height: 64px;
+    position: fixed;
+    z-index: 300;
+    background: #34495e;
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);
+    transition: transform 0.1s ease;
+    transform: translateY(-120%);
+}
+
+.show {
+    transform: translateY(0);
+}
+
+.eventTitleSection {
+    padding-right: 5px;
+    overflow: hidden;
+}
+
+.eventHeader {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.eventListHeader {
+    flex: 1;
+    overflow: hidden;
+}
+
+.eventTitleSection > h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.divider {
+    flex: 1;
+}
+
+.controlPanel {
+    display: flex;
+}
+
+.headerButton {
+    cursor: pointer;
+}

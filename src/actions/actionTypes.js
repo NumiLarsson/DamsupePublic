@@ -7,6 +7,7 @@ export const RESET_USER_DATA              = 'RESET_USER_DATA';
 export const USER_SIGNED_IN               = 'USER_SIGNED_IN';
 export const USER_SIGNED_OUT              = 'USER_SIGNED_OUT';
 export const UPDATE_USER_INFO             = 'UPDATE_USER_INFO';
+export const USER_LOGGED_OUT              = 'USER_LOGGED_OUT';
 
 //Event
 export const UPDATE_CURRENT_EVENT         = 'UPDATE_CURRENT_EVENT';
@@ -16,6 +17,12 @@ export const EVENT_DATA_DONE_LOADING      = 'EVENT_DATA_DONE_LOADING';
 export const USER_EVENT_DATA_LOADING      = 'USER_EVENT_DATA_LOADING';
 export const USER_EVENT_DATA_DONE_LOADING = 'USER_EVENT_DATA_DONE_LOADING';
 export const RESET_EVENT_DATA             = 'RESET_EVENT_DATA';
+export const UPDATE_USER_EVENT_ACCESS     = 'UPDATE_USER_EVENT_ACCESS';
+
+//EventList
+export const ADD_EVENT_TO_EVENT_LIST      = 'ADD_EVENT_TO_LIST';
+export const REMOVE_EVENT_FROM_EVENT_LIST = 'REMOVE_EVENT_FROM_EVENT_LIST';
+export const UPDATE_EVENT_IN_EVENT_LIST   = 'UPDATE_EVENT_IN_EVENT_LIST';
 
 //Login
 export const REDIRECT_ERROR               = 'REDIRECT_ERROR';

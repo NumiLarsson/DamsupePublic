@@ -33,8 +33,8 @@ class HomeScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-        loading: state.app.loading,
-        authed: state.auth.authenticated
+        loading: state.app.get('loading'),
+        authed: state.auth.get('authenticated')
     }
 }
 

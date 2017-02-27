@@ -31,6 +31,48 @@ export default class UserApi {
         })
     }
 
+    /**
+     * Get the id of the event last visited by the user.
+     * @param {string} uid - ID of the user.
+     */   
+     getLastVisitedEvent(uid) {
+         let self = this;
+
+         return new Promise((resolve, reject) => {
+             self.database().ref(`/users/${uid}/lastVisitedEvent`).once('value')
+             .then(snapshot => {
+                 let val = snapshot.val();
+                 if (val) {
+                     resolve(val);
+                 } else {
+                     reject('No value');
+                 }
+             })
+             .catch(err => {
+                 reject(err);
+             })
+         })
+     }
+
+    /**
+     * Save the event last visited by the user.
+     * @param {string} uid - ID of the user.
+     * @param {string} eventId - Id of the event.
+     */
+     setLastVisitedEvent(uid, eventId) {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            let update = {};
+            self.database().ref(`users/${uid}/lastVisitedEvent`).set(eventId)
+            .then(() => {
+                resolve('SUCCESS');
+            })
+            .catch(err => {
+                reject(err);
+            })
+        })
+     }
+        
 
     /**
      * Subscribe to data about the user.

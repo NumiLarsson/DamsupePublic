@@ -53,7 +53,7 @@ class RegisterScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-        loading: state.register.loading
+        loading: state.register.get('loading')
     }
 }
 

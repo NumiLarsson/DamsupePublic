@@ -10,7 +10,7 @@
           ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 100"
         },
         "lastVisitedEvent": {
-          ".validate": "newData.isString() && root.child('events').child(data.val()).val() != null"
+          ".validate": "newData.isString()"
         },
         "$other": {
           ".validate": "false"
@@ -20,8 +20,11 @@
       }
     },
     "events": {
-      "$event": {
-        ".validate": "newData.hasChildren(['active', 'name'])",
+      "$key1": {
+        ".validate": "newData.hasChildren(['id', 'active', 'name']) && newData.child('id').val() == $key1",
+        "id": {
+          ".validate": "newData.isString() && root.child('events').child(data.val()).val() != null"
+        },
         "active": {
           ".validate": "newData.isBoolean()"
         },
@@ -30,14 +33,28 @@
         },
         "$other": {
           ".validate": "false"
-        },
-        ".read": "auth != null && root.child('eventParticipants').child($event).child(auth.uid).val() != null"
+        }
+      },
+      ".validate": "newData.hasChildren()",
+      ".read": "true"
+    },
+    "eventUserParticipationRequests": {
+      ".validate": "newData.hasChildren()",
+      ".read": "auth.canAddTasks == true || auth.canProcessTasks == true",
+      "$eventId": {
+        ".validate": "newData.hasChildren()",
+        ".write": "auth != null && root.child('events').child($eventId).val() != null",
+        "$uid": {
+          ".validate": "newData.isString() && (newData.val() == 'pending' || auth.canProcessTasks == true && (newData.val() == 'approved' || newData.val() == 'denied'))",
+          ".read": "auth != null && auth.uid == $uid",
+          ".write": "auth != null && auth.uid == $uid"
+        }
       }
     },
     "eventParticipants": {
       "$event": {
         ".validate": "newData.hasChildren()",
-        ".write": "auth.isAdmin == true && root.child('events').child($event).val() != null",
+        ".write": "auth.canProcessTasks == true && root.child('events').child($event).val() != null",
         "$uid": {
           ".validate": "newData.isBoolean() && root.child('users').child($uid).val() != null"
         }
@@ -46,7 +63,8 @@
     "userEventParticipations": {
       "$uid": {
         ".validate": "newData.hasChildren()",
-        ".write": "auth.isAdmin == true && root.child('users').child($uid).val() != null",
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth.canProcessTasks == true && root.child('users').child($uid).val() != null",
         "$event": {
           ".validate": "newData.isBoolean() && root.child('events').child($event).val() != null"
         }
@@ -65,6 +83,67 @@
           ".read": "auth != null && auth.uid == $uid && root.child('eventParticipants').child($event).child(auth.uid).val() != null",
           ".write": "auth != null && auth.uid == $uid && root.child('events').child($event).val() != null && root.child('eventParticipants').child($event).child(auth.uid).val() != null"
         }
+      }
+    },
+    "eventAccessRequests": {
+      "tasks": {
+        "$key2": {
+          ".validate": "newData.hasChildren() && (newData.child('uid').val() != null && newData.child('eventId').val() != null && newData.child('password').val() != null || auth.canProcessTasks == true && newData.child('_state').val() != null && newData.child('_state_changed').val() != null && newData.child('_progress').val() != null)",
+          "_state": {
+            ".validate": "newData.isString()"
+          },
+          "_state_changed": {
+            ".validate": "newData.isNumber() && (newData.val() == now || data.val() == newData.val())"
+          },
+          "_owner": {
+            ".validate": "newData.isString()"
+          },
+          "_progress": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100"
+          },
+          "_error_details": {
+            ".validate": "newData.hasChildren()",
+            "error": {
+              ".validate": "newData.isString()"
+            },
+            "error_stack": {
+              ".validate": "newData.isString()"
+            },
+            "previous_state": {
+              ".validate": "newData.isString()"
+            },
+            "original_task": {
+              ".validate": "true"
+            },
+            "attempts": {
+              ".validate": "newData.isNumber() && newData.val() > 0"
+            },
+            "$other": {
+              ".validate": "false"
+            }
+          },
+          "_id": {
+            ".validate": "newData.isString()"
+          },
+          "uid": {
+            ".validate": "newData.isString()"
+          },
+          "eventId": {
+            ".validate": "newData.isString()"
+          },
+          "password": {
+            ".validate": "newData.isString()"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        },
+        ".validate": "newData.hasChildren()",
+        ".read": "auth.canProcessTasks == true",
+        ".write": "auth.canAddTasks == true || auth.canProcessTasks == true",
+        ".indexOn": [
+          "_state"
+        ]
       }
     }
   }

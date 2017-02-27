@@ -1,4 +1,4 @@
-.mainMenuCard {
+.eventMenuCard {
     width: 100%;
     max-width: 300px;
     height: 150px;
@@ -9,7 +9,7 @@
     transition: opacity 0.3s ease;
 }
 
-.mainMenuCard[disabled] {
+.eventMenuCard[disabled] {
     opacity: 0.5;
 }
 

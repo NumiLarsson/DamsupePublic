@@ -1,11 +1,10 @@
 import { createAction } from 'redux-actions';
 import api from '../api/Api';
 import { push } from 'react-router-redux';
-import { setupEventUserDataHooks, eventLoading, resetEventData } from './event';
 import { appDoneLoading } from './app';
-import { USER_SIGNED_IN, USER_SIGNED_OUT, UPDATE_USER_INFO, RESET_USER_DATA} from './actionTypes';
+import { USER_SIGNED_IN, USER_SIGNED_OUT, UPDATE_USER_INFO, RESET_USER_DATA, USER_LOGGED_OUT} from './actionTypes';
 
-
+export const loggedOut = createAction(USER_LOGGED_OUT);
 export const signedIn = createAction(USER_SIGNED_IN);
 export const signedOut = createAction(USER_SIGNED_OUT);
 export const updateUserInfo = createAction(UPDATE_USER_INFO);
@@ -24,7 +23,7 @@ export function listenForAuthChanges() {
                 dispatch(signedOut());
                 unsubscribeToUserData(dispatch, true);
                 dispatch(push('/'));
-                if(getState().app.loading) {
+                if(getState().app.get('loading')) {
                     dispatch(appDoneLoading());
                 }
             }
@@ -43,11 +42,22 @@ function handleUserSignIn(dispatch, user, getState) {
     api.user.createUserIfNotExists(user)
     .then(() => {
         dispatch(signedIn(user.uid));
-        subscribeToUserData(dispatch, user.uid, getState);
-        if(getState().app.loading) {
-            dispatch(appDoneLoading());
-        }
-        dispatch(push('/main'));
+        //Subscribe to user data updates
+        subscribeToUserData(dispatch, user.uid);
+        //Get the last visited event.
+        api.user.getLastVisitedEvent(user.uid)
+        .then(eventId => {
+            dispatch(push(`/main/event/${eventId}`))
+            if(getState().app.get('loading')) {
+                dispatch(appDoneLoading());
+            }
+        })
+        .catch(() => {
+            dispatch(push(`/main/eventList`));
+            if(getState().app.get('loading')) {
+                dispatch(appDoneLoading());
+            }
+        })
     }).catch(err => {
         //TODO: Handle error gracefully
         console.log(err);
@@ -60,20 +70,9 @@ function handleUserSignIn(dispatch, user, getState) {
  * @param {string} uid - Firebase.Auth UserID
  * @param {function} getState - Redux thunk getState function
  */
-function subscribeToUserData (dispatch, uid, getState) {
+function subscribeToUserData (dispatch, uid) {
     unsubscribeToUserData(dispatch, false);
     api.user.subscribeToUserData(uid, (userData) => {
-        const { lastVisitedEvent } = userData;
-        const oldLastVisitedEvent = getState().auth.lastVisitedEvent;
-        if(lastVisitedEvent && (lastVisitedEvent !== oldLastVisitedEvent)) {
-            dispatch(eventLoading());
-            setupEventUserDataHooks(dispatch, uid, lastVisitedEvent);
-        }
-
-        if(!lastVisitedEvent) {
-            dispatch(resetEventData());
-        }
-
         dispatch(updateUserInfo(userData));
     });
 }
@@ -85,11 +84,8 @@ function subscribeToUserData (dispatch, uid, getState) {
  * @param {clear} - Flag dictating if the data should be purged.
  */
 function unsubscribeToUserData(dispatch, clear) {
-    
     if(clear) {
         dispatch(resetUserData());
     }
-
-    api.events.clearSubscriptions();
     api.user.clearSubscriptions();
 }
