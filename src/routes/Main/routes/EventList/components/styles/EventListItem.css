@@ -1,4 +1,8 @@
 
+.eventLink {
+    text-decoration: none;
+}
+
 .eventListItem {
     display: block;
     background: #fff;

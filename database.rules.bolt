@@ -33,10 +33,26 @@ type Event {
  * Event Participation
  */
 
+path /eventUserParticipationRequests is Object {
+	read() {auth.canAddTasks == true || auth.canProcessTasks == true}
+}
+
+path /eventUserParticipationRequests/{eventId} is Object {
+	write() {isSignedIn() && isEvent(eventId)}
+}
+
+path /eventUserParticipationRequests/{eventId}/{uid} is ParticipationRequest {
+	write() {isCurrentUser(uid)}
+	read() {isCurrentUser(uid)}
+}
+
+type ParticipationRequest extends String {
+	validate() {this == 'pending' || auth.canProcessTasks == true && (this == 'approved' || this == 'denied')}
+}
 
 path /eventParticipants/{event} is Object {
 	read() {false}
-	write() {auth.isAdmin == true && isEvent(event)}
+	write() {auth.canProcessTasks == true && isEvent(event)}
 }
 
 path /eventParticipants/{event}/{uid} is Boolean {
@@ -46,14 +62,14 @@ path /eventParticipants/{event}/{uid} is Boolean {
 
 path /userEventParticipations/{uid} is Object {
 	read() {isCurrentUser(uid)}
-	write() {auth.isAdmin == true && isUser(uid)}
+	write() {auth.canProcessTasks == true && isUser(uid)}
 }
 
 path /userEventParticipations/{uid}/{event} is Boolean {
 	validate() {isEvent(event)}
 }
 
-//auth != null && root.child('eventParticipants').child($event).child(auth.uid).val() != null
+
 /*
  * userEventData
  */

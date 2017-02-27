@@ -38,10 +38,23 @@
       ".validate": "newData.hasChildren()",
       ".read": "true"
     },
+    "eventUserParticipationRequests": {
+      ".validate": "newData.hasChildren()",
+      ".read": "auth.canAddTasks == true || auth.canProcessTasks == true",
+      "$eventId": {
+        ".validate": "newData.hasChildren()",
+        ".write": "auth != null && root.child('events').child($eventId).val() != null",
+        "$uid": {
+          ".validate": "newData.isString() && (newData.val() == 'pending' || auth.canProcessTasks == true && (newData.val() == 'approved' || newData.val() == 'denied'))",
+          ".read": "auth != null && auth.uid == $uid",
+          ".write": "auth != null && auth.uid == $uid"
+        }
+      }
+    },
     "eventParticipants": {
       "$event": {
         ".validate": "newData.hasChildren()",
-        ".write": "auth.isAdmin == true && root.child('events').child($event).val() != null",
+        ".write": "auth.canProcessTasks == true && root.child('events').child($event).val() != null",
         "$uid": {
           ".validate": "newData.isBoolean() && root.child('users').child($uid).val() != null"
         }
@@ -51,7 +64,7 @@
       "$uid": {
         ".validate": "newData.hasChildren()",
         ".read": "auth != null && auth.uid == $uid",
-        ".write": "auth.isAdmin == true && root.child('users').child($uid).val() != null",
+        ".write": "auth.canProcessTasks == true && root.child('users').child($uid).val() != null",
         "$event": {
           ".validate": "newData.isBoolean() && root.child('events').child($event).val() != null"
         }
