@@ -10,7 +10,8 @@ export function navigateOrGoBack(path) {
     return (dispatch, getState) => {
         if (getState().app.get('canGoBack') === true) {
             dispatch(goBack());
+        } else {
+            dispatch(push(path));
         } 
-        dispatch(push(path));
     }
 }

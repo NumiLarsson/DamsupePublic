@@ -9,7 +9,6 @@ export function signOut() {
         api.auth.signOut().then(
             () => {
                 dispatch(loggedOut());
-                dispatch(push('/'));
             }
         );
     }

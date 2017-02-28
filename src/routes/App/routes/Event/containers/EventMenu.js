@@ -115,21 +115,6 @@ class EventMenu extends Component  {
                                 <h2 className={styles.cardHeaderTitleText}>Store</h2>
                             </div>
                     </EventMenuCard>
-                    <EventMenuCard
-                        disabled={!this.props.userHasAccess}  
-                        styleClass={styles.fourth}
-                        headerStyle={styles.cardHeader}  
-                        open={this.props.userScreenOpen} 
-                        expandCard={this.expCard} 
-                        closeCard={this.closeCard}
-                        openAction={userScreenOpen}
-                        closeAction={userScreenClose}>
-                            <div className={styles.cardHeaderTitle}>
-                                <Face color="#fff" size="72" />
-                                <h2 className={styles.cardHeaderTitleText}>User</h2>
-                            </div>
-                            <UserScreen uid={this.props.uid} currentEvent={this.props.currentEvent} />
-                    </EventMenuCard>
                 </div>
             </div>
         )
@@ -167,5 +152,23 @@ const mapDispatchToProps = (dispatch) => {
     }
     
 }
+
+/**
+ <EventMenuCard
+                        disabled={!this.props.userHasAccess}  
+                        styleClass={styles.fourth}
+                        headerStyle={styles.cardHeader}  
+                        open={this.props.userScreenOpen} 
+                        expandCard={this.expCard} 
+                        closeCard={this.closeCard}
+                        openAction={userScreenOpen}
+                        closeAction={userScreenClose}>
+                            <div className={styles.cardHeaderTitle}>
+                                <Face color="#fff" size="72" />
+                                <h2 className={styles.cardHeaderTitleText}>User</h2>
+                            </div>
+                            <UserScreen uid={this.props.uid} currentEvent={this.props.currentEvent} />
+                    </EventMenuCard>
+ */
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(EventMenu);

@@ -6,6 +6,7 @@ import EventListItem from '../components/EventListItem';
 
 //Actions
 import { setupEventListSubscription } from 'actions/event';
+import { updateCanGoBack } from 'actions/app';
 
 //Styles
 import styles from './styles/EventList.css';
@@ -15,6 +16,7 @@ class EventList extends Component  {
 
     componentWillMount() {
         this.props.setupEventListSubscription();
+        this.props.updateCanGoBack(true);
     }
 
     render() {
@@ -31,7 +33,7 @@ class EventList extends Component  {
     }
     
 }
-//this.renderEvents(this.props.events)
+
 const mapStateToProps = (state) => {
     return {
         events: state.event.eventlist
@@ -39,7 +41,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    setupEventListSubscription
+    setupEventListSubscription,
+    updateCanGoBack
 }
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(EventList);

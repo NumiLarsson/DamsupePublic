@@ -5,6 +5,7 @@ import RegisterForm from '../components/RegisterForm';
 import api from 'api/Api';
 import { animateErrorButton } from 'utils/animations';
 import {registerLoading, registerDoneLoading } from 'actions/register';
+import { navigateOrGoBack } from 'actions/app';
 
 import styles from './styles/Register.css';
 
@@ -24,6 +25,9 @@ class RegisterScreen extends Component {
         this.props.registerLoading();
         const { email, password } = values;
         return api.auth.createUser(email, password)
+        .then(() => {
+            this.props.navigateOrGoBack('/app/eventlist');
+        })
         .catch((e) => { throw new SubmissionError({ _error: e }); });
     }
 
@@ -56,7 +60,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps =  {
     registerLoading,
-    registerDoneLoading
+    registerDoneLoading,
+    navigateOrGoBack
 }
 
 

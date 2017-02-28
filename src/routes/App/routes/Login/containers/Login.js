@@ -34,7 +34,7 @@ class LoginScreen extends Component {
         api.auth.getRedirectResult()
         .then(res => {
             if (res.user && !this.props.userSignedOut) {
-                this.props.setRedirectLoading();
+                this.props.navigateOrGoBack('/app/eventlist');
             } else {
                 this.props.setNoRedirect();
             }

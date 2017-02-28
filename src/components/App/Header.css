@@ -17,7 +17,11 @@
     transform: translateY(0);
 }
 
-
+.loginLink {
+    margin-right: 10px;
+    color: #fff;
+    text-decoration: none;
+}
 
 .eventHeader {
     flex: 1;
@@ -30,11 +34,17 @@
 .eventListHeader {
     flex: 1;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .baseHeader {
     flex: 1;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .eventTitleSection {
@@ -54,6 +64,7 @@
 
 .controlPanel {
     display: flex;
+    align-items: center;
 }
 
 .headerButton {

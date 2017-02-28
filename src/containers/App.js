@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { goBack } from 'react-router-redux';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import Header from 'components/App/Header';
 import { signOut } from 'actions/user';
@@ -9,15 +10,21 @@ import styles from './styles/App.css';
 
 class App extends Component {
   render() {
-    let {children, signOut, eventIsChosen, currentEventName, location} = this.props;
+    let {children, signOut, eventIsChosen, 
+         currentEventName, location, isAuthenticated, 
+         canGoBack, goBack, loading} = this.props;
     const path = location.pathname.split('/');
     return (
       <div className={styles.app}>
         <Header 
           show={path[1] === 'app'} 
-          signOut={signOut} 
+          signOut={signOut}
+          goBack={goBack} 
+          loading={loading}
           location={location}
-          eventIsChosen={eventIsChosen} 
+          isAuthenticated={isAuthenticated}
+          eventIsChosen={eventIsChosen}
+          canGoBack={canGoBack} 
           currentEvent={currentEventName}/>
         <ReactTransitionGroup component="div" className={styles.routeContainer}>
               {React.cloneElement(children, {
@@ -31,14 +38,17 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    canGoBack: state.app.get('canGoBack'),
     isAuthenticated: state.auth.get('authenticated'),
     eventIsChosen: state.event.event.get('eventChosen'),
-    currentEventName: state.event.event.get('name')
+    currentEventName: state.event.event.get('name'),
+    loading: state.app.get('loading')
   }
 }
 
 const mapDispatchToProps = {
-  signOut
+  signOut,
+  goBack
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

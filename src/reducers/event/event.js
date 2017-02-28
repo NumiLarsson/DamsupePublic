@@ -27,8 +27,12 @@ export const initialState = Immutable.Map({
 export default (state = initialState, action) => {
     switch (action.type) {
 
-        case RESET_USER_DATA: 
-            return initialState;
+        case RESET_USER_DATA:
+            const resetState=Immutable.Map({
+                userHasAccess: initialState.get('userHasAccess'),
+                userData: initialState.get('userData')
+            }) 
+            return state.merge(resetState);
 
         case RESET_EVENT_DATA: 
             return initialState;
