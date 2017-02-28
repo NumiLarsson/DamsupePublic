@@ -7,7 +7,7 @@ import Home from 'react-icons/lib/md/home';
 export default props => {
     return (
         <div className={styles.baseHeader}>
-            {props.canGoBack && <Back onClick={props.goBack} color="#fff" size="32" />}
+            {props.canGoBack && <Back className={styles.backButton} onClick={props.goBack} color="#fff" size="32" />}
             {!props.canGoBack && <Link to="/app/eventlist"><Home color="#fff" size="32" /></Link>}
         </div>
     )

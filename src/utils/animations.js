@@ -73,8 +73,7 @@ export function leave(target, duration,  direction, cb) {
 export function enter(target, duration, from, cb) {
     let dir = from ==='right' ? '100%' : '-100%';
     let tl = new TweenMax.TimelineMax();
-    tl.fromTo(target, duration, {x : dir, opacity: 0}, {x: '0%'}, TweenMax.easeInOut);
-    tl.to(target, duration, {opacity: 1}, TweenMax.ease);
+    tl.fromTo(target, duration, {x : dir}, {x: '0%'}, TweenMax.easeInOut);
     tl.add(() => cb());
     tl.play();
 }

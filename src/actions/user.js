@@ -1,5 +1,4 @@
 import api from 'api/Api';
-import { push } from 'react-router-redux';
 import { loggedOut } from './auth';
 /**
  * Sign out of the application. Send user to main screen.

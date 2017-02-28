@@ -2,19 +2,17 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 //Components
-import UserScreen from './UserScreen';
 import EventMenuCard from '../components/EventMenuCard';
 import Loader from 'components/Loader/Loader';
 
 //Icons
 import Media from 'react-icons/lib/md/perm-media';
-import Face from 'react-icons/lib/md/face';
 import Cart from 'react-icons/lib/md/shopping-cart';
 import Info from 'react-icons/lib/md/info';
 
 //Actions
-import {infoScreenOpen, mediaScreenOpen, shopScreenOpen, userScreenOpen,
-    infoScreenClose, mediaScreenClose, shopScreenClose, userScreenClose} from 'actions/eventmenu';
+import {infoScreenOpen, mediaScreenOpen, shopScreenOpen,
+    infoScreenClose, mediaScreenClose, shopScreenClose} from 'actions/eventmenu';
 import { resetMenu } from 'actions/eventmenu';
 import { setupEventUserDataHooks, eventLoading, resetEventData, unsubscribeToEvent } from 'actions/event';
 import { updateCanGoBack } from 'actions/app';

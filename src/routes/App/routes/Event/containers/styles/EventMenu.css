@@ -1,8 +1,10 @@
 
 .eventMenu {
+    padding-top: 64px;
     flex:1;
     overflow: auto;
     position: relative;
+    will-change: transform, opacity;
 }
 
 .eventMenuCardWrapper {
