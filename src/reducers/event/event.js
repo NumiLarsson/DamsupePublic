@@ -17,6 +17,8 @@ export const initialState = Immutable.Map({
     eventDataLoading: false,
     userEventDataLoading: false,
     name: "",
+    date: 0,
+    description: '',
     active: false,
     userHasAccess: false,
     userData: Immutable.Map({

@@ -131,5 +131,9 @@ export function setupEventListSubscription() {
             event => dispatch(updateEventInEventList(event)),
             event => dispatch(removeEventFromEventList(event)),
         )
+        api.events.getEvents()
+        .then(() => {
+            dispatch(eventDataDoneLoading());
+        })
     }
 }

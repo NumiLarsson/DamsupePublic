@@ -3,6 +3,7 @@ import api from '../api/Api';
 import { appDoneLoading } from './app';
 import { subscribeToUserEventAccess } from './event';
 import { USER_SIGNED_IN, USER_SIGNED_OUT, UPDATE_USER_INFO, RESET_USER_DATA, USER_LOGGED_OUT} from './actionTypes';
+import { browserHistory } from 'react-router'
 
 export const loggedOut = createAction(USER_LOGGED_OUT);
 export const signedIn = createAction(USER_SIGNED_IN);
@@ -17,6 +18,10 @@ export function listenForAuthChanges() {
     return (dispatch, getState) => {
         api.auth.listenForAuthChanges(
             (user) => {
+                let location = browserHistory.getCurrentLocation().pathname.split('/');
+                if(location[2] === 'login' || location[2] === 'register') {
+                    browserHistory.replace('/app/eventlist');
+                }
                 handleUserSignIn(dispatch, user, getState);
             }, //Success
             () => {

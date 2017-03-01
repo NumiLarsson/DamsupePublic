@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 //Components
 import EventListItem from '../components/EventListItem';
-
+import Loader from 'components/Loader/Loader';
 //Actions
-import { setupEventListSubscription } from 'actions/event';
+import { setupEventListSubscription, eventLoading } from 'actions/event';
 import { updateCanGoBack } from 'actions/app';
 
 //Styles
@@ -15,6 +15,7 @@ class EventList extends Component  {
 
 
     componentWillMount() {
+        this.props.eventLoading();
         this.props.setupEventListSubscription();
         this.props.updateCanGoBack(true);
     }
@@ -22,6 +23,7 @@ class EventList extends Component  {
     render() {
         return (
             <div className={styles.eventListScreen}>
+                <Loader show={this.props.loading} />
                 <ul className={styles.eventList}>
                     {this.props.events.map(event => {
                         let id = event.get('id');
@@ -36,13 +38,15 @@ class EventList extends Component  {
 
 const mapStateToProps = (state) => {
     return {
-        events: state.event.eventlist
+        events: state.event.eventlist,
+        loading: state.event.event.get('eventDataLoading')
     }
 }
 
 const mapDispatchToProps = {
     setupEventListSubscription,
-    updateCanGoBack
+    updateCanGoBack,
+    eventLoading
 }
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(EventList);

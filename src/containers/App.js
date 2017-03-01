@@ -12,7 +12,7 @@ class App extends Component {
   render() {
     let {children, signOut, eventIsChosen, 
          currentEventName, location, isAuthenticated, 
-         canGoBack, goBack, loading} = this.props;
+         canGoBack, goBack, loading, redirectLoading} = this.props;
     const path = location.pathname.split('/');
     return (
       <div className={styles.app}>
@@ -21,6 +21,7 @@ class App extends Component {
           signOut={signOut}
           goBack={goBack} 
           loading={loading}
+          redirectLoading={redirectLoading}
           location={location}
           isAuthenticated={isAuthenticated}
           eventIsChosen={eventIsChosen}
@@ -42,7 +43,8 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.auth.get('authenticated'),
     eventIsChosen: state.event.event.get('eventChosen'),
     currentEventName: state.event.event.get('name'),
-    loading: state.app.get('loading')
+    loading: state.app.get('loading'),
+    redirectLoading: state.login.get('redirectLoading')
   }
 }
 

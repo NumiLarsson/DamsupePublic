@@ -59,8 +59,8 @@ export function expand(card, expandedClass, callback) {
     tl.add(() => {expandCard(card, expandedClass, callback)});
 }
 
-export function fadeIn(target, fromOpacity, toOpacity, cb) {
-    TweenMax.fromTo(target, 1, {opacity: fromOpacity}, {opacity: toOpacity, onComplete: cb});
+export function fadeIn(target, duration, fromOpacity, toOpacity, cb) {
+    TweenMax.fromTo(target, duration, {opacity: fromOpacity}, {opacity: toOpacity, onComplete: cb});
 }
 
 export function leave(target, duration,  direction, cb) {
