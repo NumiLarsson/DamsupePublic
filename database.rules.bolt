@@ -19,12 +19,12 @@ type User {
  */
 path /events is Event[] {
 	read() {true}
-	write() {false}
+	write() {auth.isAdmin == true}
 }
 
 type Event {
 	validate() {this.id == key()}
-	id: EventRef,
+	id: String,
 	active: Boolean,
 	name: NameString,
 	date: Number,
@@ -37,23 +37,6 @@ type Event {
 /*
  * Event Participation
  */
-
-path /eventUserParticipationRequests is Object {
-	read() {auth.canAddTasks == true || auth.canProcessTasks == true}
-}
-
-path /eventUserParticipationRequests/{eventId} is Object {
-	write() {isSignedIn() && isEvent(eventId)}
-}
-
-path /eventUserParticipationRequests/{eventId}/{uid} is ParticipationRequest {
-	write() {isCurrentUser(uid)}
-	read() {isCurrentUser(uid)}
-}
-
-type ParticipationRequest extends String {
-	validate() {this == 'pending' || auth.canProcessTasks == true && (this == 'approved' || this == 'denied')}
-}
 
 path /eventParticipants/{event} is Object {
 	read() {false}
@@ -92,68 +75,31 @@ type UserEventData {
 * QUEUES
 */
 
-type Task {
-	validate() {auth.canProcessTasks == true && this._state != null && this._state_changed != null && this._progress != null}
-	_state: String | Null,
-	_state_changed: StateChange | Null,
-	_owner: String | Null,
-	_progress: Progress | Null,
-	_error_details: ErrorDetails | Null,
-	_id: String | Null
+
+/*
+* SHOP
+*/
+path /storeItems/{itemId} is StoreItem {
+	write() {auth.isAdmin == true}
+	read() {isSignedIn()}
 }
 
-type StateChange extends Number {
-	validate() {this == now || prior(this) == this}
+type StoreItem {
+	category: String,
+	name: NameString,
+	description: String,
+	price: Number,
+	picture: String | Null
 }
 
-type Progress extends Number {
-	validate() {this >= 0 && this <= 100}
+path /eventStoreItems/{event} is Object {
+	read() {isSignedIn()}
+	write() {auth.isAdmin == true && isEvent(event)}
 }
 
-type ErrorDetails extends Object {
-	error : String | Null,
-	error_stack: String | Null,
-	previous_state: String | Null,
-	original_task: Any | Null,
-	attempts: AttemptCount | Null
+path /eventStoreItems/{event}/{item} is Boolean {
+	validate() {isStoreItem(item)}
 }
-
-type AttemptCount extends Number {
-	validate() {this > 0}
-}
-
-path /eventAccessRequests/tasks is EventAccessTaskList {
-	index() {["_state"]}
-}
-
-type EventAccessTaskList extends EventAccessTask[] {
-	read() {auth.canProcessTasks == true}
-	write() {auth.canAddTasks == true || auth.canProcessTasks == true}
-}
-
-type EventAccessTask {
-	validate() {
-		this.uid != null &&
-		this.eventId != null &&
-		this.password != null ||
-		(auth.canProcessTasks == true && 
-		this._state != null && 
-		this._state_changed != null && 
-		this._progress != null)
-	}
-	_state: String | Null,
-	_state_changed: StateChange | Null,
-	_owner: String | Null,
-	_progress: Progress | Null,
-	_error_details: ErrorDetails | Null,
-	_id: String | Null,
-	uid: String | Null,
-	eventId: String | Null,
-	password: String | Null
-}
-
-
-
 
 
 /*
@@ -174,7 +120,7 @@ type EmailString extends String {
 }
 
 type TimeString extends String {
-	validate() {this.matches(/^([01]?[0-9]|2[0-3])[0-5][0-9]$/i)}
+	validate() {this.matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/i)}
 }
 
 
@@ -183,3 +129,4 @@ isUser(uid) {prior(root.users[uid] != null)}
 isCurrentUser(uid) { isSignedIn() && auth.uid == uid }
 isSignedIn() { auth != null }
 isEvent(event) {prior(root.events[event]) != null}
+isStoreItem(item) {prior(root.storeItems[item]) != null}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 //Components
 import EventMenuCard from '../components/EventMenuCard';
 import Loader from 'components/Loader/Loader';
+import Store from './Store';
 
 //Icons
 import Media from 'react-icons/lib/md/perm-media';
@@ -73,7 +74,7 @@ class EventMenu extends Component  {
                 <div ref={(r)=> this.wrapper = r} className={styles.eventMenuCardWrapper}>
                     <EventMenuCard
                         disabled={false} 
-                        styleClass={styles.first}
+                        styleClass={styles.second}
                         headerStyle={styles.cardHeader} 
                         open={this.props.infoScreenOpen} 
                         expandCard={this.expCard} 
@@ -87,7 +88,7 @@ class EventMenu extends Component  {
                     </EventMenuCard>
                     <EventMenuCard 
                         disabled={false} 
-                        styleClass={styles.second}
+                        styleClass={styles.fourth}
                         headerStyle={styles.cardHeader}  
                         open={this.props.mediaScreenOpen} 
                         expandCard={this.expCard} 
@@ -125,14 +126,13 @@ const mapStateToProps = (state) => {
     return {
         isSignedIn: state.auth.get('authenticated'),
         uid: state.auth.get('uid'),
-        userHasAccess: state.event.event.get('userHasAccess'),
+        userHasAccess: state.event.userdata.get('userHasAccess'),
         currentEvent: state.event.event.get('id'),
         infoScreenOpen: state.event.menu.get('infoScreenOpen'),
         mediaScreenOpen: state.event.menu.get('mediaScreenOpen'),
         shopScreenOpen: state.event.menu.get('shopScreenOpen'),
-        userScreenOpen: state.event.menu.get('userScreenOpen'),
-        eventDataLoading: state.event.event.get('eventDataLoading'),
-        userEventDataLoading: state.event.event.get('userEventDataLoading')
+        eventDataLoading: state.event.event.get('loading'),
+        userEventDataLoading: state.event.userdata.get('loading')
     }
 }
 

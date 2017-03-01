@@ -88,7 +88,7 @@ export function setupEventUserDataHooks(eventId) {
 function updateCurrentEventAsync(event) {
     return (dispatch, getState) => {
         dispatch(updateCurrentEvent(event))
-        let loading = getState().event.event.get('eventDataLoading');
+        let loading = getState().event.event.get('loading');
         if (loading) {
             dispatch(eventDataDoneLoading());
         }
@@ -102,7 +102,7 @@ function updateCurrentEventAsync(event) {
 function updateUserEventDataAsync(data) {
      return (dispatch, getState) => {
         dispatch(updateUserEventData(data))
-        let loading = getState().event.event.get('userEventDataLoading');
+        let loading = getState().event.userdata.get('loading');
         if (loading) {
             dispatch(userEventDataDoneLoading());
         }
