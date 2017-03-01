@@ -19,7 +19,7 @@ function getHeader(location, currentEvent, isAuthenticated, canGoBack, goBack, l
     let paths = location.pathname.split('/');
     switch(paths[2]) {
         case 'eventlist':
-            return <EventListHeader loading={loading} title={'Choose Event'} isAuthenticated={isAuthenticated} />;
+            return <EventListHeader loading={loading} title="Smålands Events" isAuthenticated={isAuthenticated} />;
         case 'event':
             return <EventHeader loading={loading} title={currentEvent} isAuthenticated={isAuthenticated}/>;
         default:

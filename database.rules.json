@@ -21,7 +21,7 @@
     },
     "events": {
       "$key1": {
-        ".validate": "newData.hasChildren(['id', 'active', 'name']) && newData.child('id').val() == $key1",
+        ".validate": "newData.hasChildren(['id', 'active', 'name', 'date', 'type']) && newData.child('id').val() == $key1",
         "id": {
           ".validate": "newData.isString() && root.child('events').child(data.val()).val() != null"
         },
@@ -30,6 +30,21 @@
         },
         "name": {
           ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 100"
+        },
+        "date": {
+          ".validate": "newData.isNumber()"
+        },
+        "start": {
+          ".validate": "newData.isString() && newData.val().matches(/^([01]?[0-9]|2[0-3])[0-5][0-9]$/i)"
+        },
+        "end": {
+          ".validate": "newData.isString() && newData.val().matches(/^([01]?[0-9]|2[0-3])[0-5][0-9]$/i)"
+        },
+        "type": {
+          ".validate": "newData.isString()"
+        },
+        "description": {
+          ".validate": "newData.isString()"
         },
         "$other": {
           ".validate": "false"

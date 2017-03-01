@@ -28,6 +28,9 @@ type Event {
 	active: Boolean,
 	name: NameString,
 	date: Number,
+	start: TimeString | Null,
+	end: TimeString | Null,
+	type: String,
 	description: String | Null
 }
 
@@ -168,6 +171,10 @@ type NameString extends String {
 
 type EmailString extends String {
   validate() {this.matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)}
+}
+
+type TimeString extends String {
+	validate() {this.matches(/^([01]?[0-9]|2[0-3])[0-5][0-9]$/i)}
 }
 
 

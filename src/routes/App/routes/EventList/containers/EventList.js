@@ -24,12 +24,20 @@ class EventList extends Component  {
         return (
             <div className={styles.eventListScreen}>
                 <Loader show={this.props.loading} />
-                <ul className={styles.eventList}>
+                <div className={styles.eventList}>
                     {this.props.events.map(event => {
                         let id = event.get('id');
-                        return <EventListItem key={id} name={event.get('name')} active={event.get('active')} eventId={id} />
+                        return <EventListItem 
+                                    key={id} 
+                                    name={event.get('name')}
+                                    date={event.get('date')}
+                                    start={event.get('start')}
+                                    end={event.get('end')} 
+                                    type={event.get('type')} 
+                                    active={event.get('active')} 
+                                    eventId={id} />
                     })}
-                </ul>
+                </div>
             </div>
         )
     }
