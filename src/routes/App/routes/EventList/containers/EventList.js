@@ -47,7 +47,7 @@ class EventList extends Component  {
 const mapStateToProps = (state) => {
     return {
         events: state.event.eventlist,
-        loading: state.event.event.get('eventDataLoading')
+        loading: state.event.event.get('loading')
     }
 }
 

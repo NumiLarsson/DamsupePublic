@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './styles/EventListItem.css';
 import { Link } from 'react-router';
 import Loader from 'components/Loader/Loader';
+import header from 'styles/header.jpg';
 
 export default class EventListItem extends Component  {
    
@@ -25,7 +26,7 @@ export default class EventListItem extends Component  {
                     <div className={styles.itemContent}>
                         <div className={styles.itemImageWrapper}>
                             <Loader show={!this.state.loaded}/>
-                            <img onLoad={this.onImageLoad} className={styles.itemImage} src="http://lorempixel.com/400/200" 
+                            <img onLoad={this.onImageLoad} className={styles.itemImage} src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/16807114_1023974504374263_8697212058189955989_n.jpg?oh=915923b28b6bcb09cf2110161f720950&oe=592A9CC9" 
                                 alt="Event image"/>
                         </div>
                         <div className={styles.titleSection}>
