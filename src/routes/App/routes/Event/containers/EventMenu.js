@@ -113,6 +113,7 @@ class EventMenu extends Component  {
                                 <Cart color="#fff" size="72" />
                                 <h2 className={styles.cardHeaderTitleText}>Store</h2>
                             </div>
+                            <Store />
                     </EventMenuCard>
                 </div>
             </div>
