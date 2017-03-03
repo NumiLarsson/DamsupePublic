@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from './styles/EventListItem.css';
 import { Link } from 'react-router';
 import Loader from 'components/Loader/Loader';
-import header from 'styles/header.jpg';
+
 
 export default class EventListItem extends Component  {
    
