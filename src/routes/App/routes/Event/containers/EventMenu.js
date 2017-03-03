@@ -43,6 +43,7 @@ class EventMenu extends Component  {
     componentWillUnmount () {
         this.props.resetEventData();
         this.props.unsubscribeToEvent();
+        document.getElementById('mainHeader').removeAttribute("style");
     }
 
     expCard(target, shouldExpand, action) {
@@ -50,7 +51,6 @@ class EventMenu extends Component  {
             let dispatch = this.props.dispatch;
             expand(target, styles.cardExpanded, () => {
                 dispatch(action());
-                target.querySelector(`.${styles.cardHeader}`).classList.add(styles.cardHeaderExpanded);
             });
             //TODO:FIX
             this.wrapper.style.overflow = "hidden";
@@ -62,7 +62,6 @@ class EventMenu extends Component  {
         target.removeAttribute("style");
         document.getElementById('mainHeader').removeAttribute("style");
         target.classList.remove(styles.cardExpanded);
-        target.querySelector(`.${styles.cardHeader}`).classList.remove(styles.cardHeaderExpanded);
         this.wrapper.style.overflow = "auto";
     }   
 
@@ -74,45 +73,30 @@ class EventMenu extends Component  {
                 <div ref={(r)=> this.wrapper = r} className={styles.eventMenuCardWrapper}>
                     <EventMenuCard
                         disabled={false} 
-                        styleClass={styles.second}
-                        headerStyle={styles.cardHeader} 
                         open={this.props.infoScreenOpen} 
                         expandCard={this.expCard} 
                         closeCard={this.closeCard}
                         openAction={infoScreenOpen}
-                        closeAction={infoScreenClose}>
-                            <div className={styles.cardHeaderTitle}>
-                                <Info color="#fff" size="72" />
-                                <h2 className={styles.cardHeaderTitleText}>Information</h2>
-                            </div>
+                        closeAction={infoScreenClose}
+                        title="Information">
                     </EventMenuCard>
                     <EventMenuCard 
                         disabled={false} 
-                        styleClass={styles.fourth}
-                        headerStyle={styles.cardHeader}  
                         open={this.props.mediaScreenOpen} 
                         expandCard={this.expCard} 
                         closeCard={this.closeCard}
                         openAction={mediaScreenOpen}
-                        closeAction={mediaScreenClose}>
-                            <div className={styles.cardHeaderTitle}>
-                                <Media color="#fff" size="72" />
-                                <h2 className={styles.cardHeaderTitleText}>Media</h2>
-                            </div>
+                        closeAction={mediaScreenClose}
+                        title="Media">
                     </EventMenuCard>
                     <EventMenuCard 
                         disabled={false} 
-                        styleClass={styles.third}
-                        headerStyle={styles.cardHeader}  
                         open={this.props.shopScreenOpen} 
                         expandCard={this.expCard} 
                         closeCard={this.closeCard}
                         openAction={shopScreenOpen}
-                        closeAction={shopScreenClose}>
-                            <div className={styles.cardHeaderTitle}>
-                                <Cart color="#fff" size="72" />
-                                <h2 className={styles.cardHeaderTitleText}>Store</h2>
-                            </div>
+                        closeAction={shopScreenClose}
+                        title="store">
                             <Store />
                     </EventMenuCard>
                 </div>

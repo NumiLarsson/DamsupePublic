@@ -18,12 +18,15 @@ export default props => {
     }
 
     return (
-        <div disabled={props.disabled} ref={(card) => ref = card} className={[styles.eventMenuCard, props.styleClass].join(' ')} onClick={expand}>
-            <div className={props.headerStyle}>
-                {props.children[0] || props.children}
+        <div disabled={props.disabled} ref={(card) => ref = card} className={styles.eventMenuCard} onClick={expand}>
+            <div className={styles.headerImgContainer} style={{backgroundImage: "url(http://placeimg.com/640/480/nature)"}}>
                 {props.open && <Close className={styles.backButton} onClick={close} color="#fff" size="52" />}
+                <span className={styles.headerTitle}><h3>{props.title}</h3></span>
             </div>
-            {(props.open && props.children[1]) || null}
+            
+            <div className={styles.description}>
+                Description goes here.
+            </div>
         </div>
     )
 }

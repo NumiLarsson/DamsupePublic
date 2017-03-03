@@ -1,12 +1,16 @@
 .eventMenuCard {
+    position: relative;
     width: 100%;
-    max-width: 300px;
-    height: 150px;
+    max-width: 320px;
+    height: 250px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin: 5px;
+    margin: 10px;
     box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);
     transition: opacity 0.3s ease;
+    background: #fff;
+    border-radius: 3px;
 }
 
 .eventMenuCard[disabled] {
@@ -23,4 +27,40 @@
 
 .backButton:hover {
     transform: scale(1.2);
+}
+
+.headerImgContainer {
+    position: relative;
+    border-radius: 3px 3px 0 0;
+    max-height: 150px;
+    width: 100%;
+    flex:1;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.headerTitle {
+  background: rgba(157, 187, 63, 0.85);
+  padding: 5px;
+  color: white;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.headerTitle h3 {
+  font-size: 1.4em;
+  line-height: 1.4;
+  padding: 0 5px;
+  margin: 0;
+}
+
+.description {
+    width: 100%;
+    height: 125px;
+    padding: 10px;
+    color: #363636;
 }
