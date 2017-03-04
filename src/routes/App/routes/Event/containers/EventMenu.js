@@ -6,11 +6,6 @@ import EventMenuCard from '../components/EventMenuCard';
 import Loader from 'components/Loader/Loader';
 import Store from './Store';
 
-//Icons
-import Media from 'react-icons/lib/md/perm-media';
-import Cart from 'react-icons/lib/md/shopping-cart';
-import Info from 'react-icons/lib/md/info';
-
 //Actions
 import {infoScreenOpen, mediaScreenOpen, shopScreenOpen,
     infoScreenClose, mediaScreenClose, shopScreenClose} from 'actions/eventmenu';
@@ -78,7 +73,7 @@ class EventMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={infoScreenOpen}
                         closeAction={infoScreenClose}
-                        title="Information">
+                        title="Event Information">
                     </EventMenuCard>
                     <EventMenuCard 
                         disabled={false} 

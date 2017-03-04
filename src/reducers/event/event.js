@@ -3,7 +3,6 @@ import {
     UPDATE_CURRENT_EVENT, 
     EVENT_DATA_LOADING, 
     RESET_EVENT_DATA,
-    RESET_USER_DATA,
     EVENT_DATA_DONE_LOADING
 } from 'actions/actionTypes';
 
