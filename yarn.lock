@@ -4740,6 +4740,12 @@ react-icons@^2.2.3:
   dependencies:
     react-icon-base "2.0.4"
 
+react-notification-system@^0.2.12:
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/react-notification-system/-/react-notification-system-0.2.12.tgz#8cadae3b09ed979e3be0150ac9b423879a7d8a24"
+  dependencies:
+    object-assign "^4.0.1"
+
 react-redux@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.2.tgz#3d9878f5f71c6fafcd45de1fbb162ea31f389814"

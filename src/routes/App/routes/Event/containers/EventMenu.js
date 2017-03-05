@@ -60,7 +60,6 @@ class EventMenu extends Component  {
         this.wrapper.style.overflow = "auto";
     }   
 
-
     render() {
         return (
             <div className={styles.eventMenu}>
