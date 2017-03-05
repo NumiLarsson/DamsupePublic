@@ -31,6 +31,14 @@
     background-color: #34495e; 
 }
 
+.flatButtonPrimarySmall {
+    composes:flatButton; 
+    background-color: #34495e; 
+    height: 42px;
+    min-height: 42px;
+    width: auto;
+}
+
 .flatButtonError {
     composes: flatButton;
     background-color: #e74c3c; 

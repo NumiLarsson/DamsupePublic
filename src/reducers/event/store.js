@@ -6,11 +6,13 @@ import {
     RESET_EVENT_DATA,
     CHANGE_SELECTED_CATEGORY,
     ADD_ITEM_TO_CART,
-    REMOVE_ITEM_FROM_CART
+    REMOVE_ITEM_FROM_CART,
+    TOGGLE_SHOW_CHECKOUT
 } from 'actions/actionTypes';
 
 export const initialState = Immutable.Map({
     itemsLoading: false,
+    showCheckout: false,
     selectedCategory: 1,
     items: Immutable.List(),
     cart: Immutable.List()
@@ -74,7 +76,9 @@ export default (state = initialState, action) => {
                     return cart.push(newItem.set('count', 1));
                 })
             }
-            
+        
+        case TOGGLE_SHOW_CHECKOUT:
+            return state.set('showCheckout', !state.get('showCheckout'));
 
         default:
             return state;
