@@ -30,6 +30,8 @@ export const ADD_EVENT_STORE_ITEM         = 'ADD_EVENT_STORE_ITEM';
 export const DELETE_EVENT_STORE_ITEM      = 'DELETE_EVENT_STORE_ITEM';
 export const UPDATE_EVENT_STORE_ITEM      = 'UPDATE_EVENT_STORE_ITEM';
 export const CHANGE_SELECTED_CATEGORY     = 'CHANGE_SELECTED_CATEGORY';
+export const ADD_ITEM_TO_CART             = 'ADD_ITEM_TO_CART';
+export const REMOVE_ITEM_FROM_CART        = 'REMOVE_ITEM_FROM_CART';
 
 //Login
 export const REDIRECT_ERROR               = 'REDIRECT_ERROR';

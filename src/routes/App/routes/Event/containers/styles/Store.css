@@ -17,7 +17,28 @@
     margin-left: 15px;
 }
 
+.cartWrapper {
+    position: relative;
+}
+
+.cartCount {
+    position: absolute;
+    top:-5px;
+    right: -5px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: red;
+    color: #fff;
+    text-align: center;
+}
+
 .itemList {
     flex:1;
     overflow: auto;
+}
+
+.divider {
+    flex: 1;
 }

@@ -4,13 +4,16 @@ import {
     DELETE_EVENT_STORE_ITEM,
     UPDATE_EVENT_STORE_ITEM,
     RESET_EVENT_DATA,
-    CHANGE_SELECTED_CATEGORY
+    CHANGE_SELECTED_CATEGORY,
+    ADD_ITEM_TO_CART,
+    REMOVE_ITEM_FROM_CART
 } from 'actions/actionTypes';
 
 export const initialState = Immutable.Map({
     itemsLoading: false,
     selectedCategory: 1,
-    items: Immutable.List()
+    items: Immutable.List(),
+    cart: Immutable.List()
 });
 
 export default (state = initialState, action) => {
@@ -53,6 +56,26 @@ export default (state = initialState, action) => {
         case CHANGE_SELECTED_CATEGORY:
             return state.set('selectedCategory', action.payload);
         
+        case ADD_ITEM_TO_CART:
+            const newItem = action.payload;
+            let cart = state.get('cart');
+            const addCIndex = cart.findIndex(item => {
+                return item.get('id') === newItem.get('id');
+            })
+
+            if (addCIndex !== -1) {
+                return state.update('cart', cart => {
+                    return cart.update(addCIndex, item => {
+                        return item.set('count', item.get('count') + 1);
+                    })
+                })
+            } else {
+                return state.update('cart', cart => {
+                    return cart.push(newItem.set('count', 1));
+                })
+            }
+            
+
         default:
             return state;
     }  

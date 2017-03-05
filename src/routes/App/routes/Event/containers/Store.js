@@ -5,9 +5,10 @@ import StoreItem from '../components/EventStoreItem';
 import Diamond from 'react-icons/lib/fa/diamond';
 import Drink from 'react-icons/lib/fa/glass';
 import Beer from 'react-icons/lib/fa/beer';
+import Cart from 'react-icons/lib/fa/shopping-cart';
 
 //Actions
-import { changeSelectedCategory } from 'actions/store';
+import { changeSelectedCategory, addItemToCart } from 'actions/store';
 
 //Styles
 import styles from './styles/Store.css';
@@ -23,7 +24,7 @@ class Store extends Component {
         return storeItems.filter(item => {
             return (item.get('category') === category);
         }).map(item => {
-            return <StoreItem key={item.get('id')} item={item} icon={this.getIcon(item.get('category'))}  />
+            return <StoreItem add={this.addItemToCart.bind(this, item)} key={item.get('id')} item={item} icon={this.getIcon(item.get('category'))}  />
         });
     }
 
@@ -38,6 +39,10 @@ class Store extends Component {
             default:
                 return <Diamond color="#ddd" size="48" />
         }
+    }
+
+    addItemToCart(item) {
+        this.props.addItemToCart(item);
     }
 
     render() {
@@ -62,6 +67,11 @@ class Store extends Component {
                         color={this.props.category === 3 ? "#34495e" : "#dddddd"} 
                         size="32" 
                     />
+                    <div className={styles.divider} />
+                    <div className={styles.cartWrapper}>
+                        <Cart className={styles.cart} color="#34495e" size="32" />
+                        {this.props.cartCount > 0 && <span className={styles.cartCount}>{this.props.cartCount}</span>}
+                    </div>
                 </nav>
                 <div className={styles.itemList}>
                     {this.filterStoreItems(this.props.items, this.props.category)}
@@ -73,11 +83,15 @@ class Store extends Component {
 
 const mapStateToProps = state => {return {
     category: state.event.store.get('selectedCategory'),
+    cartCount: state.event.store.get('cart').reduce((count, item) => {
+        return count + item.get('count');
+    },0),
     items: state.event.store.get('items')
 }}
 
 const mapDispatchToProps = {
-    changeSelectedCategory
+    changeSelectedCategory,
+    addItemToCart
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Store);
