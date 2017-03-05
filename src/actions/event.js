@@ -5,6 +5,7 @@ import { UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, RESET
          EVENT_DATA_DONE_LOADING, USER_EVENT_DATA_LOADING, USER_EVENT_DATA_DONE_LOADING,
         ADD_EVENT_TO_EVENT_LIST, REMOVE_EVENT_FROM_EVENT_LIST, UPDATE_EVENT_IN_EVENT_LIST,
         UPDATE_USER_EVENT_ACCESS} from './actionTypes';
+import { setupEventStoreDataHooks } from './store';
 
 export const addEventToEventList = createAction(ADD_EVENT_TO_EVENT_LIST);
 export const removeEventFromEventList = createAction(REMOVE_EVENT_FROM_EVENT_LIST);
@@ -36,6 +37,7 @@ function setupEventDataHooks(eventId) {
         api.events.subscribeToEvent(eventId, event => {
             dispatch(updateCurrentEventAsync(event));
         });
+        dispatch(setupEventStoreDataHooks(eventId));
     }
 } 
 

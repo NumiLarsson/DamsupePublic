@@ -28,6 +28,29 @@ export default class EventApi {
         this.eventSubscriptions.set(key, ref);
     }
 
+    /**
+     * Subscribe to receive store items.
+     * @param {string} eventId - ID of the event.
+     */
+     subscribeToEventStoreItems(eventId, added, changed, deleted) {
+        let ref = this.database().ref(`/eventStoreItems/${eventId}`);
+
+        ref.on('child_added', (snapshot) => {
+            added(snapshot.val());
+        });
+        
+        ref.on('child_changed', (snapshot) => {
+            changed(snapshot.val());
+        });
+        
+        ref.on('child_removed', (snapshot) => {
+            deleted(snapshot.val());
+        });
+        
+        let key = `eventStore_${eventId}`;
+        this.eventSubscriptions.set(key, ref);
+    }
+
      /**
      * Subscribe to the access status of a user for the selected event.
      * @param {string} uid - ID of the user.
