@@ -79,28 +79,24 @@ type UserEventData {
 /*
 * SHOP
 */
-path /storeItems/{itemId} is StoreItem {
-	write() {auth.isAdmin == true}
-	read() {isSignedIn()}
+
+path /eventStoreItems is Object {
+	read() {true}
+}
+
+path /eventStoreItems/{event}/{itemId} is StoreItem {
+	write() {auth.isAdmin == true && isEvent(event)}
 }
 
 type StoreItem {
-	category: String,
+	validate() {this.id == key()}
+	id: String,
+	category: Number,
 	name: NameString,
 	description: String,
 	price: Number,
 	picture: String | Null
 }
-
-path /eventStoreItems/{event} is Object {
-	read() {isSignedIn()}
-	write() {auth.isAdmin == true && isEvent(event)}
-}
-
-path /eventStoreItems/{event}/{item} is Boolean {
-	validate() {isStoreItem(item)}
-}
-
 
 /*
  * Helper functions and types

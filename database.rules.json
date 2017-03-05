@@ -88,38 +88,34 @@
         }
       }
     },
-    "storeItems": {
-      "$itemId": {
-        ".validate": "newData.hasChildren(['category', 'name', 'description', 'price'])",
-        "category": {
-          ".validate": "newData.isString()"
-        },
-        "name": {
-          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 100"
-        },
-        "description": {
-          ".validate": "newData.isString()"
-        },
-        "price": {
-          ".validate": "newData.isNumber()"
-        },
-        "picture": {
-          ".validate": "newData.isString()"
-        },
-        "$other": {
-          ".validate": "false"
-        },
-        ".read": "auth != null",
-        ".write": "auth.isAdmin == true"
-      }
-    },
     "eventStoreItems": {
+      ".validate": "newData.hasChildren()",
+      ".read": "true",
       "$event": {
-        ".validate": "newData.hasChildren()",
-        ".read": "auth != null",
-        ".write": "auth.isAdmin == true && root.child('events').child($event).val() != null",
-        "$item": {
-          ".validate": "newData.isBoolean() && root.child('storeItems').child($item).val() != null"
+        "$itemId": {
+          ".validate": "newData.hasChildren(['id', 'category', 'name', 'description', 'price']) && newData.child('id').val() == $itemId",
+          "id": {
+            ".validate": "newData.isString()"
+          },
+          "category": {
+            ".validate": "newData.isNumber()"
+          },
+          "name": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 100"
+          },
+          "description": {
+            ".validate": "newData.isString()"
+          },
+          "price": {
+            ".validate": "newData.isNumber()"
+          },
+          "picture": {
+            ".validate": "newData.isString()"
+          },
+          "$other": {
+            ".validate": "false"
+          },
+          ".write": "auth.isAdmin == true && root.child('events').child($event).val() != null"
         }
       }
     }
