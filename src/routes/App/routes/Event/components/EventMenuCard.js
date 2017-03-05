@@ -1,6 +1,5 @@
 import React from 'react';
 import Close from 'react-icons/lib/md/close';
-
 import styles from './styles/EventMenuCard.css';
 
 export default props => {
@@ -19,7 +18,7 @@ export default props => {
 
     return (
         <div disabled={props.disabled} ref={(card) => ref = card} className={styles.eventMenuCard} onClick={expand}>
-            <div className={styles.headerImgContainer} style={{backgroundImage: "url(https://placeimg.com/300/90/tech)"}}>
+            <div className={styles.headerImgContainer} style={{backgroundImage: `url(${props.image})`}}>
                 {props.open && <Close className={styles.backButton} onClick={close} color="#fff" size="48" />}
                 <span className={styles.headerTitle}><h3>{props.title}</h3></span>
             </div>

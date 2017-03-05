@@ -16,7 +16,10 @@ export const initialState = Immutable.Map({
     end: '',
     type: '',
     description: '',
-    active: false
+    active: false,
+    shopImage: '',
+    infoImage: '',
+    mediaImage: ''
 });
 
 export default (state = initialState, action) => {

@@ -6,12 +6,34 @@ import Diamond from 'react-icons/lib/fa/diamond';
 import Drink from 'react-icons/lib/fa/glass';
 import Beer from 'react-icons/lib/fa/beer';
 import Cart from 'react-icons/lib/fa/shopping-cart';
-
+import NotificationSystem from 'react-notification-system';
 //Actions
 import { changeSelectedCategory, addItemToCart } from 'actions/store';
 
 //Styles
 import styles from './styles/Store.css';
+
+const notificationStyle = {
+    NotificationItem: {
+        DefaultStyle: {
+            color: '#fff',
+            border: 'none',
+            textTransform: 'uppercase'
+        },
+        error: {
+            backgroundColor: 'red',
+        },
+        success: {
+            backgroundColor: 'green'
+        }
+    },
+    Dismiss: {
+        DefaultStyle: {
+            color: '#fff',
+            backgroundColor: 'transparent'
+        }
+    }
+}
 
 class Store extends Component {
     
@@ -42,12 +64,34 @@ class Store extends Component {
     }
 
     addItemToCart(item) {
-        this.props.addItemToCart(item);
+        if (!this.props.signedIn || !this.props.hasAccess) {
+            this.addNotification(
+                'You must be signed in and registered to the event in order to use the store.', 
+                'error', 
+                'bc', 
+            2);
+        } else if(this.props.cartCount >= 9) {
+            this.addNotification('You cannot order more than 9 items at a time.', 'error', 'bc', 2);
+        } else {
+            this.props.addItemToCart(item);
+            const name = item.get('name');
+            this.addNotification(`Added ${name} to the cart`, 'success', 'bc', 2);
+        }
+    }
+
+    addNotification(message, level, position, dismiss) {
+        this.notificationSystem.addNotification({
+            message,
+            level,
+            position,
+            dismiss
+        });
     }
 
     render() {
         return (
             <div ref={(r) => this.store = r} className={styles.store}>
+                <NotificationSystem style={notificationStyle} ref={r => this.notificationSystem = r} />
                 <nav className={styles.nav}>
                     <Diamond 
                         onClick={this.props.changeSelectedCategory.bind(null, 1)} 
@@ -82,6 +126,8 @@ class Store extends Component {
 }
 
 const mapStateToProps = state => {return {
+    signedIn: state.auth.get('authenticated'),
+    hasAccess: state.event.userdata.get('userHasAccess'),
     category: state.event.store.get('selectedCategory'),
     cartCount: state.event.store.get('cart').reduce((count, item) => {
         return count + item.get('count');
