@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { fadeIn } from 'utils/animations';
 import StoreItem from '../components/EventStoreItem';
 import Diamond from 'react-icons/lib/fa/diamond';
@@ -10,6 +11,7 @@ import Cart from 'react-icons/lib/fa/shopping-cart';
 import { changeSelectedCategory, addItemToCart, toggleShowCheckout } from 'actions/store';
 
 import styles from './styles/Order.css';
+import list from 'styles/list.css';
 
 class Order extends Component {
     
@@ -89,7 +91,9 @@ class Order extends Component {
                     </div>
                 </nav>
                 <div className={styles.itemList}>
-                    {this.filterStoreItems(this.props.items, this.props.category)}
+                    <ReactCSSTransitionGroup transitionEnterTimeout={800} transitionLeave={false} transitionName={list}>
+                        {this.filterStoreItems(this.props.items, this.props.category)}
+                    </ReactCSSTransitionGroup>
                 </div> 
             </div>
         )

@@ -72,6 +72,7 @@ class EventMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={infoScreenOpen}
                         closeAction={infoScreenClose}
+                        image={this.props.infoImageUrl}
                         title="Event Information">
                     </EventMenuCard>
                     <EventMenuCard 
@@ -81,6 +82,7 @@ class EventMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={mediaScreenOpen}
                         closeAction={mediaScreenClose}
+                        image={this.props.mediaImageUrl}
                         title="Media">
                     </EventMenuCard>
                     <EventMenuCard 
@@ -90,6 +92,7 @@ class EventMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={shopScreenOpen}
                         closeAction={shopScreenClose}
+                        image={this.props.shopImageUrl}
                         title="store">
                             <Store />
                     </EventMenuCard>
@@ -111,7 +114,10 @@ const mapStateToProps = (state) => {
         mediaScreenOpen: state.event.menu.get('mediaScreenOpen'),
         shopScreenOpen: state.event.menu.get('shopScreenOpen'),
         eventDataLoading: state.event.event.get('loading'),
-        userEventDataLoading: state.event.userdata.get('loading')
+        userEventDataLoading: state.event.userdata.get('loading'),
+        shopImageUrl: state.event.event.get('shopImage'),
+        mediaImageUrl: state.event.event.get('mediaImage'),
+        infoImageUrl: state.event.event.get('infoImage')
     }
 }
 

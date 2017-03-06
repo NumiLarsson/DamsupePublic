@@ -23,11 +23,6 @@ export default props => {
                 <span className={styles.headerTitle}><h3>{props.title}</h3></span>
             </div>
             <div className={styles.content}>
-                {!props.open &&
-                    <p className={styles.description}>
-                        Description goes here.
-                    </p>
-                }
                {props.open && 
                 props.children
                }

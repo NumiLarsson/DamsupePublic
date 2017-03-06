@@ -77,6 +77,21 @@ export default (state = initialState, action) => {
                 })
             }
         
+        case REMOVE_ITEM_FROM_CART:
+            const delId = action.payload;
+            const delCIndex = state.get('cart').findIndex(item => {
+                return item.get('id') === delId;
+            });
+
+            if (delCIndex !== -1) {
+                return state.update('cart', cart => {
+                    return cart.delete(delCIndex);
+                });
+            } else {
+                return state;
+            }
+            
+        
         case TOGGLE_SHOW_CHECKOUT:
             return state.set('showCheckout', !state.get('showCheckout'));
 

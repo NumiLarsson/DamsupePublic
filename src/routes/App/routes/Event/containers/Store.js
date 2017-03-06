@@ -49,7 +49,7 @@ class Store extends Component {
         return (
             <div ref={(r) => this.store = r} className={styles.store}>
                 <NotificationSystem style={notificationStyle} ref={r => this.notificationSystem = r} />
-                {!this.props.showCheckout ? <Order addNotification={this.addNotification} /> : <Checkout />}
+                {!this.props.showCheckout ? <Order addNotification={this.addNotification} /> : <Checkout addNotification={this.addNotification} />}
             </div>
         )
     }
