@@ -101,6 +101,72 @@ type StoreItem {
 	picture: String | Null
 }
 
+type OrderItem  {
+	validate() {this.id == key()}
+	id: String,
+	category: Number,
+	name: NameString,
+	description: String,
+	price: Number,
+	picture: String | Null
+	count: Number
+}
+
+type Order {
+	validate() {userIsParticipantOf(this.eventId) && isCurrentUser(this.userId)}
+	eventId: EventRef,
+	userId: String,
+	items: OrderItem[]
+}
+
+
+type StateChange extends Number {
+	validate() {this == now || prior(this) == this}
+}
+
+type Progress extends Number {
+	validate() {this >= 0 && this <= 100}
+}
+
+type ErrorDetails extends Object {
+	error : String | Null,
+	error_stack: String | Null,
+	previous_state: String | Null,
+	original_task: Any | Null,
+	attempts: AttemptCount | Null
+}
+
+type AttemptCount extends Number {
+	validate() {this > 0}
+}
+
+path /orders/tasks is OrderTaskList {
+	index() {["_state"]}
+}
+
+type OrderTaskList extends OrderTask[] {
+	read() {auth.canProcessTasks == true}
+	write() {isSignedIn()}
+}
+
+type OrderTask {
+	validate() {
+		this.order != null ||
+		(auth.canProcessTasks == true && 
+		this._state != null && 
+		this._state_changed != null && 
+		this._progress != null)
+	}
+	_state: String | Null,
+	_state_changed: StateChange | Null,
+	_owner: String | Null,
+	_progress: Progress | Null,
+	_error_details: ErrorDetails | Null,
+	_id: String | Null,
+	order: Order | Null
+}
+
+
 /*
  * Helper functions and types
  */
