@@ -49,12 +49,12 @@ class Order extends Component {
     addItemToCart(item) {
         if (!this.props.signedIn || !this.props.hasAccess) {
             this.props.addNotification(
-                'You must be signed in and registered to the event in order to use the store.', 
+                'You must be signed in and registered to the event to use the store.', 
                 'error', 
                 'bc', 
             2);
         } else if(this.props.cartCount >= 9) {
-            this.props.addNotification('You cannot order more than 9 items at a time.', 'error', 'bc', 2);
+            this.props.addNotification('Your cart is full', 'error', 'bc', 2);
         } else {
             this.props.addItemToCart(item);
         }

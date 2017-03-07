@@ -19,7 +19,7 @@ export function listenForAuthChanges() {
         api.auth.listenForAuthChanges(
             (user) => {
                 let location = browserHistory.getCurrentLocation().pathname.split('/');
-                if(location[2] === 'login' || location[2] === 'register') {
+                if(getState().app.get('canGoBack') === false && (location[2] === 'login' || location[2] === 'register')) {
                     browserHistory.replace('/app/eventlist');
                 }
                 handleUserSignIn(dispatch, user, getState);

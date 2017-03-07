@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import EventListItem from '../components/EventListItem';
 import Loader from 'components/Loader/Loader';
 //Actions
-import { setupEventListSubscription, eventLoading } from 'actions/event';
+import { setupEventListSubscription, eventLoading, unsubscribeToEventList } from 'actions/event';
 import { updateCanGoBack } from 'actions/app';
 
 //Styles
@@ -18,6 +18,10 @@ class EventList extends Component  {
         this.props.eventLoading();
         this.props.setupEventListSubscription();
         this.props.updateCanGoBack(true);
+    }
+
+    componentWillUnMount() {
+        this.props.unsubscribeToEventList();
     }
 
     render() {
@@ -54,7 +58,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     setupEventListSubscription,
     updateCanGoBack,
-    eventLoading
+    eventLoading,
+    unsubscribeToEventList
 }
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(EventList);

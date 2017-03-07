@@ -74,12 +74,20 @@ export function setupEventUserDataHooks(eventId) {
     return (dispatch, getState) => {
 
         dispatch(setupEventDataHooks(eventId));
+
+        let user = api.auth.getCurrentUser();
+        if (user) {
+            dispatch(subscribeToUserEventAccess(user.uid, eventId));
+        }
+        
+        /*
         const auth = getState().auth;
         const signedIn = auth.get('authenticated');
         if(signedIn) {
             const uid = auth.get('uid');
-            dispatch(subscribeToUserEventAccess(uid, eventId));
+            
         }
+        */
     }
 }
 
@@ -120,6 +128,12 @@ export function unsubscribeToEvent() {
         api.events.clearEventUserSubscriptions();
         api.events.clearEventSubscriptions();
     } 
+}
+
+export function unsubscribeToEventList() {
+    return dispatch => {
+        api.events.unsubScribeToEvents();
+    }
 }
 
 

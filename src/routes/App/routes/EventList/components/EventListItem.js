@@ -30,7 +30,7 @@ export default class EventListItem extends Component  {
                         </div>
                         <div className={styles.titleSection}>
                             <div className={styles.dateSection}>
-                                <span div className={styles.month}>
+                                <span className={styles.month}>
                                     {getMonth(this.props.date)}
                                 </span>
                                 <span className={styles.day}>
@@ -53,7 +53,7 @@ export default class EventListItem extends Component  {
 
 function getDay(date) {
     const temp = new Date(date);
-    return temp.getDay();
+    return temp.getDate();
 }
 
 function getMonth(date) {

@@ -60,10 +60,6 @@ class Checkout extends Component {
         )
     }
 }
-/*
-                  <ReactCSSTransitionGroup transitionEnterTimeout={800} transitionLeaveTimeout={100} transitionName={list}>
-                        {this.getCartItems(this.props.items)}
-                    </ReactCSSTransitionGroup>*/
 
 const mapStateToProps = state => {return {
     signedIn: state.auth.get('authenticated'),

@@ -25,7 +25,7 @@ export default class EventApi {
             } 
         });
         let key = `event_${eventId}`;
-        this.eventSubscriptions.set(key, ref);
+        this.eventSubscriptions = this.eventSubscriptions.set(key, ref);
     }
 
     /**
@@ -48,7 +48,7 @@ export default class EventApi {
         });
         
         let key = `eventStore_${eventId}`;
-        this.eventSubscriptions.set(key, ref);
+        this.eventSubscriptions = this.eventSubscriptions.set(key, ref);
     }
 
      /**
@@ -63,7 +63,7 @@ export default class EventApi {
             cb(snapshot.val());
         })
         let key = `userEventAccess_${uid}_${eventId}`;
-        this.eventAccessSubscription.set(key, ref);
+        this.eventAccessSubscription = this.eventAccessSubscription.set(key, ref);
      }
 
 
@@ -79,7 +79,7 @@ export default class EventApi {
             cb(snapshot.val());
         })
         let key = `userEventData_${uid}_${eventId}`;
-        this.eventUserSubscriptions.set(key, ref);
+        this.eventUserSubscriptions = this.eventUserSubscriptions.set(key, ref);
     }
 
     /**
@@ -152,12 +152,13 @@ export default class EventApi {
             deleted(snapshot.val());
         })
         
-        if(this.eventListSubscription) {
+        this.eventListSubscription = ref;
+    }
+
+    unsubScribeToEvents() {
+        if (this.eventListSubscription) {
             this.eventListSubscription.off();
         }
-        
-
-        this.eventListSubscription = ref;
     }
 
     getEvents() {
