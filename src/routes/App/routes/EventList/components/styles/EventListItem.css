@@ -60,7 +60,7 @@
 .nameSection {
     display: flex;
     align-items: center;
-    overflow: hidden;
+    overflow: hidden; v
 }
 
 .nameSection > h3 {
