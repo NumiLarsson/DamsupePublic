@@ -19,6 +19,11 @@
     height: 100%;
 }
 
+.itemCounter {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .itemDescription {
     display: flex;
     flex-direction: column;

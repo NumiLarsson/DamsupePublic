@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+//import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import FlipMove from 'react-flip-move';
 import { connect } from 'react-redux';
 import { fadeIn } from 'utils/animations';
 import Back from 'react-icons/lib/fa/arrow-left';
@@ -14,6 +15,11 @@ import CartItem from '../components/EventCartItem';
 
 class Checkout extends Component {
     
+    constructor() {
+        super();
+        this.addItemToCart = this.addItemToCart.bind(this);
+    }
+
     componentDidMount() {
         fadeIn(this.checkout, 1, 0.1, 1, () => {});
     }
@@ -21,8 +27,8 @@ class Checkout extends Component {
     getCartItems(cartItems) {
         return cartItems.map(item => {
             return <CartItem 
-                    remove={this.props.removeItemFromCart.bind(null, item.get('id'))} 
-                    add={this.props.addItemToCart.bind(this, item)} 
+                    remove={this.props.removeItemFromCart} 
+                    add={this.addItemToCart} 
                     key={item.get('id')} 
                     item={item} />
         });
@@ -30,13 +36,12 @@ class Checkout extends Component {
 
     addItemToCart(item) {
         if(this.props.cartCount >= 9) {
-            this.props.addNotification('You cannot order more than 9 items at a time.', 'error', 'bc', 2);
+            this.props.addNotification('Your cart is full', 'error', 'bc', 2);
         } else {
             this.props.addItemToCart(item);
-            const name = item.get('name');
-            this.props.addNotification(`Added ${name} to the cart`, 'success', 'bc', 2);
         }
     }
+
 
     render() {
         return (
@@ -47,14 +52,18 @@ class Checkout extends Component {
                     <button disabled={!this.props.signedIn || !this.props.hasAccess} className={buttons.textButtonDark}>ORDER</button>
                 </nav>
                 <div className={styles.itemList}>
-                    <ReactCSSTransitionGroup transitionEnterTimeout={800} transitionLeaveTimeout={800} transitionName={list}>
+                    <FlipMove duration={400} easing="ease-out">
                         {this.getCartItems(this.props.items)}
-                    </ReactCSSTransitionGroup>
+                    </FlipMove>
                 </div> 
             </div>
         )
     }
 }
+/*
+                  <ReactCSSTransitionGroup transitionEnterTimeout={800} transitionLeaveTimeout={100} transitionName={list}>
+                        {this.getCartItems(this.props.items)}
+                    </ReactCSSTransitionGroup>*/
 
 const mapStateToProps = state => {return {
     signedIn: state.auth.get('authenticated'),

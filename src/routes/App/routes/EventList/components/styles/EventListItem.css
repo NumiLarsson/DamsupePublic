@@ -34,6 +34,22 @@
     border-radius: 0 0 2px 2px;
 }
 
+.dateSection {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.month {
+    text-transform: uppercase;
+    color: #fa3e3e;
+}
+
+.day {
+    text-align: center;
+}
+
 .titleSection {
     height: 50px;
     display: flex;
@@ -52,6 +68,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 1em;
 }
 
 

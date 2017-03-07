@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { fadeIn } from 'utils/animations';
+import FlipMove from 'react-flip-move';
 import StoreItem from '../components/EventStoreItem';
 import Diamond from 'react-icons/lib/fa/diamond';
 import Drink from 'react-icons/lib/fa/glass';
@@ -57,8 +57,6 @@ class Order extends Component {
             this.props.addNotification('You cannot order more than 9 items at a time.', 'error', 'bc', 2);
         } else {
             this.props.addItemToCart(item);
-            const name = item.get('name');
-            this.props.addNotification(`Added ${name} to the cart`, 'success', 'bc', 2);
         }
     }
 
@@ -91,9 +89,9 @@ class Order extends Component {
                     </div>
                 </nav>
                 <div className={styles.itemList}>
-                    <ReactCSSTransitionGroup transitionEnterTimeout={800} transitionLeave={false} transitionName={list}>
+                    <FlipMove duration={400} easing="ease-out">
                         {this.filterStoreItems(this.props.items, this.props.category)}
-                    </ReactCSSTransitionGroup>
+                    </FlipMove>
                 </div> 
             </div>
         )

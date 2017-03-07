@@ -60,8 +60,8 @@ export default (state = initialState, action) => {
         
         case ADD_ITEM_TO_CART:
             const newItem = action.payload;
-            let cart = state.get('cart');
-            const addCIndex = cart.findIndex(item => {
+            const addCart = state.get('cart');
+            const addCIndex = addCart.findIndex(item => {
                 return item.get('id') === newItem.get('id');
             })
 
@@ -78,15 +78,26 @@ export default (state = initialState, action) => {
             }
         
         case REMOVE_ITEM_FROM_CART:
+            const delCart = state.get('cart');
             const delId = action.payload;
-            const delCIndex = state.get('cart').findIndex(item => {
+            const delCIndex = delCart.findIndex(item => {
                 return item.get('id') === delId;
             });
 
             if (delCIndex !== -1) {
-                return state.update('cart', cart => {
-                    return cart.delete(delCIndex);
-                });
+                const item = delCart.get(delCIndex);
+                if (item.get('count') === 1) {
+                    return state.update('cart', cart => {
+                        return cart.delete(delCIndex);
+                    });
+                } else {
+                    return state.update('cart', cart => {
+                        return cart.update(delCIndex, item => {
+                            return item.set('count', item.get('count') - 1);
+                        })
+                    })
+                }
+               
             } else {
                 return state;
             }

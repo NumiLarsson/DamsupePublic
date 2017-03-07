@@ -29,6 +29,14 @@ export default class EventListItem extends Component  {
                             <img onLoad={this.onImageLoad} className={styles.itemImage} src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/16807114_1023974504374263_8697212058189955989_n.jpg?oh=915923b28b6bcb09cf2110161f720950&oe=592A9CC9" />
                         </div>
                         <div className={styles.titleSection}>
+                            <div className={styles.dateSection}>
+                                <span div className={styles.month}>
+                                    {getMonth(this.props.date)}
+                                </span>
+                                <span className={styles.day}>
+                                    {getDay(this.props.date)}
+                                </span>
+                            </div>
                             <div className={styles.nameSection}>
                                 <h3>{this.props.name}</h3>
                             </div>
@@ -41,4 +49,16 @@ export default class EventListItem extends Component  {
             </Link>
         )
     }
+}
+
+function getDay(date) {
+    const temp = new Date(date);
+    return temp.getDay();
+}
+
+function getMonth(date) {
+    const temp = new Date(date);
+    const locale = "sv-SE"
+    const month = temp.toLocaleString(locale, { month: "short" });
+    return month.slice(0, -1);
 }
