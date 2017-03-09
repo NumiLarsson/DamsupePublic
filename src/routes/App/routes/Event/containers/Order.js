@@ -11,7 +11,6 @@ import Cart from 'react-icons/lib/fa/shopping-cart';
 import { changeSelectedCategory, addItemToCart, toggleShowCheckout } from 'actions/store';
 
 import styles from './styles/Order.css';
-import list from 'styles/list.css';
 
 class Order extends Component {
     

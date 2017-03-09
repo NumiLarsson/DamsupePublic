@@ -6,7 +6,8 @@ import auth from './auth';
 import login from './login';
 import register from './register';
 import event from './event';
+import userscreen from './userscreen';
 
-const root = combineReducers({app, auth, login, register, event, routing: routerReducer, form: formReducer});
+const root = combineReducers({app, auth, login, register, event, userscreen, routing: routerReducer, form: formReducer});
 
 export default root;

@@ -102,7 +102,6 @@ type StoreItem {
 }
 
 type OrderItem  {
-	validate() {this.id == key()}
 	id: String,
 	category: Number,
 	name: NameString,
@@ -113,9 +112,13 @@ type OrderItem  {
 }
 
 type Order {
-	validate() {userIsParticipantOf(this.eventId) && isCurrentUser(this.userId)}
-	eventId: EventRef,
-	userId: String,
+	validate() {auth.canProcessTasks == true || (valueIsParticipantOf(this.eventId) && 
+		isCurrentUser(this.userId))}
+	created: Number | Null
+	eventId: String | Null,
+	userId: String | Null,
+	name: NameString | Null,
+	table: String | Null
 	items: OrderItem[]
 }
 
@@ -150,8 +153,7 @@ type OrderTaskList extends OrderTask[] {
 }
 
 type OrderTask {
-	validate() {
-		this.order != null ||
+	validate() {this.order != null ||
 		(auth.canProcessTasks == true && 
 		this._state != null && 
 		this._state_changed != null && 
@@ -190,6 +192,7 @@ type TimeString extends String {
 
 
 userIsParticipantOf(event) {prior(root.eventParticipants[event][auth.uid] != null)}
+valueIsParticipantOf(event) {prior(root.eventParticipants).child(event.val()).child(auth.uid).val() != null}
 isUser(uid) {prior(root.users[uid] != null)}
 isCurrentUser(uid) { isSignedIn() && auth.uid == uid }
 isSignedIn() { auth != null }

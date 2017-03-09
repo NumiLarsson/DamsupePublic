@@ -31,7 +31,10 @@ export function eventLoading() {
     }
 }
 
-
+/**
+ * Set upp data subscriptions related to an event.
+ * @param {string} eventId - ID of the event.
+ */  
 function setupEventDataHooks(eventId) {
     return (dispatch) => {
         api.events.subscribeToEvent(eventId, event => {
@@ -41,6 +44,11 @@ function setupEventDataHooks(eventId) {
     }
 } 
 
+/**
+ * Set upp data subscriptions for data connected to a user participating in a specific event.
+ * @param {string} uid - ID of the user.
+ * @param {string} eventId - ID of the event.
+ */  
 function setupUserDataHooks(uid, eventId) {
     return (dispatch) => {
         api.user.setLastVisitedEvent(uid, eventId);
@@ -51,6 +59,11 @@ function setupUserDataHooks(uid, eventId) {
     }
 }
 
+/**
+ * Subscribe to be notified on the access status of the user for a specific event.
+ * @param {string} uid - ID of the user.
+ * @param {string} eventId - ID of the event.
+ */  
 export function subscribeToUserEventAccess(uid, eventId) {
     return (dispatch) => {
         api.events.subscribeToEventAccessStatus(uid, eventId, status => {
@@ -79,15 +92,6 @@ export function setupEventUserDataHooks(eventId) {
         if (user) {
             dispatch(subscribeToUserEventAccess(user.uid, eventId));
         }
-        
-        /*
-        const auth = getState().auth;
-        const signedIn = auth.get('authenticated');
-        if(signedIn) {
-            const uid = auth.get('uid');
-            
-        }
-        */
     }
 }
 
@@ -130,6 +134,9 @@ export function unsubscribeToEvent() {
     } 
 }
 
+/**
+ * unsubscribe to the event list.
+ */
 export function unsubscribeToEventList() {
     return dispatch => {
         api.events.unsubScribeToEvents();

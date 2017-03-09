@@ -3,23 +3,23 @@ import { connect } from 'react-redux';
 import { goBack } from 'react-router-redux';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import Header from 'components/App/Header';
-import { signOut } from 'actions/user';
 
+import { signOut } from 'actions/user';
 //TODO: Use css modules.
 import styles from './styles/App.css';
 
 class App extends Component {
   render() {
-    let {children, signOut, eventIsChosen, 
+    let {children, eventIsChosen, 
          currentEventName, location, isAuthenticated, 
-         canGoBack, goBack, loading, redirectLoading} = this.props;
+         canGoBack, signOut, goBack, loading, redirectLoading} = this.props;
     const path = location.pathname.split('/');
     return (
       <div className={styles.app}>
         <Header 
           show={path[1] === 'app'} 
-          signOut={signOut}
           goBack={goBack} 
+          signOut={signOut}
           loading={loading}
           redirectLoading={redirectLoading}
           location={location}
@@ -49,8 +49,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  signOut,
-  goBack
+  goBack,
+  signOut
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

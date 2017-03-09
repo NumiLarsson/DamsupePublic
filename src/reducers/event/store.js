@@ -7,6 +7,7 @@ import {
     CHANGE_SELECTED_CATEGORY,
     ADD_ITEM_TO_CART,
     REMOVE_ITEM_FROM_CART,
+    CLEAR_CART,
     TOGGLE_SHOW_CHECKOUT
 } from 'actions/actionTypes';
 
@@ -101,7 +102,11 @@ export default (state = initialState, action) => {
             } else {
                 return state;
             }
-            
+
+        case CLEAR_CART:
+            return state.update('cart', cart => {
+                return cart.clear();
+            });
         
         case TOGGLE_SHOW_CHECKOUT:
             return state.set('showCheckout', !state.get('showCheckout'));

@@ -7,7 +7,8 @@ module.exports = {
             require('./routes/Event'),
             require('./routes/EventList'),
             require('./routes/Login'),
-            require('./routes/Register')
+            require('./routes/Register'),
+            require('./routes/User')
         ])
         })
     },

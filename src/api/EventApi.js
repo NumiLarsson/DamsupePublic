@@ -31,6 +31,9 @@ export default class EventApi {
     /**
      * Subscribe to receive store items.
      * @param {string} eventId - ID of the event.
+     * @param {function} added - Function to call when a store item is added.
+     * @param {function} changed - Function to call when a store item has changed.
+     * @param {function} removed - Function to call when a store item is removed.
      */
      subscribeToEventStoreItems(eventId, added, changed, deleted) {
         let ref = this.database().ref(`/eventStoreItems/${eventId}`);
@@ -49,6 +52,19 @@ export default class EventApi {
         
         let key = `eventStore_${eventId}`;
         this.eventSubscriptions = this.eventSubscriptions.set(key, ref);
+    }
+
+    /**
+     * Subscribe to receive store items.
+     * @param {object} order - Order object.
+     * @param {function} added - Function to call when the order has been pushed to the database.
+     */
+    placeOrder(order, callback) {
+        order.created = this.database.ServerValue.TIMESTAMP;
+        
+        this.database().ref('orders/tasks').push({order}, () => {
+            callback();
+        });
     }
 
      /**
@@ -118,20 +134,10 @@ export default class EventApi {
      * @returns Promise resolving to a success message and rejecting with an error.
      */
     saveUserEventData(eventId, uid, values) {
-        let self = this;
-        return new Promise((resolve, reject) => {
-            const {table} = values;
-            let updates = {};
-            updates[`/userEventData/${uid}/${eventId}/table`] = table || null;
-            self.database().ref().update(updates)
-            .then(() => {
-                resolve('SUCCESS');
-            })
-            .catch(err => {
-                reject(err);
-            });
-        })
-
+        const {table} = values;
+        let updates = {};
+        updates[`/userEventData/${uid}/${eventId}/table`] = table || null;
+        this.database().ref().update(updates)
     }
 
     /**
