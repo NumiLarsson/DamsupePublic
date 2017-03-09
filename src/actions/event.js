@@ -5,6 +5,7 @@ import { UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, RESET
          EVENT_DATA_DONE_LOADING, USER_EVENT_DATA_LOADING, USER_EVENT_DATA_DONE_LOADING,
         ADD_EVENT_TO_EVENT_LIST, REMOVE_EVENT_FROM_EVENT_LIST, UPDATE_EVENT_IN_EVENT_LIST,
         UPDATE_USER_EVENT_ACCESS} from './actionTypes';
+import { setupEventStoreDataHooks } from './store';
 
 export const addEventToEventList = createAction(ADD_EVENT_TO_EVENT_LIST);
 export const removeEventFromEventList = createAction(REMOVE_EVENT_FROM_EVENT_LIST);
@@ -27,37 +28,70 @@ const userEventDataDoneLoading = createAction(USER_EVENT_DATA_DONE_LOADING);
 export function eventLoading() {
     return dispatch => {
         dispatch(eventDataLoading());
-        dispatch(userEventDataLoading());
     }
 }
 
- /**
- * Subscribe to data specific to a user or event or a combination.
- * @param {function} dispatch - Redux dispatch function
- * @param {string} uid - Firebase.Auth UserID
- * @param {string} lastVisitedEvent - The event that is currently selected by the user.
- */
-export function setupEventUserDataHooks(uid, currentEvent) {
-    return dispatch => {
-
-        api.user.setLastVisitedEvent(uid, currentEvent);
-        api.events.subscribeToEvent(currentEvent, event => {
+/**
+ * Set upp data subscriptions related to an event.
+ * @param {string} eventId - ID of the event.
+ */  
+function setupEventDataHooks(eventId) {
+    return (dispatch) => {
+        api.events.subscribeToEvent(eventId, event => {
             dispatch(updateCurrentEventAsync(event));
         });
-        
-        api.events.subscribeToEventAccessStatus(uid, currentEvent, status => {
+        dispatch(setupEventStoreDataHooks(eventId));
+    }
+} 
+
+/**
+ * Set upp data subscriptions for data connected to a user participating in a specific event.
+ * @param {string} uid - ID of the user.
+ * @param {string} eventId - ID of the event.
+ */  
+function setupUserDataHooks(uid, eventId) {
+    return (dispatch) => {
+        api.user.setLastVisitedEvent(uid, eventId);
+        dispatch(userEventDataLoading());
+        api.events.subscribeToUserEventData(eventId, uid, data => {
+            dispatch(updateUserEventDataAsync(data));
+        });
+    }
+}
+
+/**
+ * Subscribe to be notified on the access status of the user for a specific event.
+ * @param {string} uid - ID of the user.
+ * @param {string} eventId - ID of the event.
+ */  
+export function subscribeToUserEventAccess(uid, eventId) {
+    return (dispatch) => {
+        api.events.subscribeToEventAccessStatus(uid, eventId, status => {
             if(status) {
                 dispatch(updateUserEventAccess(true));
-                dispatch(userEventDataLoading());
-                api.events.subscribeToUserEventData(currentEvent, uid, data => {
-                    dispatch(updateUserEventDataAsync(data));
-                });
+                dispatch(setupUserDataHooks(uid, eventId));
             } else {
                 dispatch(updateUserEventAccess(false));
                 dispatch(userEventDataDoneLoading());
                 api.events.clearEventUserSubscriptions();
             }
-        })
+        });
+    }
+}
+
+ /**
+ * Subscribe to event data.
+ * @param {function} eventId - Id of the event.
+ */
+export function setupEventUserDataHooks(eventId) {
+    return (dispatch, getState) => {
+
+        dispatch(setupEventDataHooks(eventId));
+
+        let user = api.auth.getCurrentUser();
+        if (user) {
+            dispatch(subscribeToUserEventAccess(user.uid, eventId));
+        }
     }
 }
 
@@ -68,7 +102,7 @@ export function setupEventUserDataHooks(uid, currentEvent) {
 function updateCurrentEventAsync(event) {
     return (dispatch, getState) => {
         dispatch(updateCurrentEvent(event))
-        let loading = getState().event.event.get('eventDataLoading');
+        let loading = getState().event.event.get('loading');
         if (loading) {
             dispatch(eventDataDoneLoading());
         }
@@ -82,7 +116,7 @@ function updateCurrentEventAsync(event) {
 function updateUserEventDataAsync(data) {
      return (dispatch, getState) => {
         dispatch(updateUserEventData(data))
-        let loading = getState().event.event.get('userEventDataLoading');
+        let loading = getState().event.userdata.get('loading');
         if (loading) {
             dispatch(userEventDataDoneLoading());
         }
@@ -100,6 +134,15 @@ export function unsubscribeToEvent() {
     } 
 }
 
+/**
+ * unsubscribe to the event list.
+ */
+export function unsubscribeToEventList() {
+    return dispatch => {
+        api.events.unsubScribeToEvents();
+    }
+}
+
 
 /**
 * Subscribe to a list of all events
@@ -111,5 +154,9 @@ export function setupEventListSubscription() {
             event => dispatch(updateEventInEventList(event)),
             event => dispatch(removeEventFromEventList(event)),
         )
+        api.events.getEvents()
+        .then(() => {
+            dispatch(eventDataDoneLoading());
+        })
     }
 }

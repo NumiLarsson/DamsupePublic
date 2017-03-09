@@ -10,7 +10,8 @@ export default props => {
                 <h2>{props.title}</h2>
             </div>
             <nav className={styles.controlPanel}>
-                <Link to="/main/eventlist"><List style={{marginRight: '5px'}} color="#fff" size="32" /></Link>
+                {!props.loading && <Link to="/app/eventlist"><List style={{marginRight: '5px'}} color="#fff" size="32" /></Link>}
+                {!props.isAuthenticated && !props.loading && <Link className={styles.loginLink} to="/app/login">LOGIN</Link>}
             </nav>
         </div>
     )

@@ -2,6 +2,7 @@
 export const APP_LOADING                  = 'APP_LOADING';
 export const APP_DONE_LOADING             = 'APP_DONE_LOADING';
 export const RESET_USER_DATA              = 'RESET_USER_DATA';
+export const UPDATE_CAN_GO_BACK           = 'UPDATE_CAN_GO_BACK';
 
 //Auth
 export const USER_SIGNED_IN               = 'USER_SIGNED_IN';
@@ -23,6 +24,16 @@ export const UPDATE_USER_EVENT_ACCESS     = 'UPDATE_USER_EVENT_ACCESS';
 export const ADD_EVENT_TO_EVENT_LIST      = 'ADD_EVENT_TO_LIST';
 export const REMOVE_EVENT_FROM_EVENT_LIST = 'REMOVE_EVENT_FROM_EVENT_LIST';
 export const UPDATE_EVENT_IN_EVENT_LIST   = 'UPDATE_EVENT_IN_EVENT_LIST';
+
+//STORE
+export const ADD_EVENT_STORE_ITEM         = 'ADD_EVENT_STORE_ITEM';
+export const DELETE_EVENT_STORE_ITEM      = 'DELETE_EVENT_STORE_ITEM';
+export const UPDATE_EVENT_STORE_ITEM      = 'UPDATE_EVENT_STORE_ITEM';
+export const CHANGE_SELECTED_CATEGORY     = 'CHANGE_SELECTED_CATEGORY';
+export const ADD_ITEM_TO_CART             = 'ADD_ITEM_TO_CART';
+export const REMOVE_ITEM_FROM_CART        = 'REMOVE_ITEM_FROM_CART';
+export const CLEAR_CART                   = 'CLEAR_CART';
+export const TOGGLE_SHOW_CHECKOUT         = 'TOGGLE_SHOW_CHECKOUT';
 
 //Login
 export const REDIRECT_ERROR               = 'REDIRECT_ERROR';

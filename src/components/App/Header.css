@@ -17,9 +17,11 @@
     transform: translateY(0);
 }
 
-.eventTitleSection {
-    padding-right: 5px;
-    overflow: hidden;
+.loginLink {
+    margin-right: 10px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .eventHeader {
@@ -32,6 +34,22 @@
 
 .eventListHeader {
     flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.baseHeader {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.eventTitleSection {
+    padding-right: 5px;
     overflow: hidden;
 }
 
@@ -47,8 +65,13 @@
 
 .controlPanel {
     display: flex;
+    align-items: center;
 }
 
 .headerButton {
+    cursor: pointer;
+}
+
+.backButton {
     cursor: pointer;
 }

@@ -1,0 +1,31 @@
+.registerScreen {
+    padding-top: 64px;
+    flex:1;
+    overflow: auto;
+    position: relative;
+    color: #34495e;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    will-change: transform, opacity;
+}
+
+.registerScreenHeader {
+  padding: 10px;
+}
+
+.registerScreenHeaderTitle {
+    font-size: 2em;
+}
+
+.registerScreenFormWrapper {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.backButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}

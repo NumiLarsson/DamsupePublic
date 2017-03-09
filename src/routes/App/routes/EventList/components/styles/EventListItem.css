@@ -1,0 +1,85 @@
+
+.eventLink {
+    display: block;
+    text-decoration: none;
+    margin: 10px;
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    background: #fff;
+    border-radius: 0 0 2px 2px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    color: #34495e;
+    list-style: none;
+    cursor: pointer;
+}
+
+
+.itemContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.itemImageWrapper {
+    height: 150px;
+    position: relative;
+}
+
+.itemImage {
+    height: 100%;
+    transform: translate3d(0, 0, 0);
+    width: 100%;
+    border-radius: 0 0 2px 2px;
+}
+
+.dateSection {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.month {
+    text-transform: uppercase;
+    color: #fa3e3e;
+}
+
+.day {
+    text-align: center;
+}
+
+.titleSection {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
+}
+
+.nameSection {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.nameSection > h3 {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1em;
+}
+
+
+.timeSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+}
+
+.divider {
+    flex: 1;
+}

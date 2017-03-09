@@ -25,7 +25,46 @@ export default class EventApi {
             } 
         });
         let key = `event_${eventId}`;
-        this.eventSubscriptions.set(key, ref);
+        this.eventSubscriptions = this.eventSubscriptions.set(key, ref);
+    }
+
+    /**
+     * Subscribe to receive store items.
+     * @param {string} eventId - ID of the event.
+     * @param {function} added - Function to call when a store item is added.
+     * @param {function} changed - Function to call when a store item has changed.
+     * @param {function} removed - Function to call when a store item is removed.
+     */
+     subscribeToEventStoreItems(eventId, added, changed, deleted) {
+        let ref = this.database().ref(`/eventStoreItems/${eventId}`);
+
+        ref.on('child_added', (snapshot) => {
+            added(snapshot.val());
+        });
+        
+        ref.on('child_changed', (snapshot) => {
+            changed(snapshot.val());
+        });
+        
+        ref.on('child_removed', (snapshot) => {
+            deleted(snapshot.val());
+        });
+        
+        let key = `eventStore_${eventId}`;
+        this.eventSubscriptions = this.eventSubscriptions.set(key, ref);
+    }
+
+    /**
+     * Subscribe to receive store items.
+     * @param {object} order - Order object.
+     * @param {function} added - Function to call when the order has been pushed to the database.
+     */
+    placeOrder(order, callback) {
+        order.created = this.database.ServerValue.TIMESTAMP;
+        
+        this.database().ref('orders/tasks').push({order}, () => {
+            callback();
+        });
     }
 
      /**
@@ -40,7 +79,7 @@ export default class EventApi {
             cb(snapshot.val());
         })
         let key = `userEventAccess_${uid}_${eventId}`;
-        this.eventAccessSubscription.set(key, ref);
+        this.eventAccessSubscription = this.eventAccessSubscription.set(key, ref);
      }
 
 
@@ -56,7 +95,7 @@ export default class EventApi {
             cb(snapshot.val());
         })
         let key = `userEventData_${uid}_${eventId}`;
-        this.eventUserSubscriptions.set(key, ref);
+        this.eventUserSubscriptions = this.eventUserSubscriptions.set(key, ref);
     }
 
     /**
@@ -95,20 +134,10 @@ export default class EventApi {
      * @returns Promise resolving to a success message and rejecting with an error.
      */
     saveUserEventData(eventId, uid, values) {
-        let self = this;
-        return new Promise((resolve, reject) => {
-            const {table} = values;
-            let updates = {};
-            updates[`/userEventData/${uid}/${eventId}/table`] = table || null;
-            self.database().ref().update(updates)
-            .then(() => {
-                resolve('SUCCESS');
-            })
-            .catch(err => {
-                reject(err);
-            });
-        })
-
+        const {table} = values;
+        let updates = {};
+        updates[`/userEventData/${uid}/${eventId}/table`] = table || null;
+        this.database().ref().update(updates)
     }
 
     /**
@@ -129,12 +158,13 @@ export default class EventApi {
             deleted(snapshot.val());
         })
         
-        if(this.eventListSubscription) {
+        this.eventListSubscription = ref;
+    }
+
+    unsubScribeToEvents() {
+        if (this.eventListSubscription) {
             this.eventListSubscription.off();
         }
-        
-
-        this.eventListSubscription = ref;
     }
 
     getEvents() {

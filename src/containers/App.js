@@ -1,22 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { goBack } from 'react-router-redux';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import Header from 'components/App/Header';
-import { signOut } from 'actions/user';
 
+import { signOut } from 'actions/user';
 //TODO: Use css modules.
 import styles from './styles/App.css';
 
 class App extends Component {
   render() {
-    let { isAuthenticated, loading, children, signOut, eventIsChosen, currentEventName, location} = this.props;
+    let {children, eventIsChosen, 
+         currentEventName, location, isAuthenticated, 
+         canGoBack, signOut, goBack, loading, redirectLoading} = this.props;
+    const path = location.pathname.split('/');
     return (
       <div className={styles.app}>
         <Header 
-          show={isAuthenticated && !loading} 
-          signOut={signOut} 
+          show={path[1] === 'app'} 
+          goBack={goBack} 
+          signOut={signOut}
+          loading={loading}
+          redirectLoading={redirectLoading}
           location={location}
-          eventIsChosen={eventIsChosen} 
+          isAuthenticated={isAuthenticated}
+          eventIsChosen={eventIsChosen}
+          canGoBack={canGoBack} 
           currentEvent={currentEventName}/>
         <ReactTransitionGroup component="div" className={styles.routeContainer}>
               {React.cloneElement(children, {
@@ -30,14 +39,17 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    canGoBack: state.app.get('canGoBack'),
     isAuthenticated: state.auth.get('authenticated'),
-    loading: state.app.get('loading'),
     eventIsChosen: state.event.event.get('eventChosen'),
-    currentEventName: state.event.event.get('name')
+    currentEventName: state.event.event.get('name'),
+    loading: state.app.get('loading'),
+    redirectLoading: state.login.get('redirectLoading')
   }
 }
 
 const mapDispatchToProps = {
+  goBack,
   signOut
 }
 

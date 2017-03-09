@@ -1,0 +1,17 @@
+.eventListScreen {
+    padding-top: 64px;
+    flex:1;
+    overflow: auto;
+    position: relative;
+    will-change: transform, opacity;
+}
+
+.eventList {
+    margin: 0;
+    padding: 0 10px 0 10px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+}

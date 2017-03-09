@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router'
 import  MiniLoader  from 'components/Loader/MiniLoader';
+import { Link } from 'react-router';
 
 //Styles
 import styles from './styles/Home.css';
@@ -15,17 +15,9 @@ class HomeScreen extends Component {
                     <div className={styles.divider}>
                         {this.props.loading && <MiniLoader show={true} />}
                     </div>
-                    {!this.props.loading && !this.props.authed &&
-                        <nav className={styles.nav}>
-                            <div className={styles.linkWrapper}>
-                                <Link to="/register" className={styles.emphesizedLink}>JOIN</Link>
-                            </div>
-                            <span className={styles.verticalDivider}></span>
-                            <div className={styles.linkWrapper}>
-                                <Link to="/login" className={styles.emphesizedLink}>LOGIN</Link>
-                            </div>
-                        </nav>
-                    }
+                    <div className={styles.nav}>
+                        {!this.props.loading && <Link className={styles.emphesizedLink} to="/app/eventlist">ENTER</Link>}
+                    </div>
                 </div>
             )
         }

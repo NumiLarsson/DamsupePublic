@@ -59,8 +59,8 @@ export function expand(card, expandedClass, callback) {
     tl.add(() => {expandCard(card, expandedClass, callback)});
 }
 
-export function fadeIn(target, fromOpacity, toOpacity, cb) {
-    TweenMax.fromTo(target, 1, {opacity: fromOpacity}, {opacity: toOpacity, onComplete: cb});
+export function fadeIn(target, duration, fromOpacity, toOpacity, cb) {
+    TweenMax.fromTo(target, duration, {opacity: fromOpacity}, {opacity: toOpacity, onComplete: cb});
 }
 
 export function leave(target, duration,  direction, cb) {
@@ -73,7 +73,7 @@ export function leave(target, duration,  direction, cb) {
 export function enter(target, duration, from, cb) {
     let dir = from ==='right' ? '100%' : '-100%';
     let tl = new TweenMax.TimelineMax();
-    tl.fromTo(target, duration, {x : dir}, {x: '0%'});
+    tl.fromTo(target, duration, {x : dir}, {x: '0%'}, TweenMax.easeInOut);
     tl.add(() => cb());
     tl.play();
 }

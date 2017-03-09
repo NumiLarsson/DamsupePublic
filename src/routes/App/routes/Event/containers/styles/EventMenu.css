@@ -1,0 +1,52 @@
+
+.eventMenu {
+    padding-top: 64px;
+    flex:1;
+    overflow: auto;
+    position: relative;
+    will-change: transform, opacity;
+}
+
+.eventMenuCardWrapper {
+    height:100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+    align-content: flex-start;
+    position: relative;
+}
+
+.first {
+    background: #f3bb72
+}
+
+.second {
+    background: #ff85a7
+}
+
+.third {
+    background: #7beced
+}
+
+.fourth {
+    background: #b1db73
+}
+
+.cardExpanded {
+    position: fixed;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
+    max-width: none;
+    width: auto;
+    height: auto;
+    margin: 0;
+    box-shadow: none;
+    border-radius: none;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index:10;
+}

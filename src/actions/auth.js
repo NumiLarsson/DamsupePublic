@@ -1,8 +1,9 @@
 import { createAction } from 'redux-actions';
 import api from '../api/Api';
-import { push } from 'react-router-redux';
 import { appDoneLoading } from './app';
+import { subscribeToUserEventAccess } from './event';
 import { USER_SIGNED_IN, USER_SIGNED_OUT, UPDATE_USER_INFO, RESET_USER_DATA, USER_LOGGED_OUT} from './actionTypes';
+import { browserHistory } from 'react-router'
 
 export const loggedOut = createAction(USER_LOGGED_OUT);
 export const signedIn = createAction(USER_SIGNED_IN);
@@ -17,12 +18,15 @@ export function listenForAuthChanges() {
     return (dispatch, getState) => {
         api.auth.listenForAuthChanges(
             (user) => {
+                let location = browserHistory.getCurrentLocation().pathname.split('/');
+                if(getState().app.get('canGoBack') === false && (location[2] === 'login' || location[2] === 'register')) {
+                    browserHistory.replace('/app/eventlist');
+                }
                 handleUserSignIn(dispatch, user, getState);
             }, //Success
             () => {
                 dispatch(signedOut());
                 unsubscribeToUserData(dispatch, true);
-                dispatch(push('/'));
                 if(getState().app.get('loading')) {
                     dispatch(appDoneLoading());
                 }
@@ -44,20 +48,16 @@ function handleUserSignIn(dispatch, user, getState) {
         dispatch(signedIn(user.uid));
         //Subscribe to user data updates
         subscribeToUserData(dispatch, user.uid);
-        //Get the last visited event.
-        api.user.getLastVisitedEvent(user.uid)
-        .then(eventId => {
-            dispatch(push(`/main/event/${eventId}`))
-            if(getState().app.get('loading')) {
-                dispatch(appDoneLoading());
-            }
-        })
-        .catch(() => {
-            dispatch(push(`/main/eventList`));
-            if(getState().app.get('loading')) {
-                dispatch(appDoneLoading());
-            }
-        })
+        if(getState().app.get('loading')) {
+            dispatch(appDoneLoading());
+        }
+        const event = getState().event.event;
+        const eventChosen = event.get('eventChosen');
+
+        if(eventChosen) {
+            const eventId = event.get('id');
+            dispatch(subscribeToUserEventAccess(user.uid, eventId));
+        }
     }).catch(err => {
         //TODO: Handle error gracefully
         console.log(err);
