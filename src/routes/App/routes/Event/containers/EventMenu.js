@@ -9,9 +9,7 @@ import Store from './Store';
 //Actions
 import {infoScreenOpen, mediaScreenOpen, shopScreenOpen,
     infoScreenClose, mediaScreenClose, shopScreenClose} from 'actions/eventmenu';
-import { resetMenu } from 'actions/eventmenu';
-import { setupEventUserDataHooks, eventLoading, resetEventData, unsubscribeToEvent } from 'actions/event';
-import { updateCanGoBack } from 'actions/app';
+import { initializeEvent, cleanupEvent } from 'actions/event';
 
 //Animations
 import { expand } from 'utils/animations';
@@ -29,15 +27,11 @@ class EventMenu extends Component  {
 
     componentWillMount() {
         const {eventId} = this.props.params;
-        this.props.resetMenu();
-        this.props.eventLoading();
-        this.props.setupEventUserDataHooks(eventId);
-        this.props.updateCanGoBack(true);
+        this.props.initializeEvent(eventId);
     }
 
     componentWillUnmount () {
-        this.props.resetEventData();
-        this.props.unsubscribeToEvent();
+        this.props.cleanupEvent();
         document.getElementById('mainHeader').removeAttribute("style");
     }
 
@@ -123,35 +117,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        resetMenu: () => dispatch(resetMenu()),
         dispatch, 
-        setupEventUserDataHooks: (eventId) => {
-            dispatch(setupEventUserDataHooks(eventId))
-        },
-        eventLoading: () => dispatch(eventLoading()),
-        resetEventData: () => dispatch(resetEventData()),
-        unsubscribeToEvent: () => dispatch(unsubscribeToEvent()),
-        updateCanGoBack: (val) => dispatch(updateCanGoBack(val))
+        initializeEvent: (eventId) => dispatch(initializeEvent(eventId)),
+        cleanupEvent: () => dispatch(cleanupEvent())
     }
     
 }
-
-/**
- <EventMenuCard
-                        disabled={!this.props.userHasAccess}  
-                        styleClass={styles.fourth}
-                        headerStyle={styles.cardHeader}  
-                        open={this.props.userScreenOpen} 
-                        expandCard={this.expCard} 
-                        closeCard={this.closeCard}
-                        openAction={userScreenOpen}
-                        closeAction={userScreenClose}>
-                            <div className={styles.cardHeaderTitle}>
-                                <Face color="#fff" size="72" />
-                                <h2 className={styles.cardHeaderTitleText}>User</h2>
-                            </div>
-                            <UserScreen uid={this.props.uid} currentEvent={this.props.currentEvent} />
-                    </EventMenuCard>
- */
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(EventMenu);

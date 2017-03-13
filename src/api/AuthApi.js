@@ -32,6 +32,7 @@ export default class AuthApi {
 
     constructor(auth) {
         this.auth = auth;
+        this.getCurrentUser = this.getCurrentUser.bind(this);
     }
 
     /**

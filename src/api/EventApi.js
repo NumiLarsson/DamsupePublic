@@ -6,9 +6,6 @@ export default class EventApi {
 
     constructor(database) {
         this.database = database;
-        this.eventSubscriptions = Immutable.Map();
-        this.eventUserSubscriptions = Immutable.Map();
-        this.eventAccessSubscription = Immutable.Map();
         this.eventListSubscription = null;
     }
 
@@ -18,14 +15,14 @@ export default class EventApi {
      * @param {function} cb - Callback function, called when the event changes.
      */
      subscribeToEvent(eventId, cb) {
+        
         let ref = this.database().ref(`/events/${eventId}`);
         ref.on('value', snapshot => {
             if(snapshot.val()) {
                 cb(snapshot.val());
             } 
         });
-        let key = `event_${eventId}`;
-        this.eventSubscriptions = this.eventSubscriptions.set(key, ref);
+        return ref;
     }
 
     /**
@@ -77,8 +74,7 @@ export default class EventApi {
         ref.on('value', snapshot => {
             cb(snapshot.val());
         })
-        let key = `userEventAccess_${uid}_${eventId}`;
-        this.eventAccessSubscription = this.eventAccessSubscription.set(key, ref);
+        return ref;
      }
 
 
@@ -93,36 +89,7 @@ export default class EventApi {
         ref.on('value', (snapshot) => {
             cb(snapshot.val());
         })
-        let key = `userEventData_${uid}_${eventId}`;
-        this.eventUserSubscriptions = this.eventUserSubscriptions.set(key, ref);
-    }
-
-    /**
-     * Clear all subscriptions related to the user related data of an event..
-     */
-    clearEventUserSubscriptions() {
-        this.eventUserSubscriptions.toList().forEach(ref => {
-            ref.off();
-        })        
-    }
-
-    /**
-     * Clear the subscriptions to user access to an event.
-     */
-    clearEventUserAccessSubscriptions() {
-        this.eventAccessSubscription.toList().forEach(ref => {
-            ref.off();
-        })        
-    }
-
-
-     /**
-     * Clear all event subscriptions
-     */
-    clearEventSubscriptions() {
-        this.eventSubscriptions.toList().forEach(ref => {
-            ref.off();
-        })        
+        return ref;
     }
 
     /**

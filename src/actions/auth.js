@@ -1,8 +1,7 @@
 import { createAction } from 'redux-actions';
 import api from '../api/Api';
 import { appDoneLoading } from './app';
-import { subscribeToUserEventAccess } from './event';
-import { USER_SIGNED_IN, USER_SIGNED_OUT, UPDATE_USER_INFO, RESET_USER_DATA, USER_LOGGED_OUT} from './actionTypes';
+import { USER_SIGNED_IN, USER_SIGNED_OUT, UPDATE_USER_INFO, RESET_USER_DATA, USER_LOGGED_OUT, INITIALIZE_USER_ACCESS} from './actionTypes';
 import { browserHistory } from 'react-router'
 
 export const loggedOut = createAction(USER_LOGGED_OUT);
@@ -56,7 +55,7 @@ function handleUserSignIn(dispatch, user, getState) {
 
         if(eventChosen) {
             const eventId = event.get('id');
-            dispatch(subscribeToUserEventAccess(user.uid, eventId));
+            dispatch({type: INITIALIZE_USER_ACCESS, payload: eventId});
         }
     }).catch(err => {
         //TODO: Handle error gracefully

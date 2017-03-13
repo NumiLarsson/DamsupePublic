@@ -1,7 +1,7 @@
 import { eventChannel } from 'redux-saga';
 import { fork, take, call, put, cancel, cancelled } from 'redux-saga/effects';
 import { addEventStoreItem, removeEventStoreItem, updateEventStoreItem} from 'actions/store';
-import { SUBSCRIBE_TO_STORE_ITEMS, RESET_EVENT_DATA } from 'actions/actionTypes';
+import { INIT_STORE, CLEANUP_STORE } from 'actions/actionTypes';
 import api from 'api/Api';
 
 
@@ -45,9 +45,9 @@ function* subscribeToStoreItems(eventId) {
 
 function* storeFlow() {
     while(true) {
-        let { payload } = yield take(SUBSCRIBE_TO_STORE_ITEMS);
+        let { payload } = yield take(INIT_STORE);
         const task = yield fork(subscribeToStoreItems, payload);
-        let action = yield take(RESET_EVENT_DATA);
+        yield take(CLEANUP_STORE);
         yield cancel(task);
     }
 }
