@@ -50,8 +50,7 @@ export default class EventApi {
             deleted(snapshot.val());
         });
         
-        let key = `eventStore_${eventId}`;
-        this.eventSubscriptions = this.eventSubscriptions.set(key, ref);
+        return ref;
     }
 
     /**
