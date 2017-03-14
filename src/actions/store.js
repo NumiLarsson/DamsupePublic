@@ -1,6 +1,4 @@
 import { createAction } from 'redux-actions';
-import api from '../api/Api';
-
 import { 
     ADD_EVENT_STORE_ITEM,
     DELETE_EVENT_STORE_ITEM,

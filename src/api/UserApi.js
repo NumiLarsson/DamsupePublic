@@ -5,6 +5,7 @@ export default class UserApi {
     constructor(database) {
         this.database = database;
         this.subscriptions = Immutable.Map();
+        this.createUserIfNotExists = this.createUserIfNotExists.bind(this);
     }
 
     /**
@@ -105,6 +106,7 @@ export default class UserApi {
             cb(snapshot.val());
         });
         this.subscriptions[uid] = ref;
+        return ref;
     }
 
     /**

@@ -1,4 +1,3 @@
-import Immutable from 'immutable';
 /**
  * Event API.
  */
@@ -6,7 +5,8 @@ export default class EventApi {
 
     constructor(database) {
         this.database = database;
-        this.eventListSubscription = null;
+        this.subscribeToEvents = this.subscribeToEvents.bind(this);
+        this.getEvents = this.getEvents.bind(this);
     }
 
     /**
@@ -124,13 +124,7 @@ export default class EventApi {
             deleted(snapshot.val());
         })
         
-        this.eventListSubscription = ref;
-    }
-
-    unsubScribeToEvents() {
-        if (this.eventListSubscription) {
-            this.eventListSubscription.off();
-        }
+        return ref;
     }
 
     getEvents() {

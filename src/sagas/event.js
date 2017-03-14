@@ -1,4 +1,3 @@
-import { eventChannel, buffers } from 'redux-saga';
 import { fork, take, call, put, cancel, cancelled } from 'redux-saga/effects';
 import api from 'api/Api';
 import { 
@@ -8,6 +7,8 @@ import {
     CLEANUP_USER_ACCESS,
     INITIALIZE_USER_EVENT_DATA,
     CLEANUP_USER_EVENT_DATA, 
+    INITIALIZE_EVENT_LIST,
+    CLEANUP_EVENT_LIST,
     RESET_EVENT_DATA, 
     INIT_STORE, 
     CLEANUP_STORE 
@@ -19,55 +20,58 @@ import {eventDataDoneLoading, updateCurrentEvent,
         updateUserEventData,} from 'actions/event';
 import { resetMenu } from 'actions/eventmenu';
 import { updateCanGoBack } from 'actions/app';
+import {createUserEventDataChannel, createUserAccessChannel, 
+        createEventChannel, createEventListChannel } from './channels';
 
-export default function* eventRoot() {
-    yield fork(eventFlow);
-    yield fork(userAccessFlow);
-    yield fork(userEventDataFlow);
-}
 
-function* eventFlow() {
-    while(true) {
-        let { payload } = yield take(INITIALIZE_EVENT);
-        yield put(resetMenu());
-        yield put(eventDataLoading());
-        yield put(updateCanGoBack(true));
-        const eventTask = yield fork(subscribeToEvent, payload);
-        yield take(CLEANUP_EVENT);
-        yield cancel(eventTask);
-        yield put({type: RESET_EVENT_DATA});
-    }
-}
-
-function* subscribeToEvent(eventId) {
-    yield put({type: INIT_STORE, payload: eventId});
-    yield put({type: INITIALIZE_USER_ACCESS, payload: eventId});
-    const eventChan = yield call(createEventChannel, eventId);
+function* subscribeToEventList() {
+    const chan = yield call(createEventListChannel);
     try {
         while (true) {
-            let action = yield take(eventChan);
-            yield put(updateCurrentEvent(action));
-            yield put(eventDataDoneLoading());
+            let action = yield take(chan);
+            yield put(action);
         }
     } finally {
         if (yield cancelled()) {
-            yield put({type: CLEANUP_STORE});
-            yield put({type: CLEANUP_USER_ACCESS});
-            eventChan.close();
+            chan.close();
         }
     }
 }
 
-function* userAccessFlow() {
-    while(true) {
-        let { payload } = yield take(INITIALIZE_USER_ACCESS);
-        let user = yield call(api.auth.getCurrentUser);
-        if (user) {
-            yield put(userEventDataLoading());
-            let accessTask = yield fork(subscribeToEventAccess, payload, user.uid);
-            yield take(CLEANUP_USER_ACCESS);
-            yield cancel(accessTask);
+function* eventListFlow() {
+     while(true) {
+        yield take(INITIALIZE_EVENT_LIST);
+        yield put(eventDataLoading());
+        yield put(updateCanGoBack(true));
+        const eventListTask = yield fork(subscribeToEventList);
+        yield call(api.events.getEvents);
+        yield put(eventDataDoneLoading());
+        yield take(CLEANUP_EVENT_LIST);
+        yield cancel(eventListTask);
+    }
+}
+
+function* subscribeToUserEventData(eventId, userId) {
+    let userEventDataChan = yield call(createUserEventDataChannel, eventId, userId);
+    try {
+        while(true) {
+            let data = yield take(userEventDataChan);
+            yield put(updateUserEventData(data));
+            yield put(userEventDataDoneLoading());
         }
+    } finally {
+        if (yield cancelled()) {
+            userEventDataChan.close();
+        }
+    }
+}
+
+function* userEventDataFlow() {
+    while(true) {
+        let { payload } = yield take(INITIALIZE_USER_EVENT_DATA);
+        let userEventDataTask = yield fork(subscribeToUserEventData, payload.eventId, payload.userId);
+        yield take(CLEANUP_USER_EVENT_DATA);
+        yield cancel(userEventDataTask);
     } 
 }
 
@@ -93,82 +97,55 @@ function* subscribeToEventAccess(eventId, userId) {
     }
 }
 
-function* userEventDataFlow() {
+function* userAccessFlow() {
     while(true) {
-        let { payload } = yield take(INITIALIZE_USER_EVENT_DATA);
-        let userEventDataTask = yield fork(subscribeToUserData, payload.eventId, payload.userId);
-        yield take(CLEANUP_USER_EVENT_DATA);
-        yield cancel(userEventDataTask);
-        //TODO: Remove userEventData.
+        let { payload } = yield take(INITIALIZE_USER_ACCESS);
+        let user = yield call(api.auth.getCurrentUser);
+        if (user) {
+            yield put(userEventDataLoading());
+            let accessTask = yield fork(subscribeToEventAccess, payload, user.uid);
+            yield take(CLEANUP_USER_ACCESS);
+            yield cancel(accessTask);
+        }
     } 
 }
 
-function* subscribeToUserData(eventId, userId) {
-    let userEventDataChan = yield call(createUserEventDataChannel, eventId, userId);
+function* subscribeToEvent(eventId) {
+    yield put({type: INIT_STORE, payload: eventId});
+    yield put({type: INITIALIZE_USER_ACCESS, payload: eventId});
+    const eventChan = yield call(createEventChannel, eventId);
     try {
-        while(true) {
-            let data = yield take(userEventDataChan);
-            yield put(updateUserEventData(data));
-            yield put(userEventDataDoneLoading());
+        while (true) {
+            let action = yield take(eventChan);
+            yield put(updateCurrentEvent(action));
+            yield put(eventDataDoneLoading());
         }
     } finally {
         if (yield cancelled()) {
-            userEventDataChan.close();
+            yield put({type: CLEANUP_STORE});
+            yield put({type: CLEANUP_USER_ACCESS});
+            eventChan.close();
         }
     }
 }
 
-function createUserEventDataChannel(eventId, userId) {
-    return eventChannel(emit => {
-
-        const handler = data => {
-            emit(data);
-        }
-
-        let ref = api.events.subscribeToUserEventData(eventId, userId, handler);
-        
-        const unsubscribe = () => {
-            ref.off();
-        }
-        return unsubscribe;
-    }, buffers.fixed(1));
+function* eventFlow() {
+    while(true) {
+        let { payload } = yield take(INITIALIZE_EVENT);
+        yield put(resetMenu());
+        yield put(eventDataLoading());
+        yield put(updateCanGoBack(true));
+        const eventTask = yield fork(subscribeToEvent, payload);
+        yield take(CLEANUP_EVENT);
+        yield cancel(eventTask);
+        yield put({type: RESET_EVENT_DATA});
+    }
 }
 
-
-function createUserAccessChannel(eventId, userId) {
-    return eventChannel(emit => {
-        const handler = status => {
-            emit(status);
-        }
-
-        let ref = api.events.subscribeToEventAccessStatus(userId, eventId, handler);
-        
-        const unsubscribe = () => {
-            ref.off();
-        }
-        return unsubscribe;
-
-    },buffers.fixed(1));
+export default function* eventRoot() {
+    yield fork(eventFlow);
+    yield fork(userAccessFlow);
+    yield fork(userEventDataFlow);
+    yield fork(eventListFlow);
 }
-
-
-function createEventChannel(eventId) {
-    return eventChannel(emit => {
-
-        const handler = event => {
-            emit(event);
-        };
-
-        let ref = api.events.subscribeToEvent(eventId, handler);
-
-        const unsubscribe = () => {
-            ref.off();
-        }
-        return unsubscribe;
-    }, buffers.fixed(1));
-} 
-
-
-
-
 

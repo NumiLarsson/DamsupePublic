@@ -53,7 +53,7 @@ export default class AuthApi {
             if (user) {
                 signedIn(user);
             } else {
-                signedOut();
+                signedOut(user);
             } 
         });
     }
