@@ -66,7 +66,7 @@ class EventMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={infoScreenOpen}
                         closeAction={infoScreenClose}
-                        image={this.props.infoImageUrl}
+                        headerColor="#f3bb72"
                         title="Event Information">
                     </EventMenuCard>
                     <EventMenuCard 
@@ -76,7 +76,7 @@ class EventMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={mediaScreenOpen}
                         closeAction={mediaScreenClose}
-                        image={this.props.mediaImageUrl}
+                        headerColor="#ff85a7"
                         title="Media">
                     </EventMenuCard>
                     <EventMenuCard 
@@ -86,7 +86,7 @@ class EventMenu extends Component  {
                         closeCard={this.closeCard}
                         openAction={shopScreenOpen}
                         closeAction={shopScreenClose}
-                        image={this.props.shopImageUrl}
+                        headerColor="#b1db73"
                         title="store">
                             <Store />
                     </EventMenuCard>
