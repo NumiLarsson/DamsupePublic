@@ -12,6 +12,7 @@ import { listenForNetworkChanges } from './actions/network';
 import './index.css';
 import App from './containers/App';
 import TweenMax from 'gsap';
+import ScrollToPlugin from "gsap/ScrollToPlugin";
 
 /* Initialize api and start listening for auth changes*/
 store.dispatch({type: LISTEN_FOR_AUTH_CHANGES});

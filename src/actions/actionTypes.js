@@ -55,6 +55,8 @@ export const LOGIN_LOADING                = 'LOGIN_LOADING';
 export const LOGIN_DONE_LOADING           = 'LOGIN_DONE_LOADING';
 
 //Menu
+export const SET_NEXT_SCREEN              = 'SET_NEXT_SCREEN';
+export const SET_PREV_SCREEN              = 'SET_PREV_SCREEN';
 export const RESET_MENU                   = 'RESET_MENU';
 export const INFO_SCREEN_OPEN             = 'INFO_SCREEN_OPEN';
 export const INFO_SCREEN_CLOSE            = 'INFO_SCREEN_CLOSE';
