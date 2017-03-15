@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import EventMenuCard from '../components/EventMenuCard';
 import Loader from 'components/Loader/Loader';
 import Store from './Store';
+import Close from 'react-icons/lib/md/close';
 
 //Actions
-import {infoScreenOpen, mediaScreenOpen, shopScreenOpen,
-    infoScreenClose, mediaScreenClose, shopScreenClose} from 'actions/eventmenu';
+import {showContent, hideContent} from 'actions/eventmenu';
 import { initializeEvent, cleanupEvent } from 'actions/event';
 
 //Animations
@@ -21,8 +21,8 @@ class EventMenu extends Component  {
 
     constructor() {
         super();
-        this.expCard = this.expCard.bind(this);
-        this.closeCard = this.closeCard.bind(this);
+        this.showContent = this.showContent.bind(this);
+        this.hideContent = this.hideContent.bind(this);
     }
 
     componentWillMount() {
@@ -35,61 +35,31 @@ class EventMenu extends Component  {
         document.getElementById('mainHeader').removeAttribute("style");
     }
 
-    expCard(target, shouldExpand, action) {
-        if(shouldExpand) {
-            let dispatch = this.props.dispatch;
-            expand(target, styles.cardExpanded, () => {
-                dispatch(action());
-            });
-            //TODO:FIX
-            this.wrapper.style.overflow = "hidden";
-        }
+    showContent() {
+        expand(this.eventContent, styles.cardExpanded, this.props.showContent.bind(null, 'store'));
     }
 
-    closeCard(target, action) {
-        this.props.dispatch(action());
-        target.removeAttribute("style");
+    hideContent() {
+        this.props.hideContent();
+        this.eventContent.removeAttribute("style");
         document.getElementById('mainHeader').removeAttribute("style");
-        target.classList.remove(styles.cardExpanded);
-        this.wrapper.style.overflow = "auto";
+        this.eventContent.classList.remove(styles.cardExpanded);
     }   
 
     render() {
         return (
             <div className={styles.eventMenu}>
+                <header>
+
+                </header>
                 <Loader show={this.props.eventDataLoading || this.props.userEventDataLoading} />
-                <div ref={(r)=> this.wrapper = r} className={styles.eventMenuCardWrapper}>
-                    <EventMenuCard
-                        disabled={false} 
-                        open={this.props.infoScreenOpen} 
-                        expandCard={this.expCard} 
-                        closeCard={this.closeCard}
-                        openAction={infoScreenOpen}
-                        closeAction={infoScreenClose}
-                        headerColor="#f3bb72"
-                        title="Event Information">
-                    </EventMenuCard>
-                    <EventMenuCard 
-                        disabled={false} 
-                        open={this.props.mediaScreenOpen} 
-                        expandCard={this.expCard} 
-                        closeCard={this.closeCard}
-                        openAction={mediaScreenOpen}
-                        closeAction={mediaScreenClose}
-                        headerColor="#ff85a7"
-                        title="Media">
-                    </EventMenuCard>
-                    <EventMenuCard 
-                        disabled={false} 
-                        open={this.props.shopScreenOpen} 
-                        expandCard={this.expCard} 
-                        closeCard={this.closeCard}
-                        openAction={shopScreenOpen}
-                        closeAction={shopScreenClose}
-                        headerColor="#b1db73"
-                        title="store">
-                            <Store />
-                    </EventMenuCard>
+                <div ref={r => this.eventContent = r} className={styles.eventContent}>
+                    {this.props.contentShowing &&
+                        <header className={styles.contentHeader}>
+                            <span className={styles.headerTitle}><h3>Store</h3></span>             
+                            <Close className={styles.backButton} onClick={this.hideContent} color="#34495e" size="48" />
+                        </header>}
+                    {this.props.contentShowing && this.props.screen === 'store' &&<Store />}
                 </div>
             </div>
         )
@@ -97,31 +67,25 @@ class EventMenu extends Component  {
     
 }
 
-
+// <button onClick={this.showContent}>Show</button>
 const mapStateToProps = (state) => {
     return {
         isSignedIn: state.auth.get('authenticated'),
         uid: state.auth.get('uid'),
         userHasAccess: state.event.userdata.get('userHasAccess'),
         currentEvent: state.event.event.get('id'),
-        infoScreenOpen: state.event.menu.get('infoScreenOpen'),
-        mediaScreenOpen: state.event.menu.get('mediaScreenOpen'),
-        shopScreenOpen: state.event.menu.get('shopScreenOpen'),
         eventDataLoading: state.event.event.get('loading'),
         userEventDataLoading: state.event.userdata.get('loading'),
-        shopImageUrl: state.event.event.get('shopImage'),
-        mediaImageUrl: state.event.event.get('mediaImage'),
-        infoImageUrl: state.event.event.get('infoImage')
+        contentShowing: state.event.menu.get('showContent'),
+        screen: state.event.menu.get('screen')
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        dispatch, 
-        initializeEvent: (eventId) => dispatch(initializeEvent(eventId)),
-        cleanupEvent: () => dispatch(cleanupEvent())
-    }
-    
+const mapDispatchToProps = {
+        initializeEvent,
+        cleanupEvent,
+        showContent,
+        hideContent
 }
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(EventMenu);

@@ -4,7 +4,6 @@
     flex:1;
     overflow: auto;
     position: relative;
-    will-change: transform, opacity;
 }
 
 .eventMenuCardWrapper {
@@ -32,6 +31,47 @@
 
 .fourth {
     background: #b1db73
+}
+
+.eventContent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    will-change: transform;
+}
+
+.contentHeader {
+    position: relative;
+    height: 64px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+} 
+
+
+.headerTitle {
+  padding: 5px;
+  color: #34495e;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.headerTitle h3 {
+  font-size: 1.4em;
+  line-height: 1.4;
+  padding: 0 5px;
+  margin: 0;
+}
+
+
+.backButton {
+    position: absolute;
+    top:5px;
+    right: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .cardExpanded {

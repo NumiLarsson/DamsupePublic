@@ -55,17 +55,10 @@ export const LOGIN_LOADING                = 'LOGIN_LOADING';
 export const LOGIN_DONE_LOADING           = 'LOGIN_DONE_LOADING';
 
 //Menu
-export const SET_NEXT_SCREEN              = 'SET_NEXT_SCREEN';
-export const SET_PREV_SCREEN              = 'SET_PREV_SCREEN';
 export const RESET_MENU                   = 'RESET_MENU';
-export const INFO_SCREEN_OPEN             = 'INFO_SCREEN_OPEN';
-export const INFO_SCREEN_CLOSE            = 'INFO_SCREEN_CLOSE';
-export const MEDIA_SCREEN_OPEN            = 'MEDIA_SCREEN_OPEN';
-export const MEDIA_SCREEN_CLOSE           = 'MEDIA_SCREEN_CLOSE';
-export const SHOP_SCREEN_OPEN             = 'SHOP_SCREEN_OPEN';
-export const SHOP_SCREEN_CLOSE            = 'SHOP_SCREEN_CLOSE';
-export const USER_SCREEN_OPEN             = 'USER_SCREEN_OPEN';
-export const USER_SCREEN_CLOSE            = 'USER_SCREEN_CLOSE';
+export const SHOW_CONTENT                 = 'SHOW_CONTENT';
+export const HIDE_CONTENT                 = 'HIDE_CONTENT';
+
 
 //Network
 export const USER_IS_ONLINE               = 'USER_IS_ONLINE';
