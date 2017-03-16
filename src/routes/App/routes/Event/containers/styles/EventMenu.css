@@ -10,75 +10,8 @@
     color: #34495e;
 }
 
-.infoSection {
-    width: 100%;
-}
-
-.headerImage {
-    display: block;
-    min-height: 180px;
-    max-width: 100%;
-    width: 100%;
-}
-.dateSection {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.month {
-    text-transform: uppercase;
-    color: #fa3e3e;
-}
-
-.day {
-    text-align: center;
-}
-
-.titleSection {
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    padding: 0px 10px;
-}
-
-.nameSection {
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-}
-
-.nameSection > h3 {
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 1em;
-}
-
-
-.timeSection {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.8em;
-}
-
-.divider {
-    width: 100%;
-}
-
-.divider:before {
-    display: block;
-    content: '';
-    width: 100%;
-    height: 1px;
-    background: #ddd;
-}
 .eventContent {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     background: #fff;
@@ -113,10 +46,6 @@
   line-height: 1.4;
   padding: 0 5px;
   margin: 0;
-}
-
-.descriptionSection {
-    padding: 0 10px;
 }
 
 .storeSection {

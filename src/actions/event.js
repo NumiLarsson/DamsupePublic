@@ -1,5 +1,4 @@
 import { createAction } from 'redux-actions';
-import api from '../api/Api';
 
 import {INITIALIZE_EVENT, CLEANUP_EVENT, INITIALIZE_EVENT_LIST, CLEANUP_EVENT_LIST,
      UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, RESET_EVENT_DATA, 

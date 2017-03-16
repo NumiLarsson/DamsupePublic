@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 //Components
-import EventMenuCard from '../components/EventMenuCard';
 import Loader from 'components/Loader/Loader';
 import Store from './Store';
+import SectionDivider from '../components/SectionDivider';
+import EventHeader from '../components/EventHeader';
+import EventDescription from '../components/EventDescription';
+//Icons
 import Close from 'react-icons/lib/md/close';
-import Cart from 'react-icons/lib/fa/shopping-cart';
 
 //Actions
 import {showContent, hideContent} from 'actions/eventmenu';
@@ -49,35 +51,12 @@ class EventMenu extends Component  {
 
     render() {
         let { currentEvent } = this.props;
-        let start = currentEvent.get('start');
-        let end = currentEvent.get('end');
         return (
             <div className={styles.eventMenu}>
                 <Loader show={this.props.eventDataLoading} />
-                <header className={styles.infoSection}>
-                    <img className={styles.headerImage} src={currentEvent.get('headerImage')}></img>
-                    <div className={styles.titleSection}>
-                            <div className={styles.dateSection}>
-                                <span className={styles.month}>
-                                    {currentEvent.get('date') !== 0 && getMonth(currentEvent.get('date'))}
-                                </span>
-                                <span className={styles.day}>
-                                    {currentEvent.get('date') !== 0 && getDay(currentEvent.get('date'))}
-                                </span>
-                            </div>
-                            <div className={styles.nameSection}>
-                                <h3>{currentEvent.get('name')}</h3>
-                            </div>
-                            <div className={styles.timeSection}>
-                                <span>{currentEvent.get('type')}</span>
-                                <span>{start && end && `${start}-${end}`}</span>
-                            </div>
-                        </div>
-                </header>
-                <section className={styles.descriptionSection}>
-                    <p>{currentEvent.get('description')}</p>
-                </section>
-                <div className={styles.divider} />
+                <EventHeader event={currentEvent} />
+                <EventDescription description={currentEvent.get('description')} />
+                <SectionDivider />
                 <section className={styles.storeSection}>
                     <h2>Store</h2>
                     <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
@@ -98,17 +77,7 @@ class EventMenu extends Component  {
     
 }
 
-function getDay(date) {
-    const temp = new Date(date);
-    return temp.getDate();
-}
 
-function getMonth(date) {
-    const temp = new Date(date);
-    const locale = "sv-SE"
-    const month = temp.toLocaleString(locale, { month: "short" });
-    return month.slice(0, -1);
-}
 
 // <button onClick={this.showContent}>Show</button>
 const mapStateToProps = (state) => {

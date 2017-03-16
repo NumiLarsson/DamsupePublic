@@ -35,7 +35,7 @@ function* subscribeToUserData(userId) {
 function *userSignedInFlow() {
     while(true) {
         let { payload } = yield take(USER_SIGNED_IN);
-        let result = yield call(api.user.createUserIfNotExists, payload);
+        yield call(api.user.createUserIfNotExists, payload);
         let userDataTask = yield fork(subscribeToUserData, payload.uid);
         const event =  yield select(getEvent);
         const eventChosen = event.get('eventChosen');

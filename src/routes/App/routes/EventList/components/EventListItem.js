@@ -26,7 +26,7 @@ export default class EventListItem extends Component  {
                     <div className={styles.itemContent}>
                         <div className={styles.itemImageWrapper}>
                             <Loader show={!this.state.loaded}/>
-                            <img onLoad={this.onImageLoad} className={styles.itemImage} src={this.props.headerImage} />
+                            <img role="presentation" onLoad={this.onImageLoad} className={styles.itemImage} src={this.props.headerImage} />
                         </div>
                         <div className={styles.titleSection}>
                             <div className={styles.dateSection}>
