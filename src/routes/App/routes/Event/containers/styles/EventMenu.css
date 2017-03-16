@@ -4,41 +4,92 @@
     flex:1;
     overflow: auto;
     position: relative;
-}
-
-.eventMenuCardWrapper {
-    height:100%;
+    max-width: 820px;
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
     margin: 0 auto;
+    color: #34495e;
+}
+
+.infoSection {
+    width: 100%;
+}
+
+.headerImage {
+    display: block;
+    min-height: 180px;
+    max-width: 100%;
+    width: 100%;
+}
+.dateSection {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
     justify-content: center;
-    align-content: flex-start;
-    position: relative;
 }
 
-.first {
-    background: #f3bb72
+.month {
+    text-transform: uppercase;
+    color: #fa3e3e;
 }
 
-.second {
-    background: #ff85a7
+.day {
+    text-align: center;
 }
 
-.third {
-    background: #7beced
+.titleSection {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
 }
 
-.fourth {
-    background: #b1db73
+.nameSection {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
 }
 
+.nameSection > h3 {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1em;
+}
+
+
+.timeSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+}
+
+.divider {
+    width: 100%;
+}
+
+.divider:before {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #ddd;
+}
 .eventContent {
     position: fixed;
     bottom: 0;
     left: 0;
     background: #fff;
     will-change: transform;
+    display: flex;
+}
+
+.contentBody {
+    flex:1;
+    display: flex;
+    width: 100%;
 }
 
 .contentHeader {
@@ -52,7 +103,6 @@
 
 .headerTitle {
   padding: 5px;
-  color: #34495e;
   font-family: 'Roboto Condensed', sans-serif;
   text-transform: uppercase;
   width: 100%;
@@ -65,6 +115,34 @@
   margin: 0;
 }
 
+.descriptionSection {
+    padding: 0 10px;
+}
+
+.storeSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+
+.contentOpenButton {
+    height: 42px;
+    white-space: normal;
+    padding: 10px 19px;
+    font-size: 17px;
+    line-height: 1.471;
+    border: none;
+    font-weight: normal;
+    transition: opacity 0.2s linear;
+    cursor: pointer;
+    color: #fff;
+    background: #34495e;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
 
 .backButton {
     position: absolute;
@@ -73,6 +151,11 @@
     cursor: pointer;
     transition: transform 0.3s ease;
 }
+
+.backButton:hover {
+    transform: scale(1.2);
+}
+
 
 .cardExpanded {
     position: fixed;

@@ -46,6 +46,9 @@
         "description": {
           ".validate": "newData.isString()"
         },
+        "headerImage": {
+          ".validate": "newData.isString()"
+        },
         "$other": {
           ".validate": "false"
         }

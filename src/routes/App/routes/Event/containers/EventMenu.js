@@ -6,6 +6,7 @@ import EventMenuCard from '../components/EventMenuCard';
 import Loader from 'components/Loader/Loader';
 import Store from './Store';
 import Close from 'react-icons/lib/md/close';
+import Cart from 'react-icons/lib/fa/shopping-cart';
 
 //Actions
 import {showContent, hideContent} from 'actions/eventmenu';
@@ -35,8 +36,8 @@ class EventMenu extends Component  {
         document.getElementById('mainHeader').removeAttribute("style");
     }
 
-    showContent() {
-        expand(this.eventContent, styles.cardExpanded, this.props.showContent.bind(null, 'store'));
+    showContent(screen) {
+        expand(this.eventContent, styles.cardExpanded, this.props.showContent.bind(null, screen));
     }
 
     hideContent() {
@@ -47,24 +48,66 @@ class EventMenu extends Component  {
     }   
 
     render() {
+        let { currentEvent } = this.props;
+        let start = currentEvent.get('start');
+        let end = currentEvent.get('end');
         return (
             <div className={styles.eventMenu}>
-                <header>
-
+                <Loader show={this.props.eventDataLoading} />
+                <header className={styles.infoSection}>
+                    <img className={styles.headerImage} src={currentEvent.get('headerImage')}></img>
+                    <div className={styles.titleSection}>
+                            <div className={styles.dateSection}>
+                                <span className={styles.month}>
+                                    {currentEvent.get('date') !== 0 && getMonth(currentEvent.get('date'))}
+                                </span>
+                                <span className={styles.day}>
+                                    {currentEvent.get('date') !== 0 && getDay(currentEvent.get('date'))}
+                                </span>
+                            </div>
+                            <div className={styles.nameSection}>
+                                <h3>{currentEvent.get('name')}</h3>
+                            </div>
+                            <div className={styles.timeSection}>
+                                <span>{currentEvent.get('type')}</span>
+                                <span>{start && end && `${start}-${end}`}</span>
+                            </div>
+                        </div>
                 </header>
-                <Loader show={this.props.eventDataLoading || this.props.userEventDataLoading} />
+                <section className={styles.descriptionSection}>
+                    <p>{currentEvent.get('description')}</p>
+                </section>
+                <div className={styles.divider} />
+                <section className={styles.storeSection}>
+                    <h2>Store</h2>
+                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
+                </section>
                 <div ref={r => this.eventContent = r} className={styles.eventContent}>
                     {this.props.contentShowing &&
                         <header className={styles.contentHeader}>
                             <span className={styles.headerTitle}><h3>Store</h3></span>             
                             <Close className={styles.backButton} onClick={this.hideContent} color="#34495e" size="48" />
                         </header>}
-                    {this.props.contentShowing && this.props.screen === 'store' &&<Store />}
+                        <div className={styles.contentBody}>
+                            {this.props.contentShowing && this.props.screen === 'store' &&<Store />}
+                        </div>
                 </div>
             </div>
         )
     }
     
+}
+
+function getDay(date) {
+    const temp = new Date(date);
+    return temp.getDate();
+}
+
+function getMonth(date) {
+    const temp = new Date(date);
+    const locale = "sv-SE"
+    const month = temp.toLocaleString(locale, { month: "short" });
+    return month.slice(0, -1);
 }
 
 // <button onClick={this.showContent}>Show</button>
@@ -73,7 +116,7 @@ const mapStateToProps = (state) => {
         isSignedIn: state.auth.get('authenticated'),
         uid: state.auth.get('uid'),
         userHasAccess: state.event.userdata.get('userHasAccess'),
-        currentEvent: state.event.event.get('id'),
+        currentEvent: state.event.event,
         eventDataLoading: state.event.event.get('loading'),
         userEventDataLoading: state.event.userdata.get('loading'),
         contentShowing: state.event.menu.get('showContent'),

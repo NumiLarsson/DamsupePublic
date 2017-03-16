@@ -88,7 +88,7 @@ class Order extends Component {
                     </div>
                 </nav>
                 <div className={styles.itemList}>
-                    <FlipMove duration={400} easing="ease-out">
+                    <FlipMove duration={400} easing="ease-out" enterAnimation="fade" leaveAnimation="fade">
                         {this.filterStoreItems(this.props.items, this.props.category)}
                     </FlipMove>
                 </div> 

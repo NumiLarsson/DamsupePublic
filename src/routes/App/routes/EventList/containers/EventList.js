@@ -32,6 +32,7 @@ class EventList extends Component  {
                                     key={id} 
                                     name={event.get('name')}
                                     date={event.get('date')}
+                                    headerImage={event.get('headerImage')}
                                     start={event.get('start')}
                                     end={event.get('end')} 
                                     type={event.get('type')} 

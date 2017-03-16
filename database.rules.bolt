@@ -31,7 +31,8 @@ type Event {
 	start: TimeString | Null,
 	end: TimeString | Null,
 	type: String,
-	description: String | Null
+	description: String | Null,
+	headerImage: String | Null
 }
 
 /*
