@@ -49,6 +49,17 @@ class EventMenu extends Component  {
         this.eventContent.classList.remove(styles.cardExpanded);
     }   
 
+    getTitle() {
+        switch (this.props.screen) {
+            case 'media':
+                return 'Media';
+            case 'chat':
+                return 'Chat';
+            default:
+                return 'Store';
+        }
+    }
+
     render() {
         let { currentEvent } = this.props;
         return (
@@ -57,14 +68,26 @@ class EventMenu extends Component  {
                 <EventHeader event={currentEvent} />
                 <EventDescription description={currentEvent.get('description')} />
                 <SectionDivider />
-                <section className={styles.storeSection}>
+
+                <section className={styles.menuSection}>
                     <h2>Store</h2>
                     <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
                 </section>
+                <section className={styles.menuSection}>
+                    <h2>Media</h2>
+                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'media')}>open</button>
+                </section>
+                <section className={styles.menuSection}>
+                    <h2>Chat</h2>
+                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'chat')}>open</button>
+                </section>
+
+
+
                 <div ref={r => this.eventContent = r} className={styles.eventContent}>
                     {this.props.contentShowing &&
                         <header className={styles.contentHeader}>
-                            <span className={styles.headerTitle}><h3>Store</h3></span>             
+                            <span className={styles.headerTitle}><h3>{this.getTitle()}</h3></span>             
                             <Close className={styles.backButton} onClick={this.hideContent} color="#34495e" size="48" />
                         </header>}
                         <div className={styles.contentBody}>
