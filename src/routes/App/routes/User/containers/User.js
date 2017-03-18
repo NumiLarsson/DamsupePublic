@@ -17,8 +17,9 @@ class UserScreen extends Component {
     saveUserData(values) {
         let self = this;
         self.props.userScreenLoading();
-        const { userId } = this.props;
+        const userId = api.auth.getCurrentUser().uid;
         const { name } = values;
+        
         api.user.updateUserData(userId, {name}, () => {
             animateSuccessButton(document.getElementById("saveBtn"), 'SUCCESS', () => {
                 self.props.userScreenDoneLoading();

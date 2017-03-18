@@ -4,6 +4,7 @@ export default class UserApi {
     constructor(database) {
         this.database = database;
         this.createUserIfNotExists = this.createUserIfNotExists.bind(this);
+        this.updateUserData = this.updateUserData.bind(this);
     }
 
     /**
@@ -70,17 +71,19 @@ export default class UserApi {
      * @param {function} cb - Function to call on success.
      */   
      updateUserData(uid, data, cb) {
+         
         let updates = {};
-
+        /*
         if (data.email) {
             updates[`users/${uid}/email`] = data.email;
-        }
+        }*/
 
         if (data.name) {
             updates[`users/${uid}/name`] = data.name;
-        }
+        } 
 
-        this.database().ref().update(updates, cb);
+        this.database().ref().update(updates, (cb));
+        
      }
 
     /**
