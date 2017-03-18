@@ -15,6 +15,7 @@ import App from './containers/App';
 //import ScrollToPlugin from "gsap/ScrollToPlugin";
 require('gsap');
 require('gsap/ScrollToPlugin');
+require('fecha');
 
 /* Initialize api and start listening for auth changes*/
 store.dispatch({type: LISTEN_FOR_AUTH_CHANGES});

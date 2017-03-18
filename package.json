@@ -6,6 +6,7 @@
     "custom-react-scripts": "^0.0.23"
   },
   "dependencies": {
+    "fecha": "^2.3.0",
     "firebase": "^3.6.7",
     "gsap": "^1.19.1",
     "immutable": "^3.8.1",

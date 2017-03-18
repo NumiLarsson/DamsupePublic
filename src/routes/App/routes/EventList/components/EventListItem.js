@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './styles/EventListItem.css';
 import { Link } from 'react-router';
 import Loader from 'components/Loader/Loader';
+import fecha from 'fecha';
 
 
 export default class EventListItem extends Component  {
@@ -58,7 +59,8 @@ function getDay(date) {
 
 function getMonth(date) {
     const temp = new Date(date);
-    const locale = "sv-SE"
-    const month = temp.toLocaleString(locale, { month: "short" });
-    return month.slice(0, -1);
+    //const locale = "sv-SE"
+    //const month = temp.toLocaleString(locale, { month: "short" });
+    return fecha.format(temp, 'MMM');
+    //return month.slice(0, -1);
 }
