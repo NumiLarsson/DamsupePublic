@@ -93,3 +93,12 @@ export function animateSuccessButton(target, toElement, cb) {
     tl.add(() => cb());
     tl.play();
 }
+
+export function scroll(container, child) {
+    //console.log('hej');
+    //TweenMax.to("#scrollContainer", 2, {scrollTo:{y:'#second', offsetY:0}});
+    //TweenMax.to(target, 2, {scrollTo:"max"});
+    let top = child.getBoundingClientRect().top - 64;
+    console.log(top);
+    TweenMax.to(container, 0.4, {scrollTo: child});
+}

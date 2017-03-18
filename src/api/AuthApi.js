@@ -32,6 +32,7 @@ export default class AuthApi {
 
     constructor(auth) {
         this.auth = auth;
+        this.getCurrentUser = this.getCurrentUser.bind(this);
     }
 
     /**
@@ -52,7 +53,7 @@ export default class AuthApi {
             if (user) {
                 signedIn(user);
             } else {
-                signedOut();
+                signedOut(user);
             } 
         });
     }

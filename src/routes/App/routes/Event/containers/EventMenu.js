@@ -2,16 +2,17 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 //Components
-import EventMenuCard from '../components/EventMenuCard';
 import Loader from 'components/Loader/Loader';
 import Store from './Store';
+import SectionDivider from '../components/SectionDivider';
+import EventHeader from '../components/EventHeader';
+import EventDescription from '../components/EventDescription';
+//Icons
+import Close from 'react-icons/lib/md/close';
 
 //Actions
-import {infoScreenOpen, mediaScreenOpen, shopScreenOpen,
-    infoScreenClose, mediaScreenClose, shopScreenClose} from 'actions/eventmenu';
-import { resetMenu } from 'actions/eventmenu';
-import { setupEventUserDataHooks, eventLoading, resetEventData, unsubscribeToEvent } from 'actions/event';
-import { updateCanGoBack } from 'actions/app';
+import {showContent, hideContent} from 'actions/eventmenu';
+import { initializeEvent, cleanupEvent } from 'actions/event';
 
 //Animations
 import { expand } from 'utils/animations';
@@ -23,79 +24,75 @@ class EventMenu extends Component  {
 
     constructor() {
         super();
-        this.expCard = this.expCard.bind(this);
-        this.closeCard = this.closeCard.bind(this);
+        this.showContent = this.showContent.bind(this);
+        this.hideContent = this.hideContent.bind(this);
     }
 
     componentWillMount() {
         const {eventId} = this.props.params;
-        this.props.resetMenu();
-        this.props.eventLoading();
-        this.props.setupEventUserDataHooks(eventId);
-        this.props.updateCanGoBack(true);
+        this.props.initializeEvent(eventId);
     }
 
     componentWillUnmount () {
-        this.props.resetEventData();
-        this.props.unsubscribeToEvent();
+        this.props.cleanupEvent();
         document.getElementById('mainHeader').removeAttribute("style");
     }
 
-    expCard(target, shouldExpand, action) {
-        if(shouldExpand) {
-            let dispatch = this.props.dispatch;
-            expand(target, styles.cardExpanded, () => {
-                dispatch(action());
-            });
-            //TODO:FIX
-            this.wrapper.style.overflow = "hidden";
+    showContent(screen) {
+        expand(this.eventContent, styles.cardExpanded, this.props.showContent.bind(null, screen));
+    }
+
+    hideContent() {
+        this.props.hideContent();
+        this.eventContent.removeAttribute("style");
+        document.getElementById('mainHeader').removeAttribute("style");
+        this.eventContent.classList.remove(styles.cardExpanded);
+    }   
+
+    getTitle() {
+        switch (this.props.screen) {
+            case 'media':
+                return 'Media';
+            case 'chat':
+                return 'Chat';
+            default:
+                return 'Store';
         }
     }
 
-    closeCard(target, action) {
-        this.props.dispatch(action());
-        target.removeAttribute("style");
-        document.getElementById('mainHeader').removeAttribute("style");
-        target.classList.remove(styles.cardExpanded);
-        this.wrapper.style.overflow = "auto";
-    }   
-
     render() {
+        let { currentEvent } = this.props;
         return (
             <div className={styles.eventMenu}>
-                <Loader show={this.props.eventDataLoading || this.props.userEventDataLoading} />
-                <div ref={(r)=> this.wrapper = r} className={styles.eventMenuCardWrapper}>
-                    <EventMenuCard
-                        disabled={false} 
-                        open={this.props.infoScreenOpen} 
-                        expandCard={this.expCard} 
-                        closeCard={this.closeCard}
-                        openAction={infoScreenOpen}
-                        closeAction={infoScreenClose}
-                        image={this.props.infoImageUrl}
-                        title="Event Information">
-                    </EventMenuCard>
-                    <EventMenuCard 
-                        disabled={false} 
-                        open={this.props.mediaScreenOpen} 
-                        expandCard={this.expCard} 
-                        closeCard={this.closeCard}
-                        openAction={mediaScreenOpen}
-                        closeAction={mediaScreenClose}
-                        image={this.props.mediaImageUrl}
-                        title="Media">
-                    </EventMenuCard>
-                    <EventMenuCard 
-                        disabled={false} 
-                        open={this.props.shopScreenOpen} 
-                        expandCard={this.expCard} 
-                        closeCard={this.closeCard}
-                        openAction={shopScreenOpen}
-                        closeAction={shopScreenClose}
-                        image={this.props.shopImageUrl}
-                        title="store">
-                            <Store />
-                    </EventMenuCard>
+                <Loader show={this.props.eventDataLoading} />
+                <EventHeader event={currentEvent} />
+                <EventDescription description={currentEvent.get('description')} />
+                <SectionDivider />
+
+                <section className={styles.menuSection}>
+                    <h2>Store</h2>
+                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
+                </section>
+                <section className={styles.menuSection}>
+                    <h2>Media</h2>
+                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'media')}>open</button>
+                </section>
+                <section className={styles.menuSection}>
+                    <h2>Chat</h2>
+                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'chat')}>open</button>
+                </section>
+
+
+
+                <div ref={r => this.eventContent = r} className={styles.eventContent}>
+                    {this.props.contentShowing &&
+                        <header className={styles.contentHeader}>
+                            <span className={styles.headerTitle}><h3>{this.getTitle()}</h3></span>             
+                            <Close className={styles.backButton} onClick={this.hideContent} color="#34495e" size="48" />
+                        </header>}
+                        <div className={styles.contentBody}>
+                            {this.props.contentShowing && this.props.screen === 'store' &&<Store />}
+                        </div>
                 </div>
             </div>
         )
@@ -104,54 +101,26 @@ class EventMenu extends Component  {
 }
 
 
+
+// <button onClick={this.showContent}>Show</button>
 const mapStateToProps = (state) => {
     return {
         isSignedIn: state.auth.get('authenticated'),
         uid: state.auth.get('uid'),
         userHasAccess: state.event.userdata.get('userHasAccess'),
-        currentEvent: state.event.event.get('id'),
-        infoScreenOpen: state.event.menu.get('infoScreenOpen'),
-        mediaScreenOpen: state.event.menu.get('mediaScreenOpen'),
-        shopScreenOpen: state.event.menu.get('shopScreenOpen'),
+        currentEvent: state.event.event,
         eventDataLoading: state.event.event.get('loading'),
         userEventDataLoading: state.event.userdata.get('loading'),
-        shopImageUrl: state.event.event.get('shopImage'),
-        mediaImageUrl: state.event.event.get('mediaImage'),
-        infoImageUrl: state.event.event.get('infoImage')
+        contentShowing: state.event.menu.get('showContent'),
+        screen: state.event.menu.get('screen')
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        resetMenu: () => dispatch(resetMenu()),
-        dispatch, 
-        setupEventUserDataHooks: (eventId) => {
-            dispatch(setupEventUserDataHooks(eventId))
-        },
-        eventLoading: () => dispatch(eventLoading()),
-        resetEventData: () => dispatch(resetEventData()),
-        unsubscribeToEvent: () => dispatch(unsubscribeToEvent()),
-        updateCanGoBack: (val) => dispatch(updateCanGoBack(val))
-    }
-    
+const mapDispatchToProps = {
+        initializeEvent,
+        cleanupEvent,
+        showContent,
+        hideContent
 }
-
-/**
- <EventMenuCard
-                        disabled={!this.props.userHasAccess}  
-                        styleClass={styles.fourth}
-                        headerStyle={styles.cardHeader}  
-                        open={this.props.userScreenOpen} 
-                        expandCard={this.expCard} 
-                        closeCard={this.closeCard}
-                        openAction={userScreenOpen}
-                        closeAction={userScreenClose}>
-                            <div className={styles.cardHeaderTitle}>
-                                <Face color="#fff" size="72" />
-                                <h2 className={styles.cardHeaderTitleText}>User</h2>
-                            </div>
-                            <UserScreen uid={this.props.uid} currentEvent={this.props.currentEvent} />
-                    </EventMenuCard>
- */
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(EventMenu);

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { SubmissionError } from 'redux-form';
 import api from 'api/Api';
 import { animateSuccessButton, animateErrorButton } from 'utils/animations';
 import {userScreenLoading, userScreenDoneLoading} from 'actions/userscreen';
@@ -18,8 +17,9 @@ class UserScreen extends Component {
     saveUserData(values) {
         let self = this;
         self.props.userScreenLoading();
-        const { userId } = this.props;
+        const userId = api.auth.getCurrentUser().uid;
         const { name } = values;
+        
         api.user.updateUserData(userId, {name}, () => {
             animateSuccessButton(document.getElementById("saveBtn"), 'SUCCESS', () => {
                 self.props.userScreenDoneLoading();

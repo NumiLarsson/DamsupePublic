@@ -46,13 +46,7 @@
         "description": {
           ".validate": "newData.isString()"
         },
-        "shopImage": {
-          ".validate": "newData.isString()"
-        },
-        "mediaImage": {
-          ".validate": "newData.isString()"
-        },
-        "infoImage": {
+        "headerImage": {
           ".validate": "newData.isString()"
         },
         "$other": {

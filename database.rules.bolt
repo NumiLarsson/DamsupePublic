@@ -32,9 +32,7 @@ type Event {
 	end: TimeString | Null,
 	type: String,
 	description: String | Null,
-	shopImage: String | Null,
-	mediaImage: String | Null,
-	infoImage: String | Null
+	headerImage: String | Null
 }
 
 /*
