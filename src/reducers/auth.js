@@ -19,8 +19,7 @@ export default (state = initialState, action) => {
             return state.merge(Immutable.Map({authenticated: false, uid: ""}));
 
         case USER_SIGNED_IN:
-            return state.merge(Immutable.Map({authenticated: true, uid: action.payload}));
-        
+            return state.merge(Immutable.Map({authenticated: true, uid: action.payload.uid}));
         case UPDATE_USER_INFO:
             let newVals = Immutable.Map({
                 email: action.payload.email || "",
