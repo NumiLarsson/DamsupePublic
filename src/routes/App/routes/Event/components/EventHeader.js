@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles/EventHeader.css';
+import fecha from 'fecha';
 
 export default ({ event }) => {
     let start = event.get('start');
@@ -35,7 +36,5 @@ function getDay(date) {
 
 function getMonth(date) {
     const temp = new Date(date);
-    const locale = "sv-SE"
-    const month = temp.toLocaleString(locale, { month: "short" });
-    return month.slice(0, -1);
+    return fecha.format(temp, 'MMM');
 }
