@@ -23,10 +23,14 @@ class RegisterScreen extends Component {
 
     createUser(values) {
         this.props.registerLoading();
-        const { email, password } = values;
+        const { email, password, name } = values;
         return api.auth.createUser(email, password)
-        .then(() => {
-            this.props.navigateOrGoBack('/app/eventlist');
+        .then((user) => {
+            user.updateProfile({displayName: name}).then( () => {
+                api.user.createUserIfNotExists(user).then( () => {
+                    this.props.navigateOrGoBack('/app/eventlist');
+                })
+            })
         })
         .catch((e) => { throw new SubmissionError({ _error: e }); });
     }
