@@ -21,6 +21,10 @@ const validate = values => {
         errors.email = 'Invalid email address';
     }
 
+    if(!values.name) {
+        errors.name = 'Please enter your name.'
+    }
+
     if (!values.password) {
         errors.password = 'Required';
     }
@@ -43,6 +47,7 @@ const RegisterForm = (props) => {
     return (
         <form onSubmit={handleSubmit} className={styles.registerForm}>
             <Field type="email" color="#34495e" name="email" fieldId="regEmail" component={MaterialField} label="Email"/>
+            <Field type="name" color="#34495e" name="name" fieldId="regName" component={MaterialField} label="Name"/>
             <Field type="password" color="#34495e" name="password" fieldId="regPwd1" component={MaterialField} label="Password" />
             <Field type="password" color="#34495e" name="password2" fieldId="regPwd2" component={MaterialField} label="Type password again" />
             <button type="submit" 
