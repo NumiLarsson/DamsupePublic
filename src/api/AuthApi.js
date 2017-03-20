@@ -82,14 +82,15 @@ export default class AuthApi {
      * Create an email/password user.
      * @param {string} email - The email of the user.
      * @param {string} password - The password of the user.
-     * @returns Promise resolving to a success message and rejecting with an error.
+     * @returns Promise resolving to a user object and rejecting with an error.
      */
     createUser(email="", password="") {
         let self = this;
         return new Promise((resolve, reject) => {
             self.auth().createUserWithEmailAndPassword(email, password)
-            .then(() => {
-                resolve(RESULT.SUCCESS);
+            .then( (user) => {
+                //Returning a user to assign name with api.user.createUserIfNotExist.                
+                resolve(user);
             })
             .catch(error => {
                 let err = ACCOUNT_CREATION_ERRORS[error.code] || 'Network error';

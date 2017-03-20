@@ -8,7 +8,10 @@ import api from '../api/Api';
 export function createUserDataChannel(userId) {
     return eventChannel(emit => {
         const handler = userObj => {
-            emit(userObj);
+            if (userObj) {
+                console.log(userObj);
+                emit(userObj);
+            }
         };
 
         let ref = api.user.subscribeToUserData(userId, handler);

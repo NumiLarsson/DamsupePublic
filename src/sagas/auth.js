@@ -35,7 +35,18 @@ function* subscribeToUserData(userId) {
 function *userSignedInFlow() {
     while(true) {
         let { payload } = yield take(USER_SIGNED_IN);
-        yield call(api.user.createUserIfNotExists, payload);
+        //providerData is an array, the only occurance right now is one, so we use [0].
+        let isFacebook = false; //Can't yield inside forEach function, solved it with this:
+        payload.providerData.forEach( (providerData) => {
+            if (providerData.providerId === 'facebook.com') {
+                isFacebook = true;        
+            }
+        });
+        if (isFacebook) {
+            //Things only to be ran if the user was created with facebook.
+            yield call(api.user.createUserIfNotExists, payload);
+        }
+
         let userDataTask = yield fork(subscribeToUserData, payload.uid);
         const event =  yield select(getEvent);
         const eventChosen = event.get('eventChosen');
