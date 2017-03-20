@@ -46,6 +46,7 @@ class Checkout extends Component {
 
         const {currentUser, currentEvent, userName, userTable, signedIn, hasAccess } = this.props;
 
+        //userTable is no longer a requirement.
         if(!userName /*|| !userTable*/) {
             this.props.addNotification('You need to enter a name.' /*and table'*/, 'error', 'bc', 2);
             return;
@@ -56,6 +57,7 @@ class Checkout extends Component {
             return; 
         }
 
+        //Prevent checking out an empty cart.
         if (this.props.items.size <= 0) {
             this.props.addNotification('Can not submit empty order.', 'error', 'bc', 2);
             return;
