@@ -47,7 +47,7 @@ class Checkout extends Component {
         const {currentUser, currentEvent, userName, userTable, signedIn, hasAccess } = this.props;
 
         if(!userName /*|| !userTable*/) {
-            this.props.addNotification('You need to enter a name' /*and table'*/, 'error', 'bc', 2);
+            this.props.addNotification('You need to enter a name.' /*and table'*/, 'error', 'bc', 2);
             return;
         }
 
@@ -56,10 +56,15 @@ class Checkout extends Component {
             return; 
         }
 
+        if (this.props.items.size <= 0) {
+            this.props.addNotification('Can not submit empty order.', 'error', 'bc', 2);
+            return;
+        } 
+
         let items = this.props.items.map(item => {
             return item.toJS();
         }).toArray();
-        
+
         let order = {
             userId: currentUser,
             eventId: currentEvent,
