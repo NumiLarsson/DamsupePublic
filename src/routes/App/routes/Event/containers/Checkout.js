@@ -46,8 +46,8 @@ class Checkout extends Component {
 
         const {currentUser, currentEvent, userName, userTable, signedIn, hasAccess } = this.props;
 
-        if(!userName || !userTable) {
-            this.props.addNotification('You need to enter a name and table', 'error', 'bc', 2);
+        if(!userName /*|| !userTable*/) {
+            this.props.addNotification('You need to enter a name' /*and table'*/, 'error', 'bc', 2);
             return;
         }
 
