@@ -68,6 +68,12 @@ class EventMenu extends Component  {
                 <EventHeader event={currentEvent} />
                 <EventDescription description={currentEvent.get('description')} />
                 <SectionDivider />
+                {this.props.isSignedIn && !this.props.userHasAccess &&
+                    <section className={styles.menuSection}>
+                        <h2>Sign up</h2>
+                        <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
+                    </section>
+                }
 
                 <section className={styles.menuSection}>
                     <h2>Store</h2>

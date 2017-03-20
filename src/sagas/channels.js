@@ -9,7 +9,6 @@ export function createUserDataChannel(userId) {
     return eventChannel(emit => {
         const handler = userObj => {
             if (userObj) {
-                console.log(userObj);
                 emit(userObj);
             }
         };
@@ -64,7 +63,9 @@ export function createUserEventDataChannel(eventId, userId) {
 export function createUserAccessChannel(eventId, userId) {
     return eventChannel(emit => {
         const handler = status => {
-            emit(status);
+            if(status) {
+                emit(status);
+            }
         }
 
         let ref = api.events.subscribeToEventAccessStatus(userId, eventId, handler);

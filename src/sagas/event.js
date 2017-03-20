@@ -112,6 +112,7 @@ function* userAccessFlow() {
 
 function* subscribeToEvent(eventId) {
     yield put({type: INIT_STORE, payload: eventId});
+    let user = yield call(api.auth.getCurrentUser);
     yield put({type: INITIALIZE_USER_ACCESS, payload: eventId});
     const eventChan = yield call(createEventChannel, eventId);
     try {
