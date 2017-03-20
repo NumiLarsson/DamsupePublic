@@ -73,16 +73,6 @@ class EventMenu extends Component  {
                     <h2>Store</h2>
                     <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
                 </section>
-                <section className={styles.menuSection}>
-                    <h2>Media</h2>
-                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'media')}>open</button>
-                </section>
-                <section className={styles.menuSection}>
-                    <h2>Chat</h2>
-                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'chat')}>open</button>
-                </section>
-
-
 
                 <div ref={r => this.eventContent = r} className={styles.eventContent}>
                     {this.props.contentShowing &&
