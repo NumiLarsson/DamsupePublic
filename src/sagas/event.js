@@ -11,7 +11,8 @@ import {
     CLEANUP_EVENT_LIST,
     RESET_EVENT_DATA, 
     INIT_STORE, 
-    CLEANUP_STORE 
+    CLEANUP_STORE,
+    REQUEST_EVENT_ACCESS 
 } from 'actions/actionTypes';
 
 import {eventDataDoneLoading, updateCurrentEvent, 
@@ -21,7 +22,16 @@ import {eventDataDoneLoading, updateCurrentEvent,
 import { resetMenu } from 'actions/eventmenu';
 import { updateCanGoBack } from 'actions/app';
 import {createUserEventDataChannel, createUserAccessChannel, 
-        createEventChannel, createEventListChannel } from './channels';
+        createEventChannel, createEventListChannel, createEventAccessRequestChannel } from './channels';
+
+
+function* requestEventAccessFlow() {
+    while(true) {
+        let accesReq = yield take(REQUEST_EVENT_ACCESS);
+        let { uid, eventId } = accesReq.payload;
+        api.events.requestEventAccess(uid, eventId);
+    }
+}
 
 
 function* subscribeToEventList() {
@@ -97,6 +107,21 @@ function* subscribeToEventAccess(eventId, userId) {
     }
 }
 
+function* subscribeToEventAccessRequest(eventId, userId) {
+    let eventAccessChan = yield call(createEventAccessRequestChannel, eventId, userId);
+    try {
+        while(true) {
+            let requestStatus = yield take(eventAccessChan);
+            yield put(requestStatus);
+        }
+    } finally {
+         if (yield cancelled()) {
+            eventAccessChan.close();
+        }
+    }
+}
+
+
 function* userAccessFlow() {
     while(true) {
         let { payload } = yield take(INITIALIZE_USER_ACCESS);
@@ -104,8 +129,10 @@ function* userAccessFlow() {
         if (user) {
             yield put(userEventDataLoading());
             let accessTask = yield fork(subscribeToEventAccess, payload, user.uid);
+            let accessRequestTask = yield fork(subscribeToEventAccessRequest, payload, user.uid);
             yield take(CLEANUP_USER_ACCESS);
             yield cancel(accessTask);
+            yield cancel(accessRequestTask);
         }
     } 
 }
@@ -148,5 +175,6 @@ export default function* eventRoot() {
     yield fork(userAccessFlow);
     yield fork(userEventDataFlow);
     yield fork(eventListFlow);
+    yield fork(requestEventAccessFlow);
 }
 

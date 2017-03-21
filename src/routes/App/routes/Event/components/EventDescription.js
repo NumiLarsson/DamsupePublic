@@ -4,9 +4,7 @@ import styles from './styles/EventDescription.css';
 export default ({description}) => {
     return (
         <section className={styles.descriptionSection}>
-           {description.split('\\n').map((item, key) => {
-                return <span key={key}>{item}<br/></span>
-                })}
+          <p className={styles.description}>{description}</p>
         </section>
     )
 }
@@ -14,3 +12,8 @@ export default ({description}) => {
 function formatDescription(description) {
     return description.split("\\n").join("&#10;");
 }
+/**
+  {description.split('\\n').map((item, key) => {
+                return <span key={key}>{item}<br/></span>
+                })}
+ */

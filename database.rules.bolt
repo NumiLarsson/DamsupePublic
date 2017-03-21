@@ -58,6 +58,15 @@ path /userEventParticipations/{uid}/{event} is Boolean {
 	validate() {isEvent(event)}
 }
 
+path /eventAccessRequests/{event} is Object {
+	read() {auth.isAdmin == true}
+	write() {auth.isAdmin == true}
+}
+
+path /eventAccessRequests/{event}/{uid} is Boolean {
+	read() {auth.isAdmin == true || isCurrentUser(uid)}
+	write() {auth.isAdmin == true || isCurrentUser(uid) && this == true}
+}
 
 /*
  * userEventData

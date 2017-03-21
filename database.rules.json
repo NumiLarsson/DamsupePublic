@@ -76,6 +76,18 @@
         }
       }
     },
+    "eventAccessRequests": {
+      "$event": {
+        ".validate": "newData.hasChildren()",
+        ".read": "auth.isAdmin == true",
+        ".write": "auth.isAdmin == true",
+        "$uid": {
+          ".validate": "newData.isBoolean()",
+          ".read": "auth.isAdmin == true || auth != null && auth.uid == $uid",
+          ".write": "auth.isAdmin == true || auth != null && auth.uid == $uid && newData.val() == true"
+        }
+      }
+    },
     "userEventData": {
       "$uid": {
         "$event": {

@@ -77,6 +77,29 @@ export default class EventApi {
         return ref;
      }
 
+     /**
+     * Subscribe to see if there is a user request to gain access to an event.
+     * @param {string} uid - ID of the user.
+     * @param {string} eventId - ID of the event.
+     * @param {function} cb - Function to call when the status changes.
+     */
+     subscribeToEventAccessRequestStatus(uid, eventId, cb) {
+        let ref = this.database().ref(`eventAccessRequests/${eventId}/${uid}`);
+        ref.on('value', snapshot => {
+            cb(snapshot.val());
+        })
+        return ref;
+     }
+
+     /**
+      * Request event access.
+      * @param {string} uid - ID of the user.
+      * @param {string} eventId - ID of the event.
+      */
+     requestEventAccess(uid, eventId) {
+         this.database().ref(`eventAccessRequests/${eventId}/${uid}`).set(true);
+     }
+
 
     /**
      * Subscribe to user data connected to an event.
