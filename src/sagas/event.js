@@ -18,7 +18,7 @@ import {
 import {eventDataDoneLoading, updateCurrentEvent, 
         eventDataLoading, updateUserEventAccess,
         userEventDataLoading, userEventDataDoneLoading, 
-        updateUserEventData,} from 'actions/event';
+        updateUserEventData} from 'actions/event';
 import { resetMenu } from 'actions/eventmenu';
 import { updateCanGoBack } from 'actions/app';
 import {createUserEventDataChannel, createUserAccessChannel, 
@@ -66,7 +66,9 @@ function* subscribeToUserEventData(eventId, userId) {
     try {
         while(true) {
             let data = yield take(userEventDataChan);
-            yield put(updateUserEventData(data));
+            if(data) {
+                yield put(updateUserEventData(data));
+            }
             yield put(userEventDataDoneLoading());
         }
     } finally {

@@ -1,6 +1,7 @@
 import { eventChannel, buffers } from 'redux-saga';
 import { addEventStoreItem, removeEventStoreItem, updateEventStoreItem} from 'actions/store';
-import { addEventToEventList, removeEventFromEventList, updateEventInEventList, updateUserEventAccessRequest } from 'actions/event';
+import { addEventToEventList, removeEventFromEventList, 
+    updateEventInEventList, updateUserEventAccessRequest } from 'actions/event';
 import api from '../api/Api';
 /**
  * AUTHENTICATION CHANNELS
@@ -47,7 +48,11 @@ export function createUserEventDataChannel(eventId, userId) {
     return eventChannel(emit => {
 
         const handler = data => {
-            emit(data);
+            if (data) {
+                emit(data);
+            } else {
+                emit(false);
+            }
         }
 
         let ref = api.events.subscribeToUserEventData(eventId, userId, handler);
@@ -64,7 +69,9 @@ export function createUserAccessChannel(eventId, userId) {
     return eventChannel(emit => {
         const handler = status => {
             if(status) {
-                emit(status);
+                emit(true);
+            } else {
+                emit(false);
             }
         }
 
