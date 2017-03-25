@@ -36,7 +36,7 @@ class Checkout extends Component {
 
     addItemToCart(item) {
         if(this.props.cartCount >= 9) {
-            this.props.addNotification('Your cart is full', 'error', 'bc', 2);
+            this.props.addNotification('Your cart is full', 'error', 'bc');
         } else {
             this.props.addItemToCart(item);
         }
@@ -48,18 +48,18 @@ class Checkout extends Component {
 
         //userTable is no longer a requirement.
         if(!userName /*|| !userTable*/) {
-            this.props.addNotification('You need to enter a name.' /*and table'*/, 'error', 'bc', 2);
+            this.props.addNotification('You need to enter a name.' /*and table'*/, 'error', 'bc');
             return;
         }
 
         if (!signedIn || !hasAccess) {
-            this.props.addNotification('You must be signed in and registered to the event to use the store.', 'error', 'bc', 2);
+            this.props.addNotification('You must be signed in and registered to the event to use the store.', 'error', 'bc');
             return; 
         }
 
         //Prevent checking out an empty cart.
         if (this.props.items.size <= 0) {
-            this.props.addNotification('Can not submit empty order.', 'error', 'bc', 2);
+            this.props.addNotification('You can\'t submit an empty order.', 'error', 'bc');
             return;
         } 
 
@@ -76,7 +76,7 @@ class Checkout extends Component {
         };
         
         api.events.placeOrder(order, () => {
-            this.props.addNotification('Order sent', 'success', 'bc', 2);
+            this.props.addNotification('Order sent', 'success', 'bc');
             this.props.clearCart();
         })
     }

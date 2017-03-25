@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { goBack } from 'react-router-redux';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import Header from 'components/App/Header';
+import NotificationContainer from './Notifications';
 
 import { signOut } from 'actions/user';
-//TODO: Use css modules.
 import styles from './styles/App.css';
 
 class App extends Component {
@@ -32,6 +32,7 @@ class App extends Component {
                 key: this.props.location.pathname
             })}
           </ReactTransitionGroup>
+          <NotificationContainer />
       </div>
     );
   }
