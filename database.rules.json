@@ -15,8 +15,8 @@
         "$other": {
           ".validate": "false"
         },
-        ".read": "auth != null && auth.uid == $uid",
-        ".write": "auth != null && auth.uid == $uid"
+        ".read": "auth != null && auth.uid == $uid || auth.isAdmin == true",
+        ".write": "auth != null && auth.uid == $uid || auth.isAdmin == true"
       }
     },
     "events": {
@@ -60,7 +60,7 @@
     "eventParticipants": {
       "$event": {
         ".validate": "newData.hasChildren()",
-        ".write": "auth.canProcessTasks == true && root.child('events').child($event).val() != null",
+        ".write": "auth.isAdmin == true && root.child('events').child($event).val() != null",
         "$uid": {
           ".validate": "newData.isBoolean() && root.child('users').child($uid).val() != null"
         }
@@ -70,9 +70,21 @@
       "$uid": {
         ".validate": "newData.hasChildren()",
         ".read": "auth != null && auth.uid == $uid",
-        ".write": "auth.canProcessTasks == true && root.child('users').child($uid).val() != null",
+        ".write": "auth.isAdmin == true && root.child('users').child($uid).val() != null",
         "$event": {
           ".validate": "newData.isBoolean() && root.child('events').child($event).val() != null"
+        }
+      }
+    },
+    "eventAccessRequests": {
+      "$event": {
+        ".validate": "newData.hasChildren()",
+        ".read": "auth.isAdmin == true",
+        ".write": "auth.isAdmin == true",
+        "$uid": {
+          ".validate": "newData.isBoolean()",
+          ".read": "auth.isAdmin == true || auth != null && auth.uid == $uid",
+          ".write": "auth.isAdmin == true || auth != null && auth.uid == $uid && newData.val() == true"
         }
       }
     },

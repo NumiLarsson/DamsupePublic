@@ -48,10 +48,11 @@ function *userSignedInFlow() {
         }
 
         let userDataTask = yield fork(subscribeToUserData, payload.uid);
-        const event =  yield select(getEvent);
-        const eventChosen = event.get('eventChosen');
-        if(eventChosen) {
-            const eventId = event.get('id');
+        
+        let location = browserHistory.getCurrentLocation().pathname.split('/');
+
+        if(location[2] === 'event') {
+            const eventId = location[3];
             yield put({type: INITIALIZE_USER_ACCESS, payload: eventId});
         }
         yield take(USER_SIGNED_OUT);

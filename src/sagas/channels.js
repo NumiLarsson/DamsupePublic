@@ -1,6 +1,7 @@
 import { eventChannel, buffers } from 'redux-saga';
 import { addEventStoreItem, removeEventStoreItem, updateEventStoreItem} from 'actions/store';
-import { addEventToEventList, removeEventFromEventList, updateEventInEventList } from 'actions/event';
+import { addEventToEventList, removeEventFromEventList, 
+    updateEventInEventList, updateUserEventAccessRequest } from 'actions/event';
 import api from '../api/Api';
 /**
  * AUTHENTICATION CHANNELS
@@ -9,7 +10,6 @@ export function createUserDataChannel(userId) {
     return eventChannel(emit => {
         const handler = userObj => {
             if (userObj) {
-                console.log(userObj);
                 emit(userObj);
             }
         };
@@ -48,7 +48,11 @@ export function createUserEventDataChannel(eventId, userId) {
     return eventChannel(emit => {
 
         const handler = data => {
-            emit(data);
+            if (data) {
+                emit(data);
+            } else {
+                emit(false);
+            }
         }
 
         let ref = api.events.subscribeToUserEventData(eventId, userId, handler);
@@ -64,10 +68,35 @@ export function createUserEventDataChannel(eventId, userId) {
 export function createUserAccessChannel(eventId, userId) {
     return eventChannel(emit => {
         const handler = status => {
-            emit(status);
+            if(status) {
+                emit(true);
+            } else {
+                emit(false);
+            }
         }
 
         let ref = api.events.subscribeToEventAccessStatus(userId, eventId, handler);
+        
+        const unsubscribe = () => {
+            ref.off();
+        }
+        return unsubscribe;
+
+    },buffers.fixed(1));
+}
+
+
+export function createEventAccessRequestChannel(eventId, userId) {
+    return eventChannel(emit => {
+        const handler = status => {
+            if(status) {
+                emit(updateUserEventAccessRequest(true));
+            } else {
+                emit(updateUserEventAccessRequest(false));
+            }
+        }
+
+        let ref = api.events.subscribeToEventAccessRequestStatus(userId, eventId, handler);
         
         const unsubscribe = () => {
             ref.off();

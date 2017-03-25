@@ -12,7 +12,7 @@ import Close from 'react-icons/lib/md/close';
 
 //Actions
 import {showContent, hideContent} from 'actions/eventmenu';
-import { initializeEvent, cleanupEvent } from 'actions/event';
+import { initializeEvent, cleanupEvent, requestEventAccess } from 'actions/event';
 
 //Animations
 import { expand } from 'utils/animations';
@@ -26,6 +26,7 @@ class EventMenu extends Component  {
         super();
         this.showContent = this.showContent.bind(this);
         this.hideContent = this.hideContent.bind(this);
+        this.requestEventAccess = this.requestEventAccess.bind(this);
     }
 
     componentWillMount() {
@@ -60,6 +61,12 @@ class EventMenu extends Component  {
         }
     }
 
+    requestEventAccess() {
+        let uid = this.props.uid;
+        let eventId = this.props.currentEvent.get('id');
+        this.props.requestEventAccess({uid, eventId});
+    }
+
     render() {
         let { currentEvent } = this.props;
         return (
@@ -68,21 +75,24 @@ class EventMenu extends Component  {
                 <EventHeader event={currentEvent} />
                 <EventDescription description={currentEvent.get('description')} />
                 <SectionDivider />
-
-                <section className={styles.menuSection}>
-                    <h2>Store</h2>
-                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
-                </section>
-                <section className={styles.menuSection}>
-                    <h2>Media</h2>
-                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'media')}>open</button>
-                </section>
-                <section className={styles.menuSection}>
-                    <h2>Chat</h2>
-                    <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'chat')}>open</button>
-                </section>
-
-
+                {this.props.isSignedIn && !this.props.userHasAccess && !this.props.requestPending &&
+                    <section className={styles.menuSection}>
+                        <span />
+                        <button className={styles.contentOpenButton} onClick={this.requestEventAccess}>join event</button>
+                    </section>
+                }
+                {this.props.isSignedIn && !this.props.userHasAccess && this.props.requestPending &&
+                    <section className={styles.applySection}>
+                        <h2>Request pending</h2>
+                    </section>
+                }
+                {this.props.isSignedIn && this.props.userHasAccess &&
+                     <section className={styles.menuSection}>
+                        <h2>Store</h2>
+                        <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
+                    </section>
+                }
+               
 
                 <div ref={r => this.eventContent = r} className={styles.eventContent}>
                     {this.props.contentShowing &&
@@ -108,6 +118,7 @@ const mapStateToProps = (state) => {
         isSignedIn: state.auth.get('authenticated'),
         uid: state.auth.get('uid'),
         userHasAccess: state.event.userdata.get('userHasAccess'),
+        requestPending: state.event.userdata.get('requestPending'),
         currentEvent: state.event.event,
         eventDataLoading: state.event.event.get('loading'),
         userEventDataLoading: state.event.userdata.get('loading'),
@@ -119,6 +130,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
         initializeEvent,
         cleanupEvent,
+        requestEventAccess,
         showContent,
         hideContent
 }

@@ -4,12 +4,14 @@ import {INITIALIZE_EVENT, CLEANUP_EVENT, INITIALIZE_EVENT_LIST, CLEANUP_EVENT_LI
      UPDATE_CURRENT_EVENT, UPDATE_USER_EVENT_DATA, EVENT_DATA_LOADING, RESET_EVENT_DATA, 
          EVENT_DATA_DONE_LOADING, USER_EVENT_DATA_LOADING, USER_EVENT_DATA_DONE_LOADING,
         ADD_EVENT_TO_EVENT_LIST, REMOVE_EVENT_FROM_EVENT_LIST, UPDATE_EVENT_IN_EVENT_LIST,
-        UPDATE_USER_EVENT_ACCESS} from './actionTypes';
+        UPDATE_USER_EVENT_ACCESS, UPDATE_USER_EVENT_ACCESS_REQ, REQUEST_EVENT_ACCESS} from './actionTypes';
 
 export const addEventToEventList = createAction(ADD_EVENT_TO_EVENT_LIST);
 export const removeEventFromEventList = createAction(REMOVE_EVENT_FROM_EVENT_LIST);
 export const updateEventInEventList = createAction(UPDATE_EVENT_IN_EVENT_LIST);
 
+export const requestEventAccess = createAction(REQUEST_EVENT_ACCESS);
+export const updateUserEventAccessRequest = createAction(UPDATE_USER_EVENT_ACCESS_REQ);
 export const updateUserEventAccess = createAction(UPDATE_USER_EVENT_ACCESS);
 export const updateCurrentEvent = createAction(UPDATE_CURRENT_EVENT);
 export const updateUserEventData = createAction(UPDATE_USER_EVENT_DATA);

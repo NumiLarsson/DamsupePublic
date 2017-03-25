@@ -4,8 +4,8 @@
  */
 
 path /users/{uid} is User {
-  read() { isCurrentUser(uid)}
-  write() { isCurrentUser(uid)}
+  read() { isCurrentUser(uid) || auth.isAdmin == true}
+  write() { isCurrentUser(uid) || auth.isAdmin == true}
 }
 
 type User {
@@ -41,7 +41,7 @@ type Event {
 
 path /eventParticipants/{event} is Object {
 	read() {false}
-	write() {auth.canProcessTasks == true && isEvent(event)}
+	write() {auth.isAdmin == true && isEvent(event)}
 }
 
 path /eventParticipants/{event}/{uid} is Boolean {
@@ -51,13 +51,22 @@ path /eventParticipants/{event}/{uid} is Boolean {
 
 path /userEventParticipations/{uid} is Object {
 	read() {isCurrentUser(uid)}
-	write() {auth.canProcessTasks == true && isUser(uid)}
+	write() {auth.isAdmin == true && isUser(uid)}
 }
 
 path /userEventParticipations/{uid}/{event} is Boolean {
 	validate() {isEvent(event)}
 }
 
+path /eventAccessRequests/{event} is Object {
+	read() {auth.isAdmin == true}
+	write() {auth.isAdmin == true}
+}
+
+path /eventAccessRequests/{event}/{uid} is Boolean {
+	read() {auth.isAdmin == true || isCurrentUser(uid)}
+	write() {auth.isAdmin == true || isCurrentUser(uid) && this == true}
+}
 
 /*
  * userEventData

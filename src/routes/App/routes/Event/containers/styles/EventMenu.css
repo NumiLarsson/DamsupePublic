@@ -53,7 +53,20 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 10px;
-    padding: 0 10px;
+    padding: 10px;
+}
+
+.menuSection h2, .applySection h2 {
+    margin: 0;
+}
+
+.applySection {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 10px;
 }
 
 .contentOpenButton {
