@@ -72,27 +72,28 @@ class EventMenu extends Component  {
         return (
             <div className={styles.eventMenu}>
                 <Loader show={this.props.eventDataLoading} />
-                <EventHeader event={currentEvent} />
-                <EventDescription description={currentEvent.get('description')} />
-                <SectionDivider />
-                {this.props.isSignedIn && !this.props.userHasAccess && !this.props.requestPending &&
-                    <section className={styles.menuSection}>
-                        <span />
-                        <button className={styles.contentOpenButton} onClick={this.requestEventAccess}>join event</button>
-                    </section>
-                }
-                {this.props.isSignedIn && !this.props.userHasAccess && this.props.requestPending &&
-                    <section className={styles.applySection}>
-                        <h2>Request pending</h2>
-                    </section>
-                }
-                {this.props.isSignedIn && this.props.userHasAccess &&
-                     <section className={styles.menuSection}>
-                        <h2>Store</h2>
-                        <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
-                    </section>
-                }
-               
+                <main className={styles.eventMenuMain}>
+                    <EventHeader event={currentEvent} />
+                    <EventDescription description={currentEvent.get('description')} />
+                    <SectionDivider />
+                    {this.props.isSignedIn && !this.props.userHasAccess && !this.props.requestPending &&
+                        <section className={styles.menuSection}>
+                            <span />
+                            <button className={styles.contentOpenButton} onClick={this.requestEventAccess}>join event</button>
+                        </section>
+                    }
+                    {this.props.isSignedIn && !this.props.userHasAccess && this.props.requestPending &&
+                        <section className={styles.applySection}>
+                            <h2>Request pending</h2>
+                        </section>
+                    }
+                    {this.props.isSignedIn && this.props.userHasAccess &&
+                        <section className={styles.menuSection}>
+                            <h2>Store</h2>
+                            <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
+                        </section>
+                    }
+               </main>
 
                 <div ref={r => this.eventContent = r} className={styles.eventContent}>
                     {this.props.contentShowing &&
