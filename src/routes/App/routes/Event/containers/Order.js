@@ -51,9 +51,9 @@ class Order extends Component {
                 'You must be signed in and registered to the event to use the store.', 
                 'error', 
                 'bc', 
-            2);
+            );
         } else if(this.props.cartCount >= 9) {
-            this.props.addNotification('Your cart is full', 'error', 'bc', 2);
+            this.props.addNotification('Your cart is full', 'error', 'bc');
         } else {
             this.props.addItemToCart(item);
         }
