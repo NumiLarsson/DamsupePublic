@@ -63,6 +63,7 @@
     "eventParticipants": {
       "$event": {
         ".validate": "newData.hasChildren()",
+        ".read": "auth.isAdmin == true",
         ".write": "auth.isAdmin == true && root.child('events').child($event).val() != null",
         "$uid": {
           ".validate": "newData.isBoolean() && root.child('users').child($uid).val() != null"
@@ -95,14 +96,14 @@
       "$uid": {
         "$event": {
           ".validate": "newData.hasChildren()",
-          "table": {
+          "identifier": {
             ".validate": "newData.isString()"
           },
           "$other": {
             ".validate": "false"
           },
-          ".read": "auth != null && auth.uid == $uid && root.child('eventParticipants').child($event).child(auth.uid).val() != null",
-          ".write": "auth != null && auth.uid == $uid && root.child('events').child($event).val() != null && root.child('eventParticipants').child($event).child(auth.uid).val() != null"
+          ".read": "auth.isAdmin == true || auth != null && auth.uid == $uid && root.child('eventParticipants').child($event).child(auth.uid).val() != null",
+          ".write": "auth.isAdmin == true"
         }
       }
     },
@@ -191,7 +192,7 @@
             "name": {
               ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 100"
             },
-            "table": {
+            "identifier": {
               ".validate": "newData.isString()"
             },
             "items": {

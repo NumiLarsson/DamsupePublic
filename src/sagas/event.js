@@ -18,7 +18,7 @@ import {
 import {eventDataDoneLoading, updateCurrentEvent, 
         eventDataLoading, updateUserEventAccess,
         userEventDataLoading, userEventDataDoneLoading, 
-        updateUserEventData} from 'actions/event';
+        updateUserEventData, resetUserEventData} from 'actions/event';
 import { resetMenu } from 'actions/eventmenu';
 import { updateCanGoBack } from 'actions/app';
 import {createUserEventDataChannel, createUserAccessChannel, 
@@ -110,6 +110,8 @@ function* subscribeToUserEventData(eventId, userId) {
             //Update the user data.
             if(data) {
                 yield put(updateUserEventData(data));
+            } else {
+                yield put(resetUserEventData());
             }
             //Stop the loader.
             yield put(userEventDataDoneLoading());
