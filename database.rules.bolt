@@ -9,7 +9,8 @@ path /users/{uid} is User {
 }
 
 type User {
-  email: EmailString,
+  id: String,
+  email: EmailString | Null,
   name : NameString | Null,
   lastVisitedEvent: String | Null
 }
