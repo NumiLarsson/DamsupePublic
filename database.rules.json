@@ -2,7 +2,10 @@
   "rules": {
     "users": {
       "$uid": {
-        ".validate": "newData.hasChildren(['email'])",
+        ".validate": "newData.hasChildren(['id'])",
+        "id": {
+          ".validate": "newData.isString()"
+        },
         "email": {
           ".validate": "newData.isString() && newData.val().matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i)"
         },
