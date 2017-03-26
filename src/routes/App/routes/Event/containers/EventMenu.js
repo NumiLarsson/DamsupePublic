@@ -13,6 +13,7 @@ import Close from 'react-icons/lib/md/close';
 //Actions
 import {showContent, hideContent} from 'actions/eventmenu';
 import { initializeEvent, cleanupEvent, requestEventAccess } from 'actions/event';
+import { addNotification } from 'actions/app';
 
 //Animations
 import { expand } from 'utils/animations';
@@ -62,9 +63,19 @@ class EventMenu extends Component  {
     }
 
     requestEventAccess() {
-        let uid = this.props.uid;
-        let eventId = this.props.currentEvent.get('id');
-        this.props.requestEventAccess({uid, eventId});
+
+        if (!this.props.username) {
+            this.props.addNotification({
+                message: 'Please enter your name in the profile settings.', 
+                level: 'error', 
+                position: 'bc'
+            });
+            return;
+        } else {
+            let uid = this.props.uid;
+            let eventId = this.props.currentEvent.get('id');
+            this.props.requestEventAccess({uid, eventId});
+        }
     }
 
     render() {
@@ -118,6 +129,7 @@ const mapStateToProps = (state) => {
     return {
         isSignedIn: state.auth.get('authenticated'),
         uid: state.auth.get('uid'),
+        username: state.auth.get('name'),
         userHasAccess: state.event.userdata.get('userHasAccess'),
         requestPending: state.event.userdata.get('requestPending'),
         currentEvent: state.event.event,
@@ -133,7 +145,8 @@ const mapDispatchToProps = {
         cleanupEvent,
         requestEventAccess,
         showContent,
-        hideContent
+        hideContent,
+        addNotification
 }
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(EventMenu);
