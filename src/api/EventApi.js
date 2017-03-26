@@ -123,9 +123,9 @@ export default class EventApi {
      * @returns Promise resolving to a success message and rejecting with an error.
      */
     saveUserEventData(eventId, uid, values) {
-        const {table} = values;
+        const {identifier} = values;
         let updates = {};
-        updates[`/userEventData/${uid}/${eventId}/table`] = table || null;
+        updates[`/userEventData/${uid}/${eventId}/identifier`] = identifier || null;
         this.database().ref().update(updates)
     }
 

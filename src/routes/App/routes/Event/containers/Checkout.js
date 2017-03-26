@@ -44,11 +44,16 @@ class Checkout extends Component {
 
     checkout() {
 
-        const {currentUser, currentEvent, userName, userTable, signedIn, hasAccess } = this.props;
+        const {currentUser, currentEvent, userName, userIdent, signedIn, hasAccess } = this.props;
 
         //userTable is no longer a requirement.
-        if(!userName /*|| !userTable*/) {
-            this.props.addNotification('You need to enter a name.' /*and table'*/, 'error', 'bc');
+        if(!userName) {
+            this.props.addNotification('You need to enter a name in the profile settings', 'error', 'bc');
+            return;
+        }
+
+        if(!userIdent) {
+            this.props.addNotification('Talk to the staff in order to get access to the store', 'error', 'bc');
             return;
         }
 
@@ -71,7 +76,7 @@ class Checkout extends Component {
             userId: currentUser,
             eventId: currentEvent,
             name: userName,
-            table: userTable,
+            identifier: userIdent,
             items
         };
         
@@ -106,7 +111,7 @@ const mapStateToProps = state => {return {
     currentUser: state.auth.get('uid'),
     currentEvent: state.event.event.get('id'),
     userName: state.auth.get('name'),
-    userTable: state.event.userdata.get('table'),
+    userIdent: state.event.userdata.get('identifier'),
     items: state.event.store.get('cart'),
     cartCount: state.event.store.get('cart').reduce((count, item) => {
         return count + item.get('count');

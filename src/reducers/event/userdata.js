@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import { 
     UPDATE_USER_EVENT_DATA,  
     RESET_USER_DATA, 
+    RESET_USER_EVENT_DATA,
     RESET_EVENT_DATA,
     USER_EVENT_DATA_LOADING, 
     USER_EVENT_DATA_DONE_LOADING,
@@ -14,7 +15,7 @@ const initialState = Immutable.Map({
     loading: false,
     userHasAccess: false,
     requestPending: true,
-    table: ''
+    identifier: ''
 });
 
 export default (state = initialState, action) => {
@@ -40,6 +41,9 @@ export default (state = initialState, action) => {
         
         case RESET_EVENT_DATA: 
             return initialState;
+        
+        case RESET_USER_EVENT_DATA:
+            return state.set('identifier', '');
 
         default:
             return state;

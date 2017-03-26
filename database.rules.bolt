@@ -41,7 +41,7 @@ type Event {
  */
 
 path /eventParticipants/{event} is Object {
-	read() {false}
+	read() {auth.isAdmin == true}
 	write() {auth.isAdmin == true && isEvent(event)}
 }
 
@@ -73,12 +73,12 @@ path /eventAccessRequests/{event}/{uid} is Boolean {
  * userEventData
  */
 path /userEventData/{uid}/{event} is UserEventData {
-	read() {isCurrentUser(uid) && userIsParticipantOf(event)}
-	write() {isCurrentUser(uid) && isEvent(event) && userIsParticipantOf(event)}
+	read() {auth.isAdmin == true || (isCurrentUser(uid) && userIsParticipantOf(event))}
+	write() {auth.isAdmin == true}
 }
 
 type UserEventData {
-	table: String | Null
+	identifier: String | Null
 }
 
 
@@ -126,7 +126,7 @@ type Order {
 	eventId: String | Null,
 	userId: String | Null,
 	name: NameString | Null,
-	table: String | Null
+	identifier: String | Null
 	items: OrderItem[]
 }
 
