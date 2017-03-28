@@ -12,6 +12,9 @@ export default class extends Component {
                     {icon}
                     <div className={styles.itemDescription}>
                         <h3>{item.get('name')}</h3>
+                        {item.get('alcoholFree') && 
+                            <span className={styles.alcFree}>Alcohol free</span>
+                        }
                     </div>
                     <span className={styles.priceTag}>{`${item.get('price')}kr`}</span>
                     <Add onClick={add} className={styles.addToCart} color="#a5d8c7" size="32" />
