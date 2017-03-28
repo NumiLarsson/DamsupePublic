@@ -106,6 +106,7 @@ type StoreItem {
 	name: NameString,
 	description: String,
 	price: Number,
+	alcoholFree: Boolean | Null,
 	picture: String | Null
 }
 
