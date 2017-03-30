@@ -100,8 +100,13 @@ class EventMenu extends Component  {
                     }
                     {this.props.isSignedIn && this.props.userHasAccess &&
                         <section className={styles.menuSection}>
+                            {!this.props.currentEvent.get('active') && 
+                                <div className={styles.sectionOverlay}>
+                                    <h2>Coming soon</h2>
+                                </div>
+                            }
                             <h2>Store</h2>
-                            <button className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
+                            <button disabled={!this.props.currentEvent.get('active')} className={styles.contentOpenButton} onClick={this.showContent.bind(this, 'store')}>open</button>
                         </section>
                     }
                </main>
