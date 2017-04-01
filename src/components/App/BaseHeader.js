@@ -8,7 +8,7 @@ export default props => {
     return (
         <div className={styles.baseHeader}>
             {props.canGoBack && <Back className={styles.backButton} onClick={props.goBack} color="#fff" size="32" />}
-            {!props.canGoBack && !props.redirectLoading &&
+            {!props.canGoBack && ((props.path === 'login' && !props.redirectLoading) || props.path === 'register') &&
                  <Link to="/app/eventlist"><Home color="#fff" size="32" /></Link>}
             {props.path === 'login'  && !props.redirectLoading &&
                  <Link to="/app/register" className={styles.loginLink}>REGISTER</Link>}

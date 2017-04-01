@@ -6,10 +6,11 @@ export default class extends Component {
     
     render() {
         const {item, icon, add} = this.props;
+        const picture = item.get('picture');
         return (
             <div className={styles.storeItem}>
                 <div className={styles.itemContent}>
-                    {icon}
+                    {picture ? <img className={styles.itemImage} src={picture} /> : icon}
                     <div className={styles.itemDescription}>
                         <h3>{item.get('name')}</h3>
                         {item.get('alcoholFree') && 

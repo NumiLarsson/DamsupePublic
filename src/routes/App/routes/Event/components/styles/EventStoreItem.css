@@ -13,6 +13,11 @@
     position: relative;
 }
 
+.itemImage {
+    width: 48px;
+    height: 48px;
+}
+
 .itemDescription {
     position: relative;
     display: flex;

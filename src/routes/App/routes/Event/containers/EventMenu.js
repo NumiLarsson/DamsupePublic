@@ -93,12 +93,12 @@ class EventMenu extends Component  {
                             <button className={styles.contentOpenButton} onClick={this.requestEventAccess}>join event</button>
                         </section>
                     }
-                    {this.props.isSignedIn && !this.props.userHasAccess && this.props.requestPending &&
+                    {this.props.isSignedIn && ((!this.props.userHasAccess && this.props.requestPending) || !this.props.userIdent) &&
                         <section className={styles.applySection}>
                             <h2>Request pending</h2>
                         </section>
                     }
-                    {this.props.isSignedIn && this.props.userHasAccess &&
+                    {this.props.isSignedIn && this.props.userHasAccess && this.props.userIdent &&
                         <section className={styles.menuSection}>
                             {!this.props.currentEvent.get('active') && 
                                 <div className={styles.sectionOverlay}>
@@ -137,6 +137,7 @@ const mapStateToProps = (state) => {
         username: state.auth.get('name'),
         userHasAccess: state.event.userdata.get('userHasAccess'),
         requestPending: state.event.userdata.get('requestPending'),
+        userIdent: state.event.userdata.get('identifier'),
         currentEvent: state.event.event,
         eventDataLoading: state.event.event.get('loading'),
         userEventDataLoading: state.event.userdata.get('loading'),

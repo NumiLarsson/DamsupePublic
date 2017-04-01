@@ -29,7 +29,7 @@ const validate = values => {
         errors.password = 'Required';
     }
     else if (!isValidPassword(values.password)) {
-        errors.password = 'The password is not strong enough';
+        errors.password = 'Minimum 6 characters';
     }
 
     if (!values.password2) {
