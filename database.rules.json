@@ -141,9 +141,69 @@
         }
       }
     },
+    "eventOrders": {
+      "$event": {
+        "$key2": {
+          ".validate": "newData.hasChildren() && (auth.canProcessTasks == true || root.child('eventParticipants').child(newData.child('eventId').val()).child(auth.uid).val() != null && (auth != null && auth.uid == newData.child('userId').val()))",
+          "created": {
+            ".validate": "newData.isNumber()"
+          },
+          "eventId": {
+            ".validate": "newData.isString()"
+          },
+          "userId": {
+            ".validate": "newData.isString()"
+          },
+          "name": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 100"
+          },
+          "identifier": {
+            ".validate": "newData.isString()"
+          },
+          "items": {
+            "$key3": {
+              ".validate": "newData.hasChildren(['id', 'category', 'name', 'description', 'price', 'count'])",
+              "id": {
+                ".validate": "newData.isString()"
+              },
+              "category": {
+                ".validate": "newData.isNumber()"
+              },
+              "name": {
+                ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 100"
+              },
+              "description": {
+                ".validate": "newData.isString()"
+              },
+              "price": {
+                ".validate": "newData.isNumber()"
+              },
+              "alcoholFree": {
+                ".validate": "newData.isBoolean()"
+              },
+              "picture": {
+                ".validate": "newData.isString()"
+              },
+              "count": {
+                ".validate": "newData.isNumber()"
+              },
+              "$other": {
+                ".validate": "false"
+              }
+            },
+            ".validate": "newData.hasChildren()"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        },
+        ".validate": "newData.hasChildren()",
+        ".write": "auth.isAdmin == true && root.child('events').child($event).val() != null"
+      }
+    },
     "orders": {
       "tasks": {
-        "$key2": {
+        "$key4": {
           ".validate": "newData.hasChildren() && (newData.child('order').val() != null || auth.canProcessTasks == true && newData.child('_state').val() != null && newData.child('_state_changed').val() != null && newData.child('_progress').val() != null)",
           "_state": {
             ".validate": "newData.isString()"
@@ -215,6 +275,9 @@
                 },
                 "price": {
                   ".validate": "newData.isNumber()"
+                },
+                "alcoholFree": {
+                  ".validate": "newData.isBoolean()"
                 },
                 "picture": {
                   ".validate": "newData.isString()"

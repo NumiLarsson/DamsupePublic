@@ -71,7 +71,7 @@ function* eventListFlow() {
         //Subsribe to events.
         const eventListTask = yield fork(subscribeToEventList);
         //Load all events seperately to sync when the loader should stop.
-        yield call(api.events.getEvents);
+        //yield call(api.events.getEvents);
         //Stop the loader when the events have all been retrived.
         yield put(eventDataDoneLoading());
         //Start the cleanup process.
@@ -205,6 +205,7 @@ function* subscribeToEvent(eventId) {
     //Initialize the user access flow..
     yield put({type: INITIALIZE_USER_ACCESS, payload: eventId});
     //Create a channel to listen for updates to the event.
+    console.log(`CREATING_EVENT_CHANNEL ${eventId}`);
     const eventChan = yield call(createEventChannel, eventId);
     try {
         while (true) {

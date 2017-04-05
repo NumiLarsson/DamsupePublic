@@ -99,6 +99,10 @@ path /eventStoreItems/{event}/{itemId} is StoreItem {
 	write() {auth.isAdmin == true && isEvent(event)}
 }
 
+path /eventOrders/{event} is Order[] {
+	write() {auth.isAdmin == true && isEvent(event)}
+}
+
 type StoreItem {
 	validate() {this.id == key()}
 	id: String,
@@ -116,6 +120,7 @@ type OrderItem  {
 	name: NameString,
 	description: String,
 	price: Number,
+	alcoholFree: Boolean | Null,
 	picture: String | Null
 	count: Number
 }
