@@ -93,7 +93,7 @@ class EventMenu extends Component  {
                             <button className={styles.contentOpenButton} onClick={this.requestEventAccess}>join event</button>
                         </section>
                     }
-                    {this.props.isSignedIn && ((!this.props.userHasAccess && this.props.requestPending) || !this.props.userIdent) &&
+                    {this.props.isSignedIn && ((!this.props.userHasAccess && this.props.requestPending) || (this.props.userHasAccess &&  !this.props.userIdent)) &&
                         <section className={styles.applySection}>
                             <h2>Request pending</h2>
                         </section>
