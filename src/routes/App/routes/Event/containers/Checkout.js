@@ -44,7 +44,12 @@ class Checkout extends Component {
 
     checkout() {
 
-        const {currentUser, currentEvent, userName, userIdent, signedIn, hasAccess } = this.props;
+        const {currentUser, currentEvent, userName, userIdent, signedIn, online, hasAccess } = this.props;
+
+        if(!online) {
+            this.props.addNotification('You have no internet connection at the moment', 'error', 'bc');
+            return;
+        }
 
         //userTable is no longer a requirement.
         if(!userName) {
@@ -107,6 +112,7 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {return {
     signedIn: state.auth.get('authenticated'),
+    online: state.app.get('online'),
     hasAccess: state.event.userdata.get('userHasAccess'),
     currentUser: state.auth.get('uid'),
     currentEvent: state.event.event.get('id'),

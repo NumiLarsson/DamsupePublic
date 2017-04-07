@@ -205,7 +205,6 @@ function* subscribeToEvent(eventId) {
     //Initialize the user access flow..
     yield put({type: INITIALIZE_USER_ACCESS, payload: eventId});
     //Create a channel to listen for updates to the event.
-    console.log(`CREATING_EVENT_CHANNEL ${eventId}`);
     const eventChan = yield call(createEventChannel, eventId);
     try {
         while (true) {
