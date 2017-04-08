@@ -76,6 +76,7 @@ class Checkout extends Component {
         let items = this.props.items.map(item => {
             return item.toJS();
         }).toArray();
+        this.props.clearCart();
 
         let order = {
             userId: currentUser,
@@ -87,7 +88,6 @@ class Checkout extends Component {
         
         api.events.placeOrder(order, () => {
             this.props.addNotification('Order sent', 'success', 'bc');
-            this.props.clearCart();
         })
     }
 

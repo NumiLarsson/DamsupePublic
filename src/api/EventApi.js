@@ -57,8 +57,9 @@ export default class EventApi {
      */
     placeOrder(order, callback) {
         order.created = this.database.ServerValue.TIMESTAMP;
-        
-        this.database().ref('orders/tasks').push({order}, () => {
+        let id = this.database().ref('orders/tasks').push().key;        
+
+        this.database().ref(`orders/tasks/${id}`).set({order}, () => {
             callback();
         });
     }
